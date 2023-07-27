@@ -1,10 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-
-interface NavItem {
-  label: string;
-  path: string;
-}
+import {NAV_ITEMS, NavItem} from "../../constants";
 
 @Component({
   selector: 'app-navbar',
@@ -12,12 +8,7 @@ interface NavItem {
   styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-
-  navItems: NavItem[] = [
-    {label: 'Home', path: '/'},
-    {label: 'Properties', path: '/properties'},
-    {label: 'Contact', path: '/contact'},
-  ];
+  navItems: NavItem[] = NAV_ITEMS;
   activeItem: NavItem | undefined;
 
   constructor(private activatedRoute: ActivatedRoute) {

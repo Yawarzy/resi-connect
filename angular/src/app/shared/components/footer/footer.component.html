@@ -1,1 +1,28 @@
-<p>footer works!</p>
+<footer class="footer bg-dark text-white">
+  <div class="container border-1">
+    <div class="row" style="--bs-gutter-y: 1.5rem">
+      <div class="col-md-6 border-1">
+        <h5 class="display-6 mb-3">Contact Information</h5>
+        <div class="lead lh-sm">
+          <p><strong>Address:</strong> Rozabal Khanyar, Srinagar 190003</p>
+          <p><strong>Contact Number:</strong> 1234567890</p>
+          <p><strong>Email:</strong> info@resiconnect.in</p>
+        </div>
+      </div>
+      <div class="col-md-6 border-1">
+        <h5 class="display-6 mb-3">Quick Links</h5>
+        <ul class="nav-list list-unstyled">
+          <li class="nav-item" *ngFor="let navItem of navItems">
+            <a class="nav-link lead lh-lg" [routerLink]="navItem.path">{{navItem.label}}</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <hr class="border-1 border-top border-white">
+        <p class="">&copy; 2023 Resiconnect. All Rights Reserved.</p>
+      </div>
+    </div>
+  </div>
+</footer>
