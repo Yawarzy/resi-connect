@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import {PageComponent} from './components/page/page.component';
 import {FooterComponent} from './components/footer/footer.component';
+import {RouterLinkWithHref} from "@angular/router";
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import {FooterComponent} from './components/footer/footer.component';
     PageComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterLinkWithHref
   ]
 })
 export class SharedModule {
