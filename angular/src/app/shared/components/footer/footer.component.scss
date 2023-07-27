@@ -1,0 +1,22 @@
+@use '../../styles/style-variables' as *;
+
+:host {
+  .footer {
+    padding-block-start: 3rem;
+    padding-block-end: 1.5rem;
+  }
+
+  h5 {
+    font-size: 1.25rem;
+    font-weight: 400;
+  }
+
+  .lead {
+    font-size: 1rem;
+    font-weight: 300;
+  }
+
+  .nav-link:hover {
+    color: $clr-primary;
+  }
+}

@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+@use "app/shared/styles/style-variables" as *;
+@import "../node_modules/bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/variables";
+
+
+$theme-colors: (
+  'primary': $clr-primary,
+  'secondary': $clr-secondary,
+);
+
+@import '../node_modules/bootstrap/scss/bootstrap.scss';
+
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
