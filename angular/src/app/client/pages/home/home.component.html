@@ -1,3 +1,91 @@
 <app-page>
-  <h1>Home</h1>
+  <!--  Hero Start -->
+  <header class="hero text-white">
+    <div class="container d-grid align-items-center justify-content-center">
+      <div class="hero__content text-center">
+        <p class="lead text-uppercase fw-semibold">It's a lease, not a leash</p>
+        <h1 class="display-3">Searching for the Best Places ?</h1>
+        <div class="hero__form mt-3 mt-md-5">
+          <app-select-field (onValueChange)="selectedLocation = $event" [options]="locations"
+                            [selectedValue]="selectedLocation"
+                            [size]="'large'"
+                            placeholder="Select a location"></app-select-field>
+          <button class="btn btn-primary">Search Places</button>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!--  Hero End-->
+
+  <!--  Popular Properties Start-->
+  <section class="properties section">
+    <div class="container">
+      <div class="section__header">
+        <p class="section__subtitle">Find your next accommodation</p>
+        <h2 class="section__title">Our Popular Accommodations</h2>
+        <a class="section__link">View all</a>
+      </div>
+    </div>
+    <div class="container d-flex flex-wrap gap-3">
+      <app-property *ngFor="let property of popularAccomodations" [property]="property" class="flex-1"></app-property>
+    </div>
+  </section>
+  <!--  Popular Properties End-->
+
+  <!--  Feature Section Start-->
+  <section class="section feature bg-light">
+    <div class="container">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <div class="feature__content">
+            <p class="section__subtitle">Rent your first accommodation</p>
+            <h2 class="section__title" style="max-width: 30ch">We have the most properties in Srinagar City</h2>
+          </div>
+          <p class="feature__lead">
+            Finding a place to live in Srinagar can be a daunting task. We are here to help you find the best place to
+            live in Srinagar.
+          </p>
+          <ul class="list-unstyled">
+            <li>
+              <i class="fa-solid fa-check text-success"></i>
+              At Resiconnect, we provide you with the best accommodation experience.
+            </li>
+
+            <li>
+              <i class="fa-solid fa-check text-success"></i>
+              All of our properties are fully furnished and equipped with all the necessary amenities.
+            </li>
+
+            <li>
+              <i class="fa-solid fa-check text-success"></i>
+              We provide the best prices for students across the Srinagar city.
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <div class="feature__image">
+            <img alt="feature" src="/assets/images/hero.jpg">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!--  Feature Section End-->
+
+  <!--  CTA Section Start-->
+
+  <section class="cta section">
+    <div class="container">
+      <div class="card py-5 flex-center text-center text-white">
+        <h2>
+          Your Dream Rental Awaits!
+        </h2>
+        <p>
+          Take the first step towards your perfect home by submitting an enquiry today.
+        </p>
+        <button class="btn btn-light">Submit Enquiry</button>
+      </div>
+    </div>
+  </section>
+  <!--  CTA Section End-->
 </app-page>

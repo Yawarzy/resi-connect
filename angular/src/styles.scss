@@ -11,10 +11,92 @@ $theme-colors: (
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 
+html, body {
+  height: 100%;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Roboto', sans-serif;
+}
+
+img {
+  max-width: 100%;
+}
+
+/** Utility Classes */
+.btn {
+  border-radius: 0;
+
+  &-light {
+    background: #fff;
+    color: #000;
+  }
+}
+
+.section {
+  padding-block: 3rem 4rem;
+
+  &__header {
+    padding-block: 1rem;
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+
+  &__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: capitalize;
+  }
+
+  &__subtitle {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  &__link {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    user-select: none;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+      color: $clr-primary;
+    }
+  }
+}
+
+.flex {
+  &-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 600px) {
+  .section {
+    &__header {
+      text-align: center;
+    }
+
+    &__title {
+      font-size: 2rem;
+    }
+  }
 }

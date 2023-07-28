@@ -1,0 +1,130 @@
+@use '../../../shared/styles/style-variables' as *;
+
+:host {
+  /**
+    hero styles
+   */
+  .hero {
+    background: url('../../../../assets/images/hero.jpg') no-repeat center center/cover, linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+    background-blend-mode: overlay;
+    padding-block: 5rem;
+    height: 28rem;
+
+    &__content {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    &__form {
+      text-align: left;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 40rem;
+      width: 100%;
+
+      app-select-field {
+        flex: 1;
+
+        ::ng-deep {
+          .ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            border-right: 0;
+            border-radius: 0;
+          }
+        }
+      }
+
+      .btn {
+        flex: 0.35;
+        border-radius: 0;
+        height: 2.5rem;
+      }
+    }
+  }
+
+  /**
+    properties styles
+   */
+  .properties {
+    app-property {
+      flex: 1;
+    }
+  }
+
+  /**
+    feature styles
+   */
+  .feature {
+    &__lead {
+      font-size: 1rem;
+      margin-block: 1rem;
+    }
+
+    li {
+      margin-block: 1rem;
+      max-width: 90%;
+
+      i {
+        font-size: 1rem;
+        margin-inline-end: 0.5rem;
+      }
+    }
+  }
+
+
+  /**
+  general styles
+ */
+  .container {
+    height: 100%;
+  }
+
+  .lead {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  /**
+    ctas styles
+   */
+  .cta {
+    .card {
+      background: $clr-primary;
+      border: 0;
+    }
+  }
+
+
+  /**
+    responsive styles
+   */
+  @media (max-width: 426px) {
+    /**
+      hero styles
+     */
+    .hero {
+      height: auto;
+    }
+
+    .hero__form {
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 20rem;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    /**
+      properties styles
+     */
+    .properties {
+      .container {
+        flex-direction: column;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+<nz-select [nzMaxTagCount]="2" [nzMaxTagPlaceholder]="tagPlaceHolder" [nzMode]="mode" [nzPlaceHolder]="placeholder"
+           [nzSize]="size" [(ngModel)]="selectedValue" [nzDisabled]="disabled" (ngModelChange)="valueChange($event)">
+  <nz-option *ngFor="let option of options" [nzLabel]="option.label" [nzValue]="option.value"
+             [nzHide]="option.default"></nz-option>
+</nz-select>
+<ng-template #tagPlaceHolder let-selectedList>and {{ selectedList.length }} more selected</ng-template>
