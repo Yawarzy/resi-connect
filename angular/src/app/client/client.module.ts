@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 
 import {ClientRoutingModule} from './client-routing.module';
 import {HomeComponent} from './pages/home/home.component';
@@ -8,6 +8,7 @@ import {ContactComponent} from './pages/contact/contact.component';
 import {SharedModule} from "../shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {PropertyComponent} from './_components/property/property.component';
+import {HttpClientModule} from "@angular/common/http";
 
 
 @NgModule({
@@ -22,6 +23,8 @@ import {PropertyComponent} from './_components/property/property.component';
     ClientRoutingModule,
     SharedModule,
     NzButtonModule,
+    HttpClientModule,
+    NgOptimizedImage
   ]
 })
 export class ClientModule {

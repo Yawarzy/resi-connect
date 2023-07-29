@@ -27,7 +27,7 @@
       </div>
     </div>
     <div class="container d-flex flex-wrap gap-3">
-      <app-property *ngFor="let property of popularAccomodations" [property]="property" class="flex-1"></app-property>
+      <app-property *ngFor="let property of popularAccommodations" [property]="property" class="flex-1"></app-property>
     </div>
   </section>
   <!--  Popular Properties End-->
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6">
           <div class="feature__image">
-            <img alt="feature" src="/assets/images/hero.jpg">
+            <img alt="feature" src="{{AppUtil.assetsUrl('assets/images/hero.jpg')}}">
           </div>
         </div>
       </div>
@@ -76,7 +76,7 @@
 
   <section class="cta section">
     <div class="container">
-      <div class="card py-5 flex-center text-center text-white">
+      <div class="card py-5 px-3 flex-center text-center text-white">
         <h2>
           Your Dream Rental Awaits!
         </h2>
