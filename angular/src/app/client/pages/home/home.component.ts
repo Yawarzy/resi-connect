@@ -23,15 +23,10 @@ export class HomeComponent implements OnInit {
 
   private fetchPropertiesAndLocations() {
     this.propertiesService.getProperties(
-      (properties: any) => {
-        this.popularAccommodations = properties.map((property: any) => {
-          return {
-            ...property,
-            photos: property.photos.slice(1, -1).split(',')
-          }
-        }).slice(0, 3);
+      (data: { properties: Property[] }) => {
+        this.popularAccommodations = data.properties.slice(0, 3);
 
-        this.locations = properties.reduce((acc: SelectFieldOption[], property: Property) => {
+        this.locations = data.properties.reduce((acc: SelectFieldOption[], property: Property) => {
           if (acc.find((location: any) => location.value === property.locality)) {
             return acc;
           }

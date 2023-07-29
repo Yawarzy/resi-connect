@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 export interface SelectFieldOption {
   label: string;
-  value: string;
+  value: string | number | boolean;
   default?: boolean;
 }
 

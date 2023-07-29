@@ -9,6 +9,8 @@ import {SharedModule} from "../shared/shared.module";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {PropertyComponent} from './_components/property/property.component';
 import {HttpClientModule} from "@angular/common/http";
+import {NzSliderModule} from "ng-zorro-antd/slider";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import {HttpClientModule} from "@angular/common/http";
     SharedModule,
     NzButtonModule,
     HttpClientModule,
-    NgOptimizedImage
+    NgOptimizedImage,
+    NzSliderModule,
+    FormsModule
   ]
 })
 export class ClientModule {

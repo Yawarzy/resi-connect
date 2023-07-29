@@ -1,3 +1,88 @@
 <app-page>
-  <h1>Properties</h1>
+  <section class="section properties">
+    <div class="container">
+      <header class="section__header">
+        <p class="section__subtitle">
+          Find Your Ideal Rental Home Amongst Our Diverse Listings </p>
+        <h1 class="section__title display-5">Explore Our Rental Properties</h1>
+      </header>
+
+      <div class="filters">
+        <h4>
+          Filters
+        </h4>
+        <div class="row g-4">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Property Type</label>
+              <app-select-field (onValueChange)="filters.type = $event" [options]="propertyTypes"
+                                [selectedValue]="filters.type"
+                                [size]="'large'"
+                                placeholder="Property Type"></app-select-field>
+
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Property Location</label>
+              <app-select-field (onValueChange)="filters.locality = $event" [options]="locations"
+                                [selectedValue]="filters.locality"
+                                [size]="'large'"
+                                placeholder="Property Location"></app-select-field>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label class="form-label">Paying Guest</label>
+              <app-select-field (onValueChange)="filters.is_pg = $event" [options]="pgOptions"
+                                [selectedValue]="filters.is_pg"
+                                [size]="'large'"
+                                placeholder="Paying Guest"></app-select-field>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-4 mt-1">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="form-label">Price Range</label>
+              <div class="filters__price__container gap-2">
+                <div class="filters__price__label">
+                  <input [value]="filters.ppm[0]" class="form-control" readonly type="text">
+                  <label class="form-label">Min</label>
+                </div>
+                <nz-slider [(ngModel)]="filters.ppm" [nzMax]="15000" [nzMin]="5000"
+                           [nzStep]="500" nzRange style="display: inline-block; width: 100%"></nz-slider>
+                <div class="filters__price__label" style="text-align: right">
+                  <input [value]="filters.ppm[1]" class="form-control" readonly type="text">
+                  <label class="form-label">Max</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 flex-between">
+            <div class="btn-group d-flex w-100 gap-3">
+              <button (click)="applyFilter()" class="btn btn-primary">Apply Filters</button>
+              <button class="btn btn-dark" (click)="resetFilter()">Reset Filters</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      length {{properties?.length}}
+
+
+      <div class="properties">
+        <div class="row g-4">
+          <div class="col-md-4" *ngFor="let property of properties">
+            <app-property [property]="property"></app-property>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </app-page>

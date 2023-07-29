@@ -32,6 +32,13 @@
           .ant-select:not(.ant-select-customize-input) .ant-select-selector {
             border-right: 0;
             border-radius: 0;
+
+
+          }
+
+          .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-select:hover, .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
+            border-color: transparent;
+            box-shadow: none;
           }
         }
       }

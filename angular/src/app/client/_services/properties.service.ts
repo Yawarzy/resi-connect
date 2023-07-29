@@ -21,7 +21,7 @@ export interface Property {
   minimum_lease_period: number;
   deposit: number;
   ppm: number;
-  photos: string[];
+  photos: string[] | string;
 }
 
 @Injectable({
@@ -33,11 +33,28 @@ export class PropertiesService {
   constructor(private http: HttpClient) {
   }
 
-  public getProperties(success: any, error: any) {
-    this.http.get<Property[]>(`${this.baseUrl}/api/properties`).subscribe(properties => {
-      success(properties);
+  public getProperties(success: any, error: any, params?: any) {
+    this.http.get<{
+      'properties': Property[]
+    }>(`${this.baseUrl}/api/properties`, {params: params}).subscribe((response) => {
+      response.properties = response.properties.map((property: any) => {
+        return {
+          ...property,
+          photos: property.photos.slice(1, -1).split(',')
+        }
+      });
+      success(response);
     }, err => {
       error(err);
     });
   }
+
+  // public getFilteredProperties(filters: any, success: any, error: any) {
+  //   this.http.get<any>(`${this.baseUrl}/api/properties`, {params: filters}).subscribe(data => {
+  //     console.log(data);
+  //     success(data);
+  //   }, err => {
+  //     error(err);
+  //   });
+  // }
 }

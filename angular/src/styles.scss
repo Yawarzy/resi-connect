@@ -7,6 +7,14 @@
 $theme-colors: (
   'primary': $clr-primary,
   'secondary': $clr-secondary,
+  'success': $success,
+  'info': $info,
+  'warning': $warning,
+  'danger': $danger,
+  'light': $light,
+  'dark': $dark,
+  'white': $white,
+  'black': $black,
 );
 
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
@@ -30,11 +38,6 @@ img {
 /** Utility Classes */
 .btn {
   border-radius: 0;
-
-  &-light {
-    background: #fff;
-    color: #000;
-  }
 }
 
 .section {

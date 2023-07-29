@@ -1,0 +1,14 @@
+:host {
+  .filters__price__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .filters__price__label {
+    label {
+      margin-top: 0.25rem;
+    }
+  }
+}
