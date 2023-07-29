@@ -16,9 +16,17 @@ class PropertyFactory extends Factory
      */
     public function definition(): array
     {
+        $photos = '[';
+        for ($i = 0; $i < 5; $i++) {
+            $photos .= $this->faker->imageUrl('640', '480', 'property', true) . ',';
+        }
+        $photos .= ']';
+
         return [
-            'name' => $this->faker->name(),
-            'address' => $this->faker->address(),
+            'name' => $this->faker->firstName(),
+            'city' => 'Srinagar',
+            'locality' => $this->faker->randomElement(['Rajbagh', 'Hyderpora', 'Khanyar', 'Nishat']),
+            'full_address' => $this->faker->address(),
             'type' => $this->faker->randomElement(['apartment', 'house']),
             'bedrooms' => $this->faker->numberBetween(1, 10),
             'bathrooms' => $this->faker->numberBetween(1, 10),
@@ -26,11 +34,11 @@ class PropertyFactory extends Factory
             'is_furnished' => $this->faker->boolean(),
             'has_parking' => $this->faker->boolean(),
             'is_pg' => $this->faker->boolean(),
-            'ppm' => $this->faker->randomFloat(2, 5000, 13000),
-            'deposit' => $this->faker->randomFloat(2, 5000, 13000),
+            'ppm' => $this->faker->randomElement([5000, 8000, 12000]),
+            'deposit' => $this->faker->randomElement([10000, 12000]),
             'minimum_lease_period' => $this->faker->numberBetween(6, 10),
             'is_available' => $this->faker->boolean(),
-            'photos' => $this->faker->imageUrl(640, 480, 'properties', true, 'Faker', true),
+            'photos' => $photos,
         ];
     }
 }

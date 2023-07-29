@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {SelectFieldOption} from "../../../shared";
+import {PropertiesService, Property} from "../../_services/properties.service";
+import {AppUtil} from "../../../app-util";
 
 @Component({
   selector: 'app-home',
@@ -9,39 +11,38 @@ import {SelectFieldOption} from "../../../shared";
 export class HomeComponent implements OnInit {
 
   selectedLocation: string = 'all';
-  locations: SelectFieldOption[] = [
-    {label: 'All', value: 'all', default: true},
-    {label: 'Location 1', value: 'location1'},
-    {label: 'Location 2', value: 'location2'},
-    {label: 'Location 3', value: 'location3'},
-    {label: 'Location 4', value: 'location4'},
-  ]
+  locations: SelectFieldOption[] | undefined;
+  popularAccommodations: Property[] | undefined;
 
-  popularAccomodations: any[] = [
-    {
-      name: 'Accomodation 1',
-      address: 'Location 1',
-      image: 'https://picsum.photos/300/300',
-      price: 100,
-    },
-    {
-      name: 'Accomodation 2',
-      address: 'Location 2',
-      image: 'https://picsum.photos/300/300',
-      price: 200,
-    },
-    {
-      name: 'Accomodation 3',
-      address: 'Location 3',
-      image: 'https://picsum.photos/300/300',
-      price: 300,
-    }
-  ]
-
-  constructor() {
+  constructor(private propertiesService: PropertiesService) {
   }
 
   ngOnInit(): void {
+    this.fetchPropertiesAndLocations();
   }
 
+  private fetchPropertiesAndLocations() {
+    this.propertiesService.getProperties(
+      (properties: any) => {
+        this.popularAccommodations = properties.map((property: any) => {
+          return {
+            ...property,
+            photos: property.photos.slice(1, -1).split(',')
+          }
+        }).slice(0, 3);
+
+        this.locations = properties.reduce((acc: SelectFieldOption[], property: Property) => {
+          if (acc.find((location: any) => location.value === property.locality)) {
+            return acc;
+          }
+          return [...acc, {label: property.locality, value: property.locality}];
+        }, [{label: 'All', value: 'all', default: true}] as SelectFieldOption[]);
+      },
+      (err: any) => {
+        console.log(err);
+      }
+    );
+  }
+
+  protected readonly AppUtil = AppUtil;
 }

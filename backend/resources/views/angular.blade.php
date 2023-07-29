@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Angular</title>
+    <title>Resiconnect | Affordable Accommodations in Srinagar City</title>
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -439,7 +439,47 @@
             src: url(https://fonts.gstatic.com/s/roboto/v30/KFOlCnqEu92Fr1MmWUlfBBc4AMP6lQ.woff2) format('woff2');
             unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
         }</style>
-    <style>@charset "UTF-8";
+    <style>body {
+            color: #000000d9
+        }
+
+        html {
+            -webkit-tap-highlight-color: transparent
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%
+        }
+
+        *, :after, :before {
+            box-sizing: border-box
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -ms-overflow-style: scrollbar;
+            --antd-wave-shadow-color: #1890ff;
+            --scroll-bar: 0
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", Segoe UI Symbol, "Noto Color Emoji"
+        }
+
+        body {
+            margin: 0;
+            font-size: 14px;
+            font-variant: tabular-nums;
+            line-height: 1.5715;
+            background-color: #fff;
+            font-feature-settings: "tnum", "tnum"
+        }
+
+        @charset "UTF-8";
         :root {
             --bs-blue: #0d6efd;
             --bs-indigo: #6610f2;
@@ -888,20 +928,24 @@
             --bs-breakpoint-xxl: 1400px
         }
 
+        html, body {
+            height: 100%
+        }
+
         body {
             font-family: Open Sans, sans-serif
         }</style>
-    <link rel="stylesheet" href="/dist/styles.5ba8dd6c62933811.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/dist/styles.df930a36f4dc29a0.css" media="print" onload="this.media='all'">
     <noscript>
-        <link rel="stylesheet" href="/dist/styles.5ba8dd6c62933811.css">
+        <link rel="stylesheet" href="/dist/styles.df930a36f4dc29a0.css">
     </noscript>
 </head>
 <body>
 <app-root></app-root>
-<script src="/dist/runtime.0ad3a7bbd93deae6.js" type="module"></script>
-<script src="/dist/polyfills.55e452bef9dff314.js" type="module"></script>
+<script src="/dist/runtime.fc718bdf1bfdf245.js" type="module"></script>
+<script src="/dist/polyfills.f0b46f1b2a981147.js" type="module"></script>
 <script src="/dist/scripts.19fad2a324740701.js" defer></script>
-<script src="/dist/main.8665020189644e94.js" type="module"></script>
+<script src="/dist/main.919dde33aeeb5f25.js" type="module"></script>
 
 </body>
 </html>

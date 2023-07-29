@@ -13,7 +13,9 @@ return new class extends Migration {
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('address');
+            $table->string('city');
+            $table->string('locality');
+            $table->string('full_address');
             $table->enum('type', ['apartment', 'house']);
 //            $table->foreignId('landlord_id')->constrained('landlords');
 

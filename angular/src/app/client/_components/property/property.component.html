@@ -1,11 +1,12 @@
-<div class="property" [ngStyle]="{'--property-image': undefined}">
-  <img [src]="property.image" alt="" class="property__image">
+<div [ngStyle]="{'--property-image': undefined}" class="property">
+  <img [src]="property?.photos?.[0]" alt="" class="property__image">
   <div class="overlay"></div>
   <div class="property__footer">
     <div class="property__details">
-      <h6 class="property__name">{{property.name}}</h6>
-      <p class="property__address">{{property.address}}</p>
+      <h6 class="property__name">{{property?.name}}</h6>
+      <p [title]="property?.locality + ' ' + property?.city"
+         class="property__address">{{property?.locality}} {{property?.city}}</p>
     </div>
-    <span class="property__price bg-light text-dark">${{property.price}}</span>
+    <span class="property__price  bg-light text-dark">₹ {{property?.ppm}}</span>
   </div>
 </div>
