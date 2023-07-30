@@ -794,8 +794,6 @@
             --bs-green: #198754;
             --bs-teal: #20c997;
             --bs-cyan: #0dcaf0;
-            --bs-black: #000;
-            --bs-white: #fff;
             --bs-gray: #6c757d;
             --bs-gray-dark: #343a40;
             --bs-gray-100: #f8f9fa;
@@ -809,6 +807,14 @@
             --bs-gray-900: #212529;
             --bs-primary: #dc2f02;
             --bs-secondary: #03071e;
+            --bs-success: #198754;
+            --bs-info: #0dcaf0;
+            --bs-warning: #ffc107;
+            --bs-danger: #dc3545;
+            --bs-light: #f8f9fa;
+            --bs-dark: #212529;
+            --bs-white: #fff;
+            --bs-black: #000;
             --bs-primary-rgb: 13, 110, 253;
             --bs-secondary-rgb: 108, 117, 125;
             --bs-success-rgb: 25, 135, 84;
@@ -935,17 +941,17 @@
         body {
             font-family: Open Sans, sans-serif
         }</style>
-    <link rel="stylesheet" href="/dist/styles.df930a36f4dc29a0.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/dist/styles.32025497a284e8a1.css" media="print" onload="this.media='all'">
     <noscript>
-        <link rel="stylesheet" href="/dist/styles.df930a36f4dc29a0.css">
+        <link rel="stylesheet" href="/dist/styles.32025497a284e8a1.css">
     </noscript>
 </head>
 <body>
 <app-root></app-root>
-<script src="/dist/runtime.fc718bdf1bfdf245.js" type="module"></script>
+<script src="/dist/runtime.4a3d1abedf8ac425.js" type="module"></script>
 <script src="/dist/polyfills.f0b46f1b2a981147.js" type="module"></script>
 <script src="/dist/scripts.19fad2a324740701.js" defer></script>
-<script src="/dist/main.919dde33aeeb5f25.js" type="module"></script>
+<script src="/dist/main.07f6353cd830325b.js" type="module"></script>
 
 </body>
 </html>
