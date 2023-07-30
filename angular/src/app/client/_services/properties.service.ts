@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {HttpClient} from "@angular/common/http";
+import {BaseCrudService} from "../../shared/services/base-crud.service";
 
 export type PropertyType = 'apartment' | 'house';
 
@@ -21,23 +22,16 @@ export interface Property {
   minimum_lease_period: number;
   deposit: number;
   ppm: number;
-  photos: string[];
+  photos: string[] | string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class PropertiesService {
-  baseUrl = environment.baseUrl;
+export class PropertiesService extends BaseCrudService<Property> {
+  baseUrl = environment.baseUrl + '/api/properties';
 
-  constructor(private http: HttpClient) {
-  }
-
-  public getProperties(success: any, error: any) {
-    this.http.get<Property[]>(`${this.baseUrl}/api/properties`).subscribe(properties => {
-      success(properties);
-    }, err => {
-      error(err);
-    });
+  constructor(public override http: HttpClient) {
+    super(http);
   }
 }
