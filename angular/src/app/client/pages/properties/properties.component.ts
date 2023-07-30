@@ -13,7 +13,10 @@ export class PropertiesComponent implements OnInit {
     locality: 'all',
     type: 'all',
     is_pg: 'any',
-    ppm: [5000, 15000]
+    ppm: [5000, 15000],
+    min: 5000,
+    max: 15000,
+    page: 1,
   }
 
   properties: Property[] | undefined;
@@ -28,6 +31,12 @@ export class PropertiesComponent implements OnInit {
     {label: 'Yes', value: true},
     {label: 'No', value: false},
   ];
+  showFilters = false;
+  count = {
+    totalCount: 0,
+    filteredCount: 0
+  }
+  pagination: any;
 
   constructor(private propertiesService: PropertiesService) {
   }
@@ -37,8 +46,14 @@ export class PropertiesComponent implements OnInit {
   }
 
   fetchProperties(filters?: any) {
-    this.propertiesService.getProperties((data: { properties: Property[] }) => {
+    this.propertiesService.getProperties((data: { properties: Property[], count: any, links: any, meta: any }) => {
       this.properties = data.properties;
+      this.count = data.count;
+      this.pagination = {
+        links: data.links,
+        meta: data.meta
+      }
+      console.log(data);
       if (!filters) {
         this.initLocations(data.properties);
       }
@@ -49,8 +64,15 @@ export class PropertiesComponent implements OnInit {
   }
 
   applyFilter() {
-    this.fetchProperties(this.filters);
-    console.log(this.properties);
+    const {locality, type, is_pg, ppm} = this.filters;
+    const filters = {
+      locality,
+      type,
+      is_pg,
+      min: ppm[0],
+      max: ppm[1]
+    }
+    this.fetchProperties(filters);
   }
 
   resetFilter() {
@@ -58,9 +80,29 @@ export class PropertiesComponent implements OnInit {
       locality: 'all',
       type: 'all',
       is_pg: 'any',
-      ppm: [5000, 15000]
+      ppm: [5000, 15000],
+      min: 5000,
+      max: 15000,
+      page: 1,
     }
     this.fetchProperties();
+  }
+
+  goToPage(page: number) {
+    // Function to navigate to a specific page using the pagination link URL
+    this.fetchProperties(
+      {
+        ...this.filters,
+        page
+      }
+    )
+
+  }
+
+  getNumberedLinks(): number[] {
+    // Helper function to create an array of page numbers for the numbered links
+    const totalPages = this.pagination?.meta?.last_page;
+    return Array.from({length: totalPages}, (_, i) => i + 1);
   }
 
   private initLocations(properties: Property[]) {

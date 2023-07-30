@@ -1,3 +1,5 @@
+@use "./../../../shared/styles/style-variables" as *;
+
 :host {
   .filters__price__container {
     display: flex;
@@ -9,6 +11,37 @@
   .filters__price__label {
     label {
       margin-top: 0.25rem;
+    }
+  }
+
+  .page-item {
+    .page-link {
+      color: $clr-primary;
+      border-color: #dee2e6;
+
+      &:hover {
+        color: #000;
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+      }
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    &.active {
+      .page-link {
+        color: #fff;
+        background-color: $clr-primary !important;
+        border-color: $clr-primary !important;
+      }
+
+      .page-link.disabled {
+        opacity: 0.5;
+        cursor: not-allowed !important;
+        background: green;
+      }
     }
   }
 }

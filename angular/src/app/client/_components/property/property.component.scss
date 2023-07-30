@@ -1,7 +1,7 @@
 :host {
   .property {
     background-blend-mode: overlay;
-    min-width: 20rem;
+    width: auto;
     height: 15rem;
     position: relative;
     cursor: pointer;
@@ -64,5 +64,12 @@
     height: 100%;
     transition: all 0.3s ease-in-out;
     background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  }
+
+
+  @media (min-width: 768px) {
+    .property {
+      min-width: 20rem;
+    }
   }
 }

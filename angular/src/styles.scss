@@ -37,7 +37,13 @@ img {
 
 /** Utility Classes */
 .btn {
-  border-radius: 0;
+  //border-radius: 0;
+}
+
+.bg {
+  &-primary {
+    background-color: $clr-primary !important;
+  }
 }
 
 .section {
