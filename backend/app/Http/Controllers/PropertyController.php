@@ -47,7 +47,7 @@ class PropertyController extends Controller
         }
 
         // Paginate the result
-        $perPage = 5; // Set the number of items per page
+        $perPage = $request->input('pageSize', 3); // Set the number of items per page
         $currentPage = $request->input('page', 1);
         Paginator::currentPageResolver(function () use ($currentPage) {
             return $currentPage;
@@ -58,6 +58,7 @@ class PropertyController extends Controller
         // return paginated properties
         return response()->json([
             'properties' => $paginatedProperties->items(),
+            'localities' => Property::select('locality')->distinct()->get(),
             'count' => [
                 'filteredCount' => $paginatedProperties->total(),
                 'totalCount' => Property::count(),
