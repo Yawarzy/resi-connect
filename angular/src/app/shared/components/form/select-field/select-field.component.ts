@@ -25,7 +25,7 @@ export class SelectFieldComponent implements OnInit {
   @Input() mode: 'multiple' | 'tags' | 'default' = 'default';
 
   /** Selected value of the select field */
-  @Input() selectedValue: string | undefined;
+  @Input() selectedValue: string | boolean | undefined;
 
   /** Whether the select field is disabled */
   @Input() disabled: boolean = false;

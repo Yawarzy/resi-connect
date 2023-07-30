@@ -1,0 +1,66 @@
+<div class="filters p-3 mb-5 bg-light rounded">
+  <div class="filters__header flex-between">
+    <div class="flex-between gap-1">
+            <span class="mb-0">
+              {{headline}}
+            </span>
+      <span class="badge bg-primary">
+              <span *ngIf="count?.filteredCount !== count?.totalCount">
+                {{count?.filteredCount}} /
+              </span>
+        {{count?.totalCount}}
+            </span>
+    </div>
+
+    <div>
+      <button (click)="showFilters = !showFilters" class="btn btn-dark">
+        <i class="fa-solid fa-filter"></i> Filters
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="showFilters" class="filters__body border-top mt-3 border-light-subtle">
+    <div class="d-flex justify-content-start align-items-center flex-wrap gap-4 mt-3">
+      <div *ngFor="let filter of filterConfig" class="form-group flex-grow-1">
+        <ng-container
+          *ngTemplateOutlet="(filter.filterType === 'select' ? selectFilterTemplate : filter.filterType === 'range' ? rangeFilterTemplate : null); context: {filter: filter}"
+        >
+        </ng-container>
+      </div>
+    </div>
+
+
+    <div class="col-md-6 flex-between">
+      <div class="btn-group d-flex w-100 gap-3">
+        <button (click)="applyFilter()" class="btn btn-primary">Apply Filters</button>
+        <button (click)="resetFilter()" class="btn btn-dark">Reset Filters</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #selectFilterTemplate let-filter="filter">
+  <label class="form-label">{{filter?.label}}</label>
+  <app-select-field (onValueChange)="filteredValues && (filteredValues[filter?.filterField] = $event)"
+                    [options]="filter?.options"
+                    [selectedValue]="filteredValues?.[filter?.filterField]"
+                    [size]="'large'"
+                    placeholder="{{filter?.label}}"></app-select-field>
+</ng-template>
+
+<ng-template #rangeFilterTemplate let-filter="filter">
+  <label class="form-label">{{filter.label}}</label>
+  <div class="filters__price__container gap-2">
+    <div class="filters__price__label">
+      <input [value]="filteredValues[filter.filterField][0]" class="form-control" readonly type="text">
+      <label class="form-label">Min</label>
+    </div>
+    <nz-slider [(ngModel)]="filteredValues[filter.filterField]" [nzMax]="filter.max" [nzMin]="filter.min"
+               [nzStep]="filter.step" nzRange style="display: inline-block; width: 100%"></nz-slider>
+    <div class="filters__price__label" style="text-align: right">
+      <input [value]="filteredValues[filter.filterField][1]" class="form-control" readonly type="text">
+      <label class="form-label">Max</label>
+    </div>
+  </div>
+</ng-template>

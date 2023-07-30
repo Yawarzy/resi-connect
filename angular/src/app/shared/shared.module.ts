@@ -7,6 +7,8 @@ import {RouterLinkWithHref} from "@angular/router";
 import {SelectFieldComponent} from './components/form/select-field/select-field.component';
 import {NzSelectModule} from "ng-zorro-antd/select";
 import {FormsModule} from "@angular/forms";
+import {FilterComponent} from './components/filter/filter.component';
+import {NzSliderModule} from "ng-zorro-antd/slider";
 
 
 @NgModule({
@@ -14,17 +16,20 @@ import {FormsModule} from "@angular/forms";
     NavbarComponent,
     PageComponent,
     FooterComponent,
-    SelectFieldComponent
+    SelectFieldComponent,
+    FilterComponent
   ],
   exports: [
     PageComponent,
-    SelectFieldComponent
+    SelectFieldComponent,
+    FilterComponent
   ],
   imports: [
     CommonModule,
     RouterLinkWithHref,
     NzSelectModule,
-    FormsModule
+    FormsModule,
+    NzSliderModule
   ]
 })
 export class SharedModule {

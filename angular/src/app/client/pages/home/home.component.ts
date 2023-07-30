@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit {
   selectedLocation: string = 'all';
   locations: SelectFieldOption[] | undefined;
   popularAccommodations: Property[] | undefined;
+  protected readonly AppUtil = AppUtil;
 
   constructor(private propertiesService: PropertiesService) {
   }
@@ -22,8 +23,14 @@ export class HomeComponent implements OnInit {
   }
 
   private fetchPropertiesAndLocations() {
-    this.propertiesService.getProperties(
+    this.propertiesService.fetchItems(
       (data: { properties: Property[] }) => {
+        data.properties = data.properties.map((property: any) => {
+          return {
+            ...property,
+            photos: property.photos.slice(1, -1).split(',')
+          }
+        });
         this.popularAccommodations = data.properties.slice(0, 3);
 
         this.locations = data.properties.reduce((acc: SelectFieldOption[], property: Property) => {
@@ -38,6 +45,4 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  protected readonly AppUtil = AppUtil;
 }
