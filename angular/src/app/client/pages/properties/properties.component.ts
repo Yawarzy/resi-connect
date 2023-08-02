@@ -108,9 +108,10 @@ export class PropertiesComponent implements OnInit {
       localities: { 'locality': string }[]
     }) => {
       this.properties = data.properties.map((property: any) => {
+        console.log(property.photos);
         return {
           ...property,
-          photos: property.photos.slice(1, -1).split(',')
+          photos: JSON.parse(property.photos),
         }
       });
       this.count = data.count;

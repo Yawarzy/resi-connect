@@ -10,7 +10,7 @@
                             [selectedValue]="selectedLocation"
                             [size]="'large'"
                             placeholder="Select a location"></app-select-field>
-          <button class="btn btn-primary">Search Places</button>
+          <button class="btn btn-primary" (click)="goToPropertiesPage()">Search Places</button>
         </div>
       </div>
     </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="col-md-6">
           <div class="feature__image">
-            <img alt="feature" src="{{AppUtil.assetsUrl('assets/images/hero.jpg')}}">
+            <img alt="feature" src="{{AppUtil.assetsUrl('assets/images/hero.jpg', 'dist')}}">
           </div>
         </div>
       </div>

@@ -16,11 +16,11 @@ class PropertyFactory extends Factory
      */
     public function definition()
     {
-        $photos = '[';
-        for ($i = 0; $i < 5; $i++) {
-            $photos .= $this->faker->imageUrl('640', '480', 'property', true) . ',';
-        }
-        $photos .= ']';
+//        $photos = '[';
+//        for ($i = 0; $i < 5; $i++) {
+//            $photos .= $this->faker->imageUrl('640', '480', 'property', true) . ',';
+//        }
+//        $photos .= ']';
 
         return [
             'name' => $this->faker->firstName(),
@@ -38,7 +38,21 @@ class PropertyFactory extends Factory
             'deposit' => $this->faker->randomElement([10000, 12000]),
             'minimum_lease_period' => $this->faker->numberBetween(6, 10),
             'is_available' => $this->faker->boolean(),
-            'photos' => $photos,
+            'photos' => $this->generatePhotos(),
+
         ];
+    }
+
+    /**
+     * @param $faker \Faker\Generator
+     * @return array of photos
+     */
+    private function generatePhotos()
+    {
+        $photos = [];
+        for ($i = 0; $i < 5; $i++) {
+            $photos[] = $this->faker->imageUrl(640, 480, 'nature');
+        }
+        return $photos;
     }
 }

@@ -1,0 +1,28 @@
+:host {
+  .filters__container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block-start: 1rem;
+  }
+
+  .filters__price__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem;
+  }
+
+  .filters__price__label {
+    label {
+      margin-top: 0.25rem;
+    }
+  }
+
+
+  @media (max-width: 768px) {
+    .filters__container {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+}

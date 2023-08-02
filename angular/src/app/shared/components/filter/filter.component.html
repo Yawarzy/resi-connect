@@ -19,21 +19,20 @@
     </div>
   </div>
 
-  <div *ngIf="showFilters" class="filters__body border-top mt-3 border-light-subtle">
-    <div class="d-flex justify-content-start align-items-center flex-wrap gap-4 mt-3">
+  <div *ngIf="showFilters" class="filters__body border-top mt-3 pb-2 border-light-subtle">
+    <div class="filters__container">
       <div *ngFor="let filter of filterConfig" class="form-group flex-grow-1">
         <ng-container
           *ngTemplateOutlet="(filter.filterType === 'select' ? selectFilterTemplate : filter.filterType === 'range' ? rangeFilterTemplate : null); context: {filter: filter}"
         >
         </ng-container>
       </div>
-    </div>
 
-
-    <div class="col-md-6 flex-between">
-      <div class="btn-group d-flex w-100 gap-3">
-        <button (click)="applyFilter()" class="btn btn-primary">Apply Filters</button>
-        <button (click)="resetFilter()" class="btn btn-dark">Reset Filters</button>
+      <div class="flex-between">
+        <div class="btn-group d-flex w-100 gap-3">
+          <button (click)="applyFilter()" class="btn btn-primary">Apply Filters</button>
+          <button (click)="resetFilter()" class="btn btn-dark">Reset Filters</button>
+        </div>
       </div>
     </div>
   </div>
