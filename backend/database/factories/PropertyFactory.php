@@ -14,7 +14,7 @@ class PropertyFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition(): array
+    public function definition()
     {
         $photos = '[';
         for ($i = 0; $i < 5; $i++) {

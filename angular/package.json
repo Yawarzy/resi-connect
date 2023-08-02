@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "copy:index": "cp ../backend/public/dist/index.html ../backend/resources/views/angular.blade.php",
+    "copy:index": "cp ../backend/public/dist/index.html ../backend/resources/views/welcome.blade.php",
     "build:prod": "ng build --configuration production --deploy-url /dist/ --base-href /; npm run copy:index"
   },
   "private": true,
