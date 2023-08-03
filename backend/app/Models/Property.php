@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Property extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'properties';
     protected $primaryKey = 'id';
@@ -31,4 +32,8 @@ class Property extends Model
         'created_at',
         'updated_at'
     ];
+//
+//    protected $casts = [
+//        'photos' => 'array',
+//    ];
 }
