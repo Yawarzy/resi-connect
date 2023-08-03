@@ -1,5 +1,13 @@
 <app-page>
-
-  property details
-
+  <div class="container">
+    <ng-container *ngIf="property?.photos">
+      <lightgallery [onInit]="galleryOnInit" [settings]="settings">
+        <a *ngFor="let photo of property?.photos" [attr.data-src]="AppUtil.assetsUrl(photo)"
+           class="gallery-item">
+          <img [src]="AppUtil.assetsUrl(photo)" alt="" class="img-responsive">
+        </a>
+      </lightgallery>
+    </ng-container>
+    property details
+  </div>
 </app-page>

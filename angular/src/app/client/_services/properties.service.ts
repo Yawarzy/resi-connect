@@ -22,7 +22,8 @@ export interface Property {
   minimum_lease_period: number;
   deposit: number;
   ppm: number;
-  photos: string[] | string;
+  photos: string[];
+  slug: string;
 }
 
 @Injectable({

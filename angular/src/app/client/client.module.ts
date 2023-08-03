@@ -13,6 +13,8 @@ import {NzSliderModule} from "ng-zorro-antd/slider";
 import {FormsModule} from "@angular/forms";
 import {PropertyDetailsComponent} from './pages/property-details/property-details.component';
 
+import {LightgalleryModule} from 'lightgallery/angular';
+
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import {PropertyDetailsComponent} from './pages/property-details/property-detail
     HttpClientModule,
     NgOptimizedImage,
     NzSliderModule,
-    FormsModule
+    FormsModule,
+    LightgalleryModule
   ]
 })
 export class ClientModule {
