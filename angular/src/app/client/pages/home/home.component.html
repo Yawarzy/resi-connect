@@ -2,10 +2,10 @@
   <!--  Hero Start -->
   <header class="hero text-white">
     <div class="container d-grid align-items-center justify-content-center">
-      <div class="hero__content text-center">
-        <p class="lead text-uppercase fw-semibold">It's a lease, not a leash</p>
-        <h1 class="display-3">Searching for the Best Places ?</h1>
-        <div class="hero__form mt-3 mt-md-5">
+      <div class="hero__content flex-center text-center">
+        <p class="lead text-uppercase hero__lead">It's a lease, not a leash</p>
+        <h1 class="display-3 hero__title">Searching for the Best Places ?</h1>
+        <div class="hero__form flex-center mt-3 mt-md-5">
           <app-select-field (onValueChange)="selectedLocation = $event" [options]="locations"
                             [selectedValue]="selectedLocation"
                             [size]="'large'"

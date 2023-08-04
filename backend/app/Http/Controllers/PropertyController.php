@@ -24,18 +24,6 @@ class PropertyController extends Controller
                 $properties->where('locality', '=', $request->locality);
         }
 
-        // min price filter
-        if ($request->has('min')) {
-            if ($request->min_price != 'any')
-                $properties->where('ppm', '>=', $request->min);
-        }
-
-        // max price filter
-        if ($request->has('max')) {
-            if ($request->max_price != 'any')
-                $properties->where('ppm', '<=', $request->max);
-        }
-
         // has pg
         if ($request->has('is_pg')) {
             if ($request->is_pg != 'any') {
@@ -44,6 +32,18 @@ class PropertyController extends Controller
                 else
                     $properties->where('is_pg', '=', false);
             }
+        }
+
+        // min price filter
+        if ($request->has('min_ppm')) {
+            if ($request->min_ppm != 'any')
+                $properties->where('ppm', '>=', $request->min_ppm);
+        }
+
+        // max price filter
+        if ($request->has('max_ppm')) {
+            if ($request->max_ppm != 'any')
+                $properties->where('ppm', '<=', $request->max_ppm);
         }
 
         // Paginate the result

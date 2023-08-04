@@ -61,12 +61,11 @@ export class FilterComponent implements OnInit {
       ...this.filteredValues
     }
     this.applyFilter();
+    console.log(this.count);
   }
 
   applyFilter(): void {
-    this.onApplyFilter.emit(this.filteredValues);
     let flat = this.flattenObject(this.filteredValues);
-
     // Don't add to query params if default values
     flat = Object.keys(flat).reduce((acc: any, key: string) => {
       if (flat[key] !== 'all' && flat[key] !== 'any') {
@@ -77,7 +76,7 @@ export class FilterComponent implements OnInit {
       }
       return acc;
     }, {} as any);
-
+    this.onApplyFilter.emit(flat);
     // Add to query params
     this.router.navigate([], {
       queryParams: {

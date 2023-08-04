@@ -1,0 +1,83 @@
+@use "./style-variables" as *;
+
+/**
+  Backgrounds
+ */
+.bg {
+  &-primary {
+    background-color: $clr-primary-500 !important;
+  }
+
+  &-secondary {
+    background: $clr-secondary-500 !important;
+  }
+}
+
+
+/**
+  Layouts
+ */
+.flex {
+  &-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.section {
+  padding-block: 3rem 4rem;
+
+  &__header {
+    padding-block: 1rem;
+    text-align: left;
+    margin-bottom: 1rem;
+  }
+
+  &__title {
+    font-size: $fs-500;
+    font-weight: $fw-semi-bold;
+    text-transform: capitalize;
+    color: $clr-dark-500;
+  }
+
+  &__subtitle {
+    font-size: $fs-100;
+    letter-spacing: 1px;
+    font-weight: $fw-regular;
+    text-transform: uppercase;
+  }
+
+  &__link {
+    font-size: $fs-100;
+    letter-spacing: 1px;
+    font-weight: $fw-regular;
+    text-transform: uppercase;
+    color: #000;
+    text-decoration: none;
+    user-select: none;
+
+    &:hover, &:focus {
+      text-decoration: underline;
+      color: $clr-primary-500;
+    }
+  }
+}
+
+@media (min-width: 600px) {
+  .section {
+    &__header {
+      text-align: center;
+    }
+
+    &__title {
+      font-size: $fs-550;
+    }
+  }
+}
