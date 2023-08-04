@@ -1,22 +1,21 @@
-@use '../../styles/style-variables' as *;
-
+@import '../../../../assets/styles/style-variables';
 
 :host {
   .navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
+    font-size: $fs-500;
+    font-weight: $fw-semi-bold;
     color: #333;
-    font-family: 'Roboto', sans-serif;
+    font-family: $ff-heading;
   }
 
   .nav-link {
-    font-size: 1rem;
-    font-weight: 400;
+    font-size: 14px;
     color: #333;
-    font-family: 'Open Sans', sans-serif;
+    font-family: $ff-body;
+    font-weight: $fw-semi-bold;
 
     &:hover, &.active, &:focus {
-      color: $clr-primary;
+      color: $clr-primary-500;
 
       &::before {
         opacity: 1;
@@ -39,7 +38,7 @@
     cursor: pointer;
     font-size: 1.5rem;
     color: #333;
-    font-family: 'Roboto', sans-serif;
+    font-family: $ff-heading;
 
     &:focus, &:active, &:hover, &:focus-visible {
       outline: none;

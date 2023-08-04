@@ -1,0 +1,46 @@
+/**
+ Colors
+ */
+$clr-primary-500: #dc2f02;
+$clr-secondary-500: #03071e;
+$clr-dark-500: #333;
+$clr-success-500: hsl(79, 72%, 48%);
+$clr-error-500: hsl(9, 100%, 57%);
+
+/**
+ Fonts Family
+ */
+$ff-primary: "Overpass", sans-serif;
+$ff-body: $ff-primary;
+$ff-heading: $ff-primary;
+
+/**
+  Font Weights
+ */
+$fw-light: 300;
+$fw-regular: 400;
+$fw-medium: 500;
+$fw-semi-bold: 600;
+$fw-bold: 700;
+
+/**
+ Font Sizes
+ */
+$fs-100: 0.75rem; // 12px
+$fs-200: 0.875rem; // 14px
+$fs-300: 1rem; // 16px
+$fs-400: 1.125rem; // 18px
+$fs-500: 1.5rem; // 24px
+$fs-550: 1.75rem; // 28px
+$fs-600: 2.25rem; // 36px
+$fs-650: 3.5rem; // 56px
+$fs-700: 4.5rem; // 72px
+
+/**
+ Media Queries
+ */
+@media only screen and (min-width: 50rem) {
+  $fs-400: 1.25rem; // 20px
+  $fs-500: 2rem; // 36px
+  $fs-600: 2.5rem; // 40px
+}

@@ -1,4 +1,4 @@
-@use '../../../shared/styles/style-variables' as *;
+@import "../../../../assets/styles/style-variables";
 
 :host {
   /**
@@ -11,17 +11,15 @@
     height: 28rem;
 
     &__content {
-      display: flex;
-      align-items: center;
       flex-direction: column;
-      justify-content: center;
+    }
+
+    &__title, &__lead {
+      font-weight: $fw-semi-bold;
     }
 
     &__form {
       text-align: left;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       max-width: 40rem;
       width: 100%;
 
@@ -32,8 +30,6 @@
           .ant-select:not(.ant-select-customize-input) .ant-select-selector {
             border-right: 0;
             border-radius: 0;
-
-
           }
 
           .ant-select-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector, .ant-select:hover, .ant-select:not(.ant-select-disabled):hover .ant-select-selector {
@@ -65,7 +61,7 @@
    */
   .feature {
     &__lead {
-      font-size: 1rem;
+      font-size: $fs-300;
       margin-block: 1rem;
     }
 
@@ -74,7 +70,7 @@
       max-width: 90%;
 
       i {
-        font-size: 1rem;
+        font-size: $fs-300;
         margin-inline-end: 0.5rem;
       }
     }
@@ -89,7 +85,7 @@
   }
 
   .lead {
-    font-size: 0.75rem;
+    font-size: $fs-100;
     letter-spacing: 1px;
   }
 
@@ -98,7 +94,7 @@
    */
   .cta {
     .card {
-      background: $clr-primary;
+      background: $clr-primary-500;
       border: 0;
     }
   }

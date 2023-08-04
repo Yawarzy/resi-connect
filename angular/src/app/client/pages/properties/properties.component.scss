@@ -1,27 +1,26 @@
-@use "./../../../shared/styles/style-variables" as *;
+@import "../../../../assets/styles/style-variables";
 
 :host {
   .page-item {
     .page-link {
-      color: $clr-primary;
+      color: $clr-primary-500;
       border-color: #dee2e6;
 
-      &:hover {
-        color: #000;
-        background-color: #e9ecef;
-        border-color: #dee2e6;
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed !important;
       }
 
-      &:focus {
-        box-shadow: none;
+      &:hover {
+        opacity: 0.8;
       }
     }
 
     &.active {
       .page-link {
         color: #fff;
-        background-color: $clr-primary !important;
-        border-color: $clr-primary !important;
+        background-color: $clr-primary-500 !important;
+        border-color: $clr-primary-500 !important;
       }
 
       .page-link.disabled {
