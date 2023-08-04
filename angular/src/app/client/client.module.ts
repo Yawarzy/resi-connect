@@ -11,6 +11,9 @@ import {PropertyComponent} from './_components/property/property.component';
 import {HttpClientModule} from "@angular/common/http";
 import {NzSliderModule} from "ng-zorro-antd/slider";
 import {FormsModule} from "@angular/forms";
+import {PropertyDetailsComponent} from './pages/property-details/property-details.component';
+
+import {LightgalleryModule} from 'lightgallery/angular';
 
 
 @NgModule({
@@ -18,7 +21,8 @@ import {FormsModule} from "@angular/forms";
     HomeComponent,
     PropertiesComponent,
     ContactComponent,
-    PropertyComponent
+    PropertyComponent,
+    PropertyDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +32,8 @@ import {FormsModule} from "@angular/forms";
     HttpClientModule,
     NgOptimizedImage,
     NzSliderModule,
-    FormsModule
+    FormsModule,
+    LightgalleryModule
   ]
 })
 export class ClientModule {

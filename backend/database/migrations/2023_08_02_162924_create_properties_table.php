@@ -35,6 +35,8 @@ return new class extends Migration {
             $table->boolean('is_available');
 
             $table->longText('photos')->nullable();
+            $table->string('slug')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -77,9 +77,9 @@ class PropertyController extends Controller
     }
 
 
-    public function show($id)
+    public function show($slug)
     {
-        $property = Property::findOrFail($id);
+        $property = Property::where('slug', $slug)->firstOrFail();
         return response()->json([
             'property' => $property,
         ]);
