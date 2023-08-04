@@ -22,8 +22,11 @@ class PropertyFactory extends Factory
 //        }
 //        $photos .= ']';
 
+        $name = $this->faker->firstName();
+        $slug = \Illuminate\Support\Str::slug($name, '-');
+
         return [
-            'name' => $this->faker->firstName(),
+            'name' => $name,
             'city' => 'Srinagar',
             'locality' => $this->faker->randomElement(['Rajbagh', 'Hyderpora', 'Khanyar', 'Nishat']),
             'full_address' => $this->faker->address(),
@@ -39,7 +42,7 @@ class PropertyFactory extends Factory
             'minimum_lease_period' => $this->faker->numberBetween(6, 10),
             'is_available' => $this->faker->boolean(),
             'photos' => $this->generatePhotos(),
-
+            'slug' => $slug,
         ];
     }
 
