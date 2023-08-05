@@ -1,3 +1,5 @@
+@use '../../../../assets/styles/style-variables' as *;
+
 :host {
   lightgallery {
     display: flex;
@@ -18,6 +20,84 @@
     height: 15rem;
     object-fit: cover;
     display: inline-block;
+  }
+
+  .property {
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    &__name {
+      font-size: $fs-550;
+      font-weight: $fw-bold;
+      color: $clr-dark-500;
+    }
+
+    &__price {
+      font-size: $fs-550;
+      font-weight: $fw-regular;
+      color: $clr-dark-500;
+    }
+
+    &__spec {
+      font-weight: $fw-semi-bold;
+      color: $clr-dark-500;
+      font-size: $fs-300;
+
+      &__row {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+      }
+
+      &__col {
+        flex: 0.5;
+        &:nth-child(2), &:nth-child(3) {
+          flex: 1;
+        }
+
+      }
+
+      &__headline {
+        font-size: $fs-500;
+        font-weight: $fw-semi-bold;
+        padding-block: 0.5rem;
+        margin-bottom: 0;
+      }
+
+      &__container {
+        padding-block: 1rem;
+      }
+
+      &__value {
+        color: #aaa;
+        font-size: $fs-300;
+        text-align: left;
+      }
+    }
+  }
+
+  @media (min-width: 600px) {
+    .property {
+      &__header {
+        justify-content: flex-start;
+        gap: 1.5rem;
+      }
+
+      &__spec {
+        &__row {
+          flex-direction: row;
+          gap: 5rem;
+        }
+
+        &__headline {
+          padding-block: 1rem;
+        }
+      }
+    }
   }
 
   @media (min-width: 768px) {
