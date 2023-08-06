@@ -1,13 +1,119 @@
 <app-page>
   <div class="container">
-    <ng-container *ngIf="property?.photos">
-      <lightgallery [onInit]="galleryOnInit" [settings]="settings">
-        <a *ngFor="let photo of property?.photos" [attr.data-src]="AppUtil.assetsUrl(photo)"
-           class="gallery-item">
-          <img [src]="AppUtil.assetsUrl(photo)" alt="" class="img-responsive">
-        </a>
-      </lightgallery>
-    </ng-container>
-    property details
+    <div class="images__wrapper">
+      <button class="btn btn-link btn-lg btn--prev" [disabled]="" (click)="prev()">
+        <i class="fa fa-arrow-left"></i>
+      </button>
+      <ng-container *ngIf="property?.photos">
+        <div class="lightgallery" #lightgallery>
+          <a *ngFor="let photo of property?.photos" [attr.data-src]="AppUtil.assetsUrl(photo)"
+             class="gallery-item">
+            <img [src]="AppUtil.assetsUrl(photo)" alt="" class="img-responsive">
+          </a>
+        </div>
+        <button class="btn btn-link btn-lg btn--next" (click)="next()">
+          <i class="fa fa-arrow-right"></i>
+        </button>
+      </ng-container>
+    </div>
+
+    <section class="property mb-5 mt-2">
+      <div class="d-flex flex-column border-bottom py-3">
+        <div class="flex-between">
+          <h2 class="property__name">{{ property?.name }}</h2>
+          <h2 class="property__price"> &#8377;{{ property?.ppm }}</h2>
+        </div>
+        <div class="property__header py-1">
+          <div>
+            <span class="property__spec">PG Available: </span>
+            <span class="property__spec__value">{{ property?.is_pg ? "Yes" : "No" }}</span>
+          </div>
+          <div>
+            <span class="property__spec">Availability: </span>
+            <span class="property__spec__value">{{ property?.is_available ? "Available" : "Not Available" }}</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="property__spec__row border-bottom py-3">
+          <div class="property__spec__col" style="padding-left: 0">
+            <h5 class="property__spec__headline">Specifications</h5>
+          </div>
+          <div class="property__spec__col">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Accommodation Type:</span>
+              <span class="property__spec__value">{{property?.type}}</span>
+            </div>
+
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Furnished:</span>
+              <span class="property__spec__value">{{property?.is_furnished && 'Yes' || 'No'}}</span>
+            </div>
+
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Parking</span>
+              <span class="property__spec__value">{{property?.has_parking && 'Yes' || 'No'}}</span>
+            </div>
+          </div>
+
+          <div class="property__spec__col px-0">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Bedrooms:</span>
+              <span class="property__spec__value">{{property?.bedrooms}}</span>
+            </div>
+
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Bathrooms:</span>
+              <span class="property__spec__value">{{property?.bathrooms}}</span>
+            </div>
+
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Storeys:</span>
+              <span class="property__spec__value">{{property?.storeys}}</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="property__spec__row border-bottom py-3">
+          <div class="property__spec__col" style="padding-left: 0">
+            <h5 class="property__spec__headline">Leasing Terms</h5>
+          </div>
+          <div class="property__spec__col">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Deposit:</span>
+              <span class="property__spec__value">{{property?.deposit}}</span>
+            </div>
+          </div>
+
+          <div class="property__spec__col">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Minimum Lease Term:</span>
+              <span class="property__spec__value">{{property?.minimum_lease_period}} months</span>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="property__spec__row py-3">
+          <div class="property__spec__col" style="padding-left: 0">
+            <h5 class="property__spec__headline">Location</h5>
+          </div>
+          <div class="property__spec__col">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">City & Locality: </span>
+              <span class="property__spec__value">{{property?.city}}, {{property?.locality}}</span>
+            </div>
+          </div>
+
+          <div class="property__spec__col">
+            <div class="property__spec__container flex-between">
+              <span class="property__spec">Full Address</span>
+              <span class="property__spec__value">{{property?.full_address}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </app-page>
