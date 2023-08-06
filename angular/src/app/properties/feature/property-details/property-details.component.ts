@@ -1,12 +1,8 @@
-import {AfterViewChecked, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Subscription} from "rxjs";
 import {PropertiesService, Property} from "../../data-access/properties.service";
 import {AppUtil} from "../../../app-util";
-import {LightGallerySettings} from "lightgallery/lg-settings";
-import lgZoom from 'lightgallery/plugins/zoom';
-import {LightGallery} from "lightgallery/lightgallery";
-import {InitDetail} from "lightgallery/lg-events";
 
 
 @Component({
@@ -14,17 +10,11 @@ import {InitDetail} from "lightgallery/lg-events";
   templateUrl: './property-details.component.html',
   styleUrls: ['./property-details.component.scss']
 })
-export class PropertyDetailsComponent implements OnInit, AfterViewChecked {
+export class PropertyDetailsComponent implements OnInit {
 
   property: Property | undefined;
 
-  settings: LightGallerySettings = {
-    counter: false,
-    plugins: [lgZoom],
-    width: '200px',
-  };
-
-  @ViewChild('lightgallery') lightGallery: LightGallery | undefined
+  @ViewChild('lightgallery') lightGallery: ElementRef | undefined
 
   private subscription: Subscription | undefined;
   protected readonly AppUtil = AppUtil;
@@ -46,15 +36,26 @@ export class PropertyDetailsComponent implements OnInit, AfterViewChecked {
   ngOnInit(): void {
   }
 
-  ngAfterViewChecked(): void {
-    this.lightGallery?.refresh();
-  }
 
   ngOnDestroy(): void {
     this.subscription?.unsubscribe();
   }
 
-  galleryOnInit = (detail: InitDetail): void => {
-    this.lightGallery = detail.instance;
+  next() {
+    const width = this.lightGallery?.nativeElement.offsetWidth;
+    const scrollLeft = this.lightGallery?.nativeElement.scrollLeft;
+    this.lightGallery?.nativeElement.scrollTo({
+      left: scrollLeft + width,
+      behavior: 'smooth'
+    });
+  }
+
+  prev() {
+    const width = this.lightGallery?.nativeElement.offsetWidth;
+    const scrollLeft = this.lightGallery?.nativeElement.scrollLeft;
+    this.lightGallery?.nativeElement.scrollTo({
+      left: scrollLeft - width,
+      behavior: 'smooth'
+    });
   }
 }
