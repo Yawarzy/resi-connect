@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('locality');
             $table->string('full_address');
             $table->enum('type', ['apartment', 'house']);
-//            $table->foreignId('landlord_id')->constrained('landlords');
+            $table->foreignId('landlord_id')->constrained('landlords');
 
             $table->integer('bedrooms')->nullable();
             $table->integer('bathrooms')->nullable();
