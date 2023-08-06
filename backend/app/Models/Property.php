@@ -26,14 +26,16 @@ class Property extends Model
         'deposit',
         'minimum_lease_period',
         'is_available',
-        'photos'
+        'photos',
+        'landlord_id',
     ];
     protected $hidden = [
         'created_at',
         'updated_at'
     ];
-//
-//    protected $casts = [
-//        'photos' => 'array',
-//    ];
+
+    public function landlord()
+    {
+        return $this->belongsTo(Landlord::class, 'landlord_id', 'id');
+    }
 }
