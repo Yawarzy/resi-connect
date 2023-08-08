@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // Public routes
 Route::get('/properties', 'App\Http\Controllers\PropertyController@index');
 Route::get('/properties/{id}', 'App\Http\Controllers\PropertyController@show');
+Route::post('/enquiries', 'App\Http\Controllers\EnquiryController@store');
+Route::get('/enquiries', 'App\Http\Controllers\EnquiryController@index');
