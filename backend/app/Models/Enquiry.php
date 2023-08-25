@@ -14,6 +14,7 @@ class Enquiry extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'property_id',
         'full_name',
         'date_of_birth',
         'email',

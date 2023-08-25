@@ -11,6 +11,28 @@
         <div class="card-body p-4">
           <form (ngSubmit)="handleSubmit()" [formGroup]="enquiryForm" enctype="multipart/form-data">
             <div class="row">
+              <div class="col">
+                <nz-form-item>
+                  <nz-form-label nzFor="propertyId">Property</nz-form-label>
+                  <nz-select formControlName="property_id" id="propertyId" nzSize="large"
+                             nzPlaceHolder="Select Property"
+                             style="width: 100%">
+                    <nz-option *ngFor="let property of properties" [nzValue]="property.id"
+                               [nzLabel]="property.name"></nz-option>
+                  </nz-select>
+
+                  <div
+                    *ngIf="enquiryForm.get('property_id')?.invalid && (enquiryForm.get('property_id')?.dirty || enquiryForm.get('property_id')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('property_id')?.errors?.['required']">
+                      Property is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div class="row">
               <div class="col-md-6">
                 <nz-form-item>
                   <nz-form-label nzFor="fullName">Full Name</nz-form-label>
