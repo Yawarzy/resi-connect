@@ -11,6 +11,10 @@ const routes: Routes = [
     loadChildren: () => import('./properties/feature/property-shell/property-shell.module').then(m => m.PropertyShellModule)
   },
   {
+    path: 'enquiry',
+    loadChildren: () => import('./enquiry/feature/enquiry-shell/enquiry-shell.module').then(m => m.EnquiryShellModule)
+  },
+  {
     path: 'contact',
     loadChildren: () => import('./contact/feature/contact.module').then(m => m.ContactModule)
   }

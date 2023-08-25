@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {BaseInputComponent} from "../base/base-input.component";
 
 export interface SelectFieldOption {
   label: string;
@@ -11,15 +12,9 @@ export interface SelectFieldOption {
   templateUrl: './select-field.component.html',
   styleUrls: ['./select-field.component.scss']
 })
-export class SelectFieldComponent implements OnInit {
-  /** Placeholder for the select field */
-  @Input() placeholder: string = 'Select an option';
-
+export class SelectFieldComponent extends BaseInputComponent {
   /** Options for the select field */
   @Input() options: SelectFieldOption[] | undefined;
-
-  /** Size of the select field */
-  @Input() size: 'large' | 'small' | 'default' = 'default';
 
   /** Mode of the select field */
   @Input() mode: 'multiple' | 'tags' | 'default' = 'default';
@@ -27,17 +22,7 @@ export class SelectFieldComponent implements OnInit {
   /** Selected value of the select field */
   @Input() selectedValue: string | boolean | undefined;
 
-  /** Whether the select field is disabled */
-  @Input() disabled: boolean = false;
-
-
   @Output() onValueChange = new EventEmitter<string>();
-
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
 
   valueChange(value: string) {
     this.onValueChange.next(value);

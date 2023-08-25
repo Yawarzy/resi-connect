@@ -1,0 +1,208 @@
+<app-page>
+  <div class="container">
+    <ng-container *ngIf="!loading && success === null">
+      <div class="card my-5 mx-auto">
+        <div class="card-header">
+          <h4 class="section__header m-0">
+            Raise an enquiry
+          </h4>
+        </div>
+
+        <div class="card-body p-4">
+          <form (ngSubmit)="handleSubmit()" [formGroup]="enquiryForm" enctype="multipart/form-data">
+            <div class="row">
+              <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzFor="fullName">Full Name</nz-form-label>
+                  <input formControlName="full_name" id="fullName" nz-input nzSize="large" placeholder="Enter Full Name"
+                         type="text">
+                  <div
+                    *ngIf="enquiryForm.get('full_name')?.invalid && (enquiryForm.get('full_name')?.dirty || enquiryForm.get('full_name')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('full_name')?.errors?.['required']">
+                      Full Name is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div class="col-md-6">
+                <nz-form-item style="display: block">
+                  <nz-form-label nzFor="dob">Date of Birth</nz-form-label>
+                  <nz-date-picker formControlName="date_of_birth" id="dob" nzFormat="dd/MM/YYYY"
+                                  nzPlaceHolder="Select Your Date of Birth"
+                                  nzSize="large" style="display:block"></nz-date-picker>
+                  <div
+                    *ngIf="enquiryForm.get('date_of_birth')?.invalid && (enquiryForm.get('date_of_birth')?.dirty || enquiryForm.get('date_of_birth')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('date_of_birth')?.errors?.['required']">
+                      Date of Birth is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzFor="email">Email</nz-form-label>
+                  <nz-input-group nzAddOnBefore="@" nzSize="large">
+                    <input formControlName="email" id="email" nz-input nzSize="large" placeholder="Enter Email Address"
+                           type="email">
+                  </nz-input-group>
+
+                  <div
+                    *ngIf="enquiryForm.get('email')?.invalid && (enquiryForm.get('email')?.dirty || enquiryForm.get('email')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('email')?.errors?.['required']">
+                      Email is required.
+                    </div>
+                    <div *ngIf="enquiryForm.get('email')?.errors?.['email']">
+                      Email is invalid.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div class="col-md-6">
+                <nz-form-item style="display: block">
+                  <nz-form-label nzFor="phoneNumber">Phone Number</nz-form-label>
+                  <nz-input-group nzAddOnBefore="+91" nzSize="large">
+                    <input formControlName="phone_number" id="phoneNumber" nz-input nzSize="large"
+                           placeholder="Enter Phone Number"
+                           type="number">
+                  </nz-input-group>
+
+                  <div
+                    *ngIf="enquiryForm.get('phone_number')?.invalid && (enquiryForm.get('phone_number')?.dirty || enquiryForm.get('phone_number')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('phone_number')?.errors?.['required']">
+                      Phone Number is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzFor="alternatePhoneNumber">Alternate Phone Number</nz-form-label>
+                  <nz-input-group nzAddOnBefore="+91" nzSize="large">
+                    <input formControlName="alternate_phone_number" id="alternatePhoneNumber" nz-input nzSize="large"
+                           placeholder="Enter Alternate Number" type="number">
+                  </nz-input-group>
+                </nz-form-item>
+              </div>
+
+              <div class="col-md-6">
+                <nz-form-item style="display: block">
+                  <nz-form-label nzFor="homeAddress">Home Address</nz-form-label>
+                  <nz-input-group nzAddOnBefore="" nzSize="large">
+                    <input formControlName="home_address" id="homeAddress" nz-input nzSize="large"
+                           placeholder="Enter Home Address"
+                           type="text">
+                  </nz-input-group>
+
+                  <div
+                    *ngIf="enquiryForm.get('home_address')?.invalid && (enquiryForm.get('home_address')?.dirty || enquiryForm.get('home_address')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('home_address')?.errors?.['required']">
+                      Home Address is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzFor="idProof">ID Proof</nz-form-label>
+                  <nz-input-group>
+                    <input (change)="onFileChange($event, 'id_proof')" class="form-control" id="idProof" nz-input
+                           type="file">
+                  </nz-input-group>
+
+                  <div
+                    *ngIf="enquiryForm.get('id_proof')?.invalid && (enquiryForm.get('id_proof')?.dirty || enquiryForm.get('id_proof')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('id_proof')?.errors?.['required']">
+                      ID Proof is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+
+              <div class="col-md-6">
+                <nz-form-item>
+                  <nz-form-label nzFor="addressProof">Address Proof</nz-form-label>
+                  <nz-input-group>
+                    <input (change)="onFileChange($event, 'address_proof')" class="form-control" id="addressProof"
+                           nz-input
+                           type="file">
+                  </nz-input-group>
+
+                  <div
+                    *ngIf="enquiryForm.get('address_proof')?.invalid && (enquiryForm.get('address_proof')?.dirty || enquiryForm.get('address_proof')?.touched)"
+                    class="text-danger mt-2">
+                    <div *ngIf="enquiryForm.get('address_proof')?.errors?.['required']">
+                      Address Proof is required.
+                    </div>
+                  </div>
+                </nz-form-item>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-primary w-100">Submit</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="loading">
+      <div class="status-container bg-light py-4 my-4">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Submitting...</span>
+        </div>
+        <span class="text-gray text-success mt-2">Submitting...</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="success">
+      <div class="alert alert-success my-4 w-100" role="alert">
+        <h4 class="alert-heading">
+          <i class="fa fa-check-circle" style="color: darkgreen"></i>
+          Enquiry Submitted Successfully!
+        </h4>
+        <p>
+          Thank you for submitting your enquiry. We will get back to you soon.
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="success === false">
+      <div class="alert alert-danger my-4 w-100" role="alert">
+        <h4 class="alert-heading">
+          <i class="fa fa-times-circle" style="color: darkred"></i>
+          Something went wrong!
+        </h4>
+        <p>
+          It seems that something went wrong while submitting your enquiry. Please try again later. If the problem
+          persists, please contact us.
+        </p>
+      </div>
+    </ng-container>
+
+
+  </div>
+</app-page>
+

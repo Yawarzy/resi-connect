@@ -81,9 +81,10 @@ export abstract class BaseCrudService<T> {
    * @param item - item to POST
    * @param success - callback function to handle the response
    * @param error - callback function to handle the error
+   * @param options
    */
-  addItem(item: any, success?: (item: any) => void, error?: (err: any) => void): void {
-    this.http.post<any>(this.baseUrl, item).subscribe(
+  addItem(item: any, success?: (item: any) => void, error?: (err: any) => void, options: any = {}): void {
+    this.http.post<any>(this.baseUrl, item, options).subscribe(
       {
         next: (response: any) => {
           success?.(response);
