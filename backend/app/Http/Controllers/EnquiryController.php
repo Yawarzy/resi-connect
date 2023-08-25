@@ -16,6 +16,7 @@ class EnquiryController extends Controller
     public function store(Request $request)
     {
         $validatedRequest = $request->validate([
+            'property_id' => 'required|exists:properties,id',
             'full_name' => 'required',
             'date_of_birth' => 'required',
             'email' => 'required|email',

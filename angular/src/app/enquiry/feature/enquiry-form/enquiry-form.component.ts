@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {EnquiryService} from "../../data-access/enquiry.service";
 import {HttpHeaders} from "@angular/common/http";
+import {PropertiesService, Property} from "../../../properties/data-access/properties.service";
 
 @Component({
   selector: 'app-enquiry-form',
@@ -11,6 +12,7 @@ import {HttpHeaders} from "@angular/common/http";
 export class EnquiryFormComponent implements OnInit {
 
   enquiryForm: FormGroup = new FormGroup({
+    property_id: new FormControl('', [Validators.required]),
     full_name: new FormControl('', [Validators.required]),
     date_of_birth: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -26,11 +28,17 @@ export class EnquiryFormComponent implements OnInit {
   }
   loading: boolean = false;
   success: boolean | null = null;
+  properties: Property[] | undefined;
 
-  constructor(private enquiryService: EnquiryService) {
+  constructor(private enquiryService: EnquiryService, private propertiesService: PropertiesService) {
   }
 
   ngOnInit(): void {
+    this.propertiesService.fetchItems((res) => {
+      this.properties = res.properties;
+    }, (err) => {
+      console.error(err)
+    });
   }
 
   handleSubmit() {
@@ -75,13 +83,13 @@ export class EnquiryFormComponent implements OnInit {
         }
         this.loading = false;
         this.success = true;
-      }, 5000)
+      }, 3000)
     }, (err) => {
       console.log(err)
       setTimeout(() => {
         this.loading = false;
         this.success = false;
-      }, 5000)
+      }, 3000)
     }, headers);
   }
 
