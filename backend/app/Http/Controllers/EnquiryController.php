@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enquiry;
+use App\Models\Property;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -62,6 +63,10 @@ class EnquiryController extends Controller
         $enquiry = Enquiry::create($validatedRequest);
 
         // TODO: Send email to Landlord
+        $property = Property::find($validatedRequest['property_id']);
+        $landlord = $property->landlord;
+
+        $landlord->sendEnquiryReceivedNotifications($enquiry, $landlord);
 
         return response()->json([
             'message' => 'Enquiry created successfully',

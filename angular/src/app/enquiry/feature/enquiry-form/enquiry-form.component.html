@@ -12,7 +12,6 @@
           <form (ngSubmit)="handleSubmit()" [formGroup]="enquiryForm" enctype="multipart/form-data">
             <div class="row">
               <div class="col">
-                {{enquiryForm.value | json}}
                 <nz-form-item>
                   <nz-form-label nzFor="propertyId">Property</nz-form-label>
                   <nz-select formControlName="property_id" id="propertyId" nzSize="large"
