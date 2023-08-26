@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+    Route::get('/contract/{id}/generate', 'App\Http\Controllers\ContractController@generate')->name('voyager.contracts.generate');
+    Route::get('/contract/{id}/send', 'App\Http\Controllers\ContractController@send')->name('voyager.contracts.send');
 });
 
 Route::get('/{any?}', function ($any = null) {

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Notifications\EnquiryReceivedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -19,6 +20,11 @@ class Landlord extends Model
         'address',
         'user_id',
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 
     public function properties()
     {
@@ -27,6 +33,6 @@ class Landlord extends Model
 
     public function sendEnquiryReceivedNotifications($enquiry, $landlord)
     {
-        $this->notify(new \App\Notifications\EnquiryReceivedNotification($enquiry, $landlord));
+        $this->notify(new EnquiryReceivedNotification($enquiry, $landlord));
     }
 }

@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use App\Notifications\SendContractToTenantNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
 
 class Enquiry extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Notifiable;
 
     protected $table = 'enquiries';
     protected $primaryKey = 'id';
-
     protected $fillable = [
         'property_id',
         'full_name',
@@ -30,4 +31,15 @@ class Enquiry extends Model
         'status',
         'upload_contract_slug'
     ];
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
+
+    public function sendContractToTenantNotification($enquiry, $file)
+    {
+        $this->notify(new SendContractToTenantNotification($enquiry, $file));
+    }
 }
