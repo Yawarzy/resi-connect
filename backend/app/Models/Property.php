@@ -28,6 +28,8 @@ class Property extends Model
         'is_available',
         'photos',
         'landlord_id',
+        'termination_notice_period',
+        'deposit_refund_period',
     ];
     protected $hidden = [
         'created_at',
