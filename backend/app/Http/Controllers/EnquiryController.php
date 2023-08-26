@@ -73,4 +73,66 @@ class EnquiryController extends Controller
             'enquiry' => $enquiry->makeHidden(['id_proof', 'address_proof', 'created_at', 'updated_at'])
         ], 201);
     }
+
+    public function isContractSigned(Request $request)
+    {
+        // get slug from request
+        $slug = $request->slug;
+
+        // get enquiry from slug
+        $enquiry = Enquiry::where('upload_contract_slug', $slug)->first();
+
+        if (!$enquiry) {
+            return response()->json([
+                'message' => 'Enquiry not found',
+                'contract_signed' => true
+            ]);
+        }
+
+        // check if contract is signed
+        if ($enquiry->contract_signed) {
+            return response()->json([
+                'message' => 'Contract signed',
+                'contract_signed' => true
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Contract not signed',
+                'contract_signed' => false
+            ]);
+        }
+    }
+
+    public function uploadContract(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'slug' => 'required',
+            'signed_contract' => 'required|file|mimes:pdf'
+        ]);
+        $slug = $validatedRequest['slug'];
+        $enquiry = Enquiry::where('upload_contract_slug', $slug)->first();
+
+        if ($request->hasFile('signed_contract')) {
+            $file = $validatedRequest['signed_contract'];
+            $fileExtension = $file->getClientOriginalExtension();
+
+            $fileName = "Signed-Contract-" . $enquiry['full_name'] . '-' . date("d-m-Y") . '-' . uniqid() . '.' . $fileExtension;
+            $storage_path = 'contracts/signed';
+            Storage::disk('local')->putFileAs('public/' . $storage_path, $file, $fileName);
+            $filePathObj = [[
+                'download_link' => $storage_path . '/' . $fileName,
+                'original_name' => $fileName
+            ]];
+
+            $enquiry->signed_contract = json_encode($filePathObj);
+            $enquiry->contract_signed = true;
+            $enquiry->status = 'CONTRACT_SIGNED';
+            $enquiry->save();
+        }
+
+
+        return response()->json([
+            'message' => 'Contract uploaded successfully',
+        ]);
+    }
 }

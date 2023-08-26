@@ -59,7 +59,7 @@ class SendContractToTenantNotification extends Notification
                 'mime' => 'application/pdf',
             ])
             ->line('Please click the button below to upload the signed contract.')
-            ->action('Upload Contract', url($app_url . '/upload-contract/' . $this->enquiry->upload_contract_slug));
+            ->action('Upload Contract', url($app_url . 'contract/upload/' . $this->enquiry->upload_contract_slug));
     }
 
     /**

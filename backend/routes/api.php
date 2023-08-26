@@ -19,8 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Public routes
+/**
+ * Properties
+ */
 Route::get('/properties', 'App\Http\Controllers\PropertyController@index');
 Route::get('/properties/{id}', 'App\Http\Controllers\PropertyController@show');
 
+/**
+ * Enquiries
+ */
 Route::get('/enquiries', 'App\Http\Controllers\EnquiryController@index');
 Route::post('/enquiries', 'App\Http\Controllers\EnquiryController@store');
+Route::post('/enquiries/is-contract-signed', 'App\Http\Controllers\EnquiryController@isContractSigned');
+Route::post('/enquiries/upload-contract', 'App\Http\Controllers\EnquiryController@uploadContract');

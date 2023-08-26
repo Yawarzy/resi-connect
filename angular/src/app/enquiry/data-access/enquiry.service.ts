@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BaseCrudService} from "../../shared/data-access/base-crud.service";
 import {Enquiry} from "../util";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 
 @Injectable({
@@ -12,5 +12,13 @@ export class EnquiryService extends BaseCrudService<Enquiry> {
 
   constructor(public override http: HttpClient) {
     super(http)
+  }
+
+  isContractSigned(slug: string) {
+    return this.http.post(this.baseUrl + '/is-contract-signed', {slug});
+  }
+
+  uploadContract(formData: FormData, headers: HttpHeaders) {
+    return this.http.post(this.baseUrl + '/upload-contract', formData, {headers});
   }
 }
