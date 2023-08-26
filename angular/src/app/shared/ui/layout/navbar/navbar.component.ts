@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {NAV_ITEMS, NavItem} from "../../../util";
 
@@ -10,6 +10,8 @@ import {NAV_ITEMS, NavItem} from "../../../util";
 export class NavbarComponent implements OnInit {
   navItems: NavItem[] = NAV_ITEMS;
   activeItem: NavItem | undefined;
+
+  @Input() showNavItems: boolean = true;
 
   constructor(private router: Router) {
   }

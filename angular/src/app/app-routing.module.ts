@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./enquiry/feature/enquiry-shell/enquiry-shell.module').then(m => m.EnquiryShellModule)
   },
   {
+    path: 'contract',
+    loadChildren: () => import('./contract/feature/contract-shell/contract-shell.module').then(m => m.ContractShellModule)
+  },
+  {
     path: 'contact',
     loadChildren: () => import('./contact/feature/contact.module').then(m => m.ContactModule)
   }

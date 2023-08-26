@@ -1,0 +1,91 @@
+<app-page [showNavItems]="false">
+  <div class="container">
+    <ng-container *ngIf="!loading && !contractSigned && success === null">
+      <div class="card mx-auto my-5 p-3" style="min-width: 20rem; max-width: 50rem">
+        <div class="card-body">
+          <h1 class="card-title fs-3">Upload Signed Contract</h1>
+          <p class="card-text">
+            Please upload the signed contract below to complete the process of renting the room.
+          </p>
+
+          <form (ngSubmit)="handleSubmit()" [formGroup]="form">
+            <nz-input-group>
+              <input (change)="onFileChange($event)" class="form-control" id="signedContract"
+                     nz-input
+                     type="file">
+            </nz-input-group>
+            <small class="form-text text-muted">
+              Please upload a PDF file.
+            </small>
+
+            <div
+              *ngIf="form.get('signed_contract')?.invalid && (form.get('signed_contract')?.dirty || form.get('signed_contract')?.touched)"
+              class="text-danger mt-2">
+              <div *ngIf="form.get('signed_contract')?.errors?.['required']">
+                Signed contract is required.
+              </div>
+
+              <div *ngIf="form.get('signed_contract')?.errors?.['invalid']">
+                Please upload a PDF file.
+              </div>
+            </div>
+
+            <div class="d-grid">
+              <button class="btn btn-primary mt-4" type="submit">
+                Upload
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="loading">
+      <div class="status-container bg-light py-4 my-4">
+        <div class="spinner-border text-success" role="status">
+          <span class="visually-hidden">Submitting...</span>
+        </div>
+        <span class="text-gray text-success mt-2">Submitting...</span>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="success">
+      <div class="alert alert-success my-4 w-100" role="alert">
+        <h4 class="alert-heading">
+          <i class="fa fa-check-circle" style="color: darkgreen"></i>
+          Contract uploaded successfully!
+        </h4>
+        <p>
+          Thank you for submitting your signed contract. You'll receive a confirmation email with your credentials once
+          the contract is verified.
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="success === false">
+      <div class="alert alert-danger my-4 w-100" role="alert">
+        <h4 class="alert-heading">
+          <i class="fa fa-times-circle" style="color: darkred"></i>
+          Something went wrong!
+        </h4>
+        <p>
+          It seems like something went wrong while uploading your contract. Please try again later. If the problem
+          persists, please contact us.
+        </p>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="expiredLink">
+      <div class="alert alert-danger my-5 w-100" role="alert">
+        <h4 class="alert-heading">
+          <i class="fa fa-times-circle" style="color: darkred"></i>
+          Link expired!
+        </h4>
+        <p>
+          The link you used to access this page has expired.
+        </p>
+      </div>
+    </ng-container>
+  </div>
+</app-page>

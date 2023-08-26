@@ -1,18 +1,21 @@
 <nav class="navbar navbar-expand-lg border-bottom py-3">
   <div class="container">
     <a class="navbar-brand" href="#">Resiconnect</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
-        <li class="nav-item" *ngFor="let navItem of navItems">
-          <a class="nav-link py-2 mx-2" [ngClass]="{'active': navItem.path === activeItem?.path}"
-             [routerLink]="navItem.path">{{navItem.label}}</a>
-        </li>
-      </ul>
-      <a [routerLink]="'/login'" class="btn btn-outline-primary"><i class="fa-solid fa-user"></i> Login</a>
-    </div>
+    <ng-container *ngIf="showNavItems">
+      <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+              class="navbar-toggler"
+              data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+          <li *ngFor="let navItem of navItems" class="nav-item">
+            <a [ngClass]="{'active': navItem.path === activeItem?.path}" [routerLink]="navItem.path"
+               class="nav-link py-2 mx-2">{{navItem.label}}</a>
+          </li>
+        </ul>
+        <a [routerLink]="'/login'" class="btn btn-outline-primary"><i class="fa-solid fa-user"></i> Login</a>
+      </div>
+    </ng-container>
   </div>
 </nav>
