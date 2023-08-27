@@ -18,6 +18,8 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::get('/contract/{id}/generate', 'App\Http\Controllers\ContractController@generate')->name('voyager.contracts.generate');
     Route::get('/contract/{id}/send', 'App\Http\Controllers\ContractController@send')->name('voyager.contracts.send');
+
+    Route::get('/convert-enquiry-to-tenant/{id}', 'App\Http\Controllers\TenantController@convertEnquiryToTenant')->name('voyager.tenants.convert-enquiry-to-tenant');
 });
 
 Route::get('/{any?}', function ($any = null) {

@@ -32,4 +32,9 @@ class GenerateContractAction extends AbstractAction
     {
         return route('voyager.contracts.generate', ['id' => $this->data->{$this->data->getKeyName()}]);
     }
+
+    public function shouldActionDisplayOnDataType()
+    {
+        return $this->dataType->slug == 'enquiries';
+    }
 }
