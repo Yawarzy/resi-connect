@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Voyager::addAction(\App\Actions\GenerateContractAction::class);
         Voyager::addAction(\App\Actions\SendContractAction::class);
+        Voyager::addAction(\App\Actions\ConvertToTenantAction::class);
     }
 }
