@@ -1,0 +1,18 @@
+:host {
+  form {
+    width: 25rem;
+    max-width: 90%;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  button {
+    border-radius: 0;
+    width: 100%;
+  }
+
+  .form-group {
+    //border: 1px solid red;
+    margin-bottom: 2rem;
+  }
+}

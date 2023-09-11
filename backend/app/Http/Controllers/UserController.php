@@ -29,4 +29,6 @@ class UserController extends VoyagerUserController
             'alert-type' => 'success',
         ]);
     }
+
+
 }

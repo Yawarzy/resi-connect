@@ -10,7 +10,15 @@
                             [selectedValue]="selectedLocation"
                             [size]="'large'"
                             placeholder="Select a location"></app-select-field>
-          <button class="btn btn-primary" (click)="goToPropertiesPage()">Search Places</button>
+          <!--          <button class="btn btn-primary" (click)="goToPropertiesPage()">Search Places</button>-->
+          <button
+            nz-button
+            nzType="primary"
+            nzSize="large"
+            (click)="goToPropertiesPage()"
+          >
+            Search Places
+          </button>
         </div>
       </div>
     </div>
@@ -83,7 +91,14 @@
         <p>
           Take the first step towards your perfect home by submitting an enquiry today.
         </p>
-        <button class="btn btn-light">Submit Enquiry</button>
+        <a
+          nz-button
+          nzType="default"
+          nzSize="large"
+          routerLink="/enquiry"
+        >
+          Submit Enquiry
+        </a>
       </div>
     </div>
   </section>

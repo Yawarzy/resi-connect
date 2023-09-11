@@ -14,7 +14,41 @@
                class="nav-link py-2 mx-2">{{navItem.label}}</a>
           </li>
         </ul>
-        <a [routerLink]="'/login'" class="btn btn-outline-primary"><i class="fa-solid fa-user"></i> Login</a>
+        <button (click)="navigateToLogin()" *ngIf="!authService.isLoggedIn()" class="nav-action" nz-button
+                nzSize="large"
+                nzType="primary">
+          Login
+        </button>
+
+        <a
+          *ngIf="authService.isLoggedIn()"
+          nz-button
+          nzSize="default"
+          nzType="link"
+          style="color: gray"
+          routerLink="/tenant/dashboard"
+          class="text-decoration-none"
+        >
+          <span class="d-flex gap-2 align-items-center justify-content-center">
+            <span nz-icon nzTheme="outline" nzType="dashboard"></span>
+            <span>Dashboard</span>
+          </span>
+        </a>
+
+        <button
+          *ngIf="authService.isLoggedIn()"
+          nz-button
+          nzSize="default"
+          nzType="link"
+          style="color: gray"
+          (click)="logout()"
+        >
+          <span class="d-flex gap-2 align-items-center justify-content-center">
+            <span nz-icon nzTheme="outline" nzType="logout"></span>
+            <span>Logout</span>
+          </span>
+        </button>
+
       </div>
     </ng-container>
   </div>

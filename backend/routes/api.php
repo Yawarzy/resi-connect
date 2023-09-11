@@ -18,6 +18,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+// middleware group
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/secret', function () {
+        // json
+        return response()->json([
+            'message' => 'secret page',
+            'status' => 'authenticated'
+        ]);
+    });
+
+    Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
+});
+
+/**
+ * Auth
+ */
+Route::post('/login', 'App\Http\Controllers\AuthController@login');
+Route::post('/is-authenticated', 'App\Http\Controllers\AuthController@isAuthenticated');
+
 // Public routes
 /**
  * Properties

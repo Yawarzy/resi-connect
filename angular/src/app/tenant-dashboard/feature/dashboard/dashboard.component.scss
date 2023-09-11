@@ -1,0 +1,54 @@
+@use '../../../../assets/styles/style-variables' as *;
+
+:host {
+  nz-layout {
+    height: 100%;
+  }
+
+  .trigger {
+    font-size: 1.25rem;
+    padding-inline: 1.5rem;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    font-size: $fs-500;
+    font-weight: $fw-semi-bold;
+    color: #fff;
+    font-family: $ff-heading;
+    display: flex;
+    padding: 0.8rem 1.5rem;
+    overflow: hidden;
+  }
+
+  nz-header {
+    background: #fff;
+    padding: 0;
+  }
+
+  nz-content {
+    margin-inline: 1rem;
+  }
+
+  .inner-content {
+    padding: 1.5rem;
+    margin-top: 1rem;
+    background: #fff;
+    height: calc(100vh - (64px + 22px + 69px));
+  }
+
+  nz-footer {
+    text-align: center;
+  }
+
+  @media only screen and (max-width: 500px) {
+    .inner-content {
+      padding-inline: 0.5rem;
+    }
+  }
+}
