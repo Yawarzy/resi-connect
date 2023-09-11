@@ -29,6 +29,7 @@ export class EnquiryFormComponent implements OnInit {
   loading: boolean = false;
   success: boolean | null = null;
   properties: Property[] | undefined;
+  current = 0;
 
   constructor(private enquiryService: EnquiryService, private propertiesService: PropertiesService) {
   }
@@ -105,6 +106,64 @@ export class EnquiryFormComponent implements OnInit {
 
 
     console.log(this.selectedFiles)
+  }
+
+  pre(): void {
+    this.current -= 1;
+  }
+
+  next(): void {
+    if (this.current === 0) {
+      console.log(this.enquiryForm.get('property_id')?.value)
+      if (this.enquiryForm.get('property_id')?.valid) {
+        this.current += 1;
+        return;
+      }
+
+      this.enquiryForm.get('property_id')?.markAsDirty();
+      this.enquiryForm.get('property_id')?.markAsTouched();
+      return;
+    }
+
+    if (this.current === 1) {
+      const controls = ['full_name', 'date_of_birth', 'email', 'phone_number', 'alternate_phone_number', 'home_address'];
+      let valid = true;
+      for (let control of controls) {
+        if (this.enquiryForm.controls?.[control]?.invalid) {
+          this.enquiryForm.controls?.[control]?.markAsDirty();
+          this.enquiryForm.controls?.[control]?.markAsTouched();
+          valid = false;
+        }
+      }
+
+      if (!valid) {
+        return;
+      }
+    }
+
+
+    if (this.current === 2) {
+      const controls = ['id_proof', 'address_proof'];
+      let valid = true;
+      for (let control of controls) {
+        if (this.enquiryForm.controls?.[control]?.invalid) {
+          this.enquiryForm.controls?.[control]?.markAsDirty();
+          this.enquiryForm.controls?.[control]?.markAsTouched();
+          valid = false;
+        }
+      }
+
+      if (!valid) {
+        return;
+      }
+    }
+
+    this.current += 1;
+  }
+
+  done(): void {
+    console.log('done');
+    this.handleSubmit();
   }
 
 }

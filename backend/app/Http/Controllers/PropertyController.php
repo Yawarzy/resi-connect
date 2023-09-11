@@ -79,7 +79,7 @@ class PropertyController extends Controller
 
     public function show($slug)
     {
-        $property = Property::where('slug', $slug)->firstOrFail();
+        $property = Property::where('slug', $slug)->orWhere('id', $slug)->firstOrFail();
         return response()->json([
             'property' => $property,
         ]);

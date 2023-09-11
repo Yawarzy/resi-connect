@@ -12,6 +12,10 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzUploadModule} from "ng-zorro-antd/upload";
 import {NzSpinModule} from "ng-zorro-antd/spin";
 import {NzSelectModule} from "ng-zorro-antd/select";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {NzStepsModule} from "ng-zorro-antd/steps";
+import {NzIconModule} from "ng-zorro-antd/icon";
+import {NzTypographyModule} from "ng-zorro-antd/typography";
 
 
 @NgModule({
@@ -29,7 +33,11 @@ import {NzSelectModule} from "ng-zorro-antd/select";
     NzDatePickerModule,
     NzUploadModule,
     NzSpinModule,
-    NzSelectModule
+    NzSelectModule,
+    NzButtonModule,
+    NzStepsModule,
+    NzIconModule,
+    NzTypographyModule
   ],
   exports: [
     EnquiryFormComponent

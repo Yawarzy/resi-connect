@@ -1,20 +1,18 @@
-<div class="filters p-3 mb-5 bg-light rounded">
+<div class="filters p-3 mb-5 ">
   <div class="filters__header flex-between">
-    <div class="flex-between gap-1">
-            <span class="mb-0">
-              {{headline}}
-            </span>
-      <span class="badge bg-primary">
-              <span *ngIf="count?.filteredCount !== count?.totalCount">
-                {{count?.filteredCount}} /
-              </span>
-        {{count?.totalCount}}
-            </span>
-    </div>
-
     <div>
-      <button (click)="showFilters = !showFilters" class="btn btn-dark">
-        <i class="fa-solid fa-filter"></i> Filters
+      <button (click)="showFilters = !showFilters" nz-button nz-dropdown nzSize="large" nzType="default"
+              class="filter__btn">
+        <span class="d-flex align-items-center gap-1">
+          <i nz-icon nzType="filter"></i>
+          <span>Filters</span>
+        </span>
+        <nz-badge
+          *ngIf="count?.filteredCount && (count?.filteredCount !== count?.totalCount)"
+          [nzCount]="$any(count?.filteredCount)"
+          [nzOverflowCount]="999"
+          [nzStyle]="{ backgroundColor: '#52c41a' }"
+        ></nz-badge>
       </button>
     </div>
   </div>
@@ -30,8 +28,8 @@
 
       <div class="flex-between">
         <div class="btn-group d-flex w-100 gap-3">
-          <button (click)="applyFilter()" class="btn btn-primary">Apply Filters</button>
-          <button (click)="resetFilter()" class="btn btn-dark">Reset Filters</button>
+          <button (click)="applyFilter()" nz-button nzSize="large" nzType="primary">Apply Filters</button>
+          <button (click)="resetFilter()" nz-button nzDanger nzSize="large" nzType="default">Reset Filters</button>
         </div>
       </div>
     </div>
@@ -52,13 +50,15 @@
   <label class="form-label">{{filter.label}}</label>
   <div class="filters__price__container gap-2">
     <div class="filters__price__label">
-      <input [value]="filteredValues[filter.filterField][0]" class="form-control" readonly type="text">
+      <input [value]="filteredValues[filter.filterField][0]" class="form-control" readonly style="border-radius: 0"
+             type="text">
       <label class="form-label">Min</label>
     </div>
     <nz-slider [(ngModel)]="filteredValues[filter.filterField]" [nzMax]="filter.max" [nzMin]="filter.min"
                [nzStep]="filter.step" nzRange style="display: inline-block; width: 100%"></nz-slider>
     <div class="filters__price__label" style="text-align: right">
-      <input [value]="filteredValues[filter.filterField][1]" class="form-control" readonly type="text">
+      <input [value]="filteredValues[filter.filterField][1]" class="form-control" readonly style="border-radius: 0"
+             type="text">
       <label class="form-label">Max</label>
     </div>
   </div>

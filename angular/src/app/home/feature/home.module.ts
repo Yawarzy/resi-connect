@@ -6,6 +6,7 @@ import {HomeComponent} from './home.component';
 import {SelectFieldModule} from "../../shared/ui/form/select-field/select-field.module";
 import {PageModule} from "../../shared/ui/layout/page/page.module";
 import {PropertyModule} from "../../properties/ui/property/property.module";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import {PropertyModule} from "../../properties/ui/property/property.module";
     HomeRoutingModule,
     SelectFieldModule,
     PageModule,
-    PropertyModule
+    PropertyModule,
+    NzButtonModule
   ],
   exports: [
     HomeComponent

@@ -21,6 +21,17 @@
     }
   }
 
+  .filter__btn {
+    position: relative;
+
+    nz-badge {
+      position: absolute;
+      top: -0.5rem;
+      right: -0.5rem;
+      transition: top 0.2s ease-in-out, right 0.2s ease-in-out;
+    }
+  }
+
 
   @media (max-width: 768px) {
     .filters__container {

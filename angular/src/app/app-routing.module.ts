@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from "./auth/util/auth-guard";
 
 const routes: Routes = [
   {
@@ -15,12 +16,22 @@ const routes: Routes = [
     loadChildren: () => import('./enquiry/feature/enquiry-shell/enquiry-shell.module').then(m => m.EnquiryShellModule)
   },
   {
+    path: 'auth',
+    loadChildren: () => import('./auth/feature/auth-shell/auth-shell.module').then(m => m.AuthShellModule)
+  },
+  {
     path: 'contract',
     loadChildren: () => import('./contract/feature/contract-shell/contract-shell.module').then(m => m.ContractShellModule)
   },
   {
     path: 'contact',
-    loadChildren: () => import('./contact/feature/contact.module').then(m => m.ContactModule)
+    loadChildren: () => import('./contact/feature/contact.module').then(m => m.ContactModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'tenant',
+    loadChildren: () => import('./tenant-dashboard/feature/tenant-dashboard-shell/tenant-dashboard-shell.module').then(m => m.TenantDashboardShellModule),
+    canActivate: [AuthGuard]
   }
 ];
 
