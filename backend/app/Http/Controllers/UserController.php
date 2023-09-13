@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Landlord;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use TCG\Voyager\Http\Controllers\VoyagerUserController;
 
 class UserController extends VoyagerUserController
@@ -27,6 +28,36 @@ class UserController extends VoyagerUserController
         return redirect()->route('voyager.users.index')->with([
             'message' => "Successfully created new User",
             'alert-type' => 'success',
+        ]);
+    }
+
+
+    public function updatePassword(Request $request)
+    {
+        $user = User::where('id', $request->id)->firstorFail();
+
+        if ($user->role_id != 2) {
+            return response()->json([
+                'message' => 'You are not authorized to update password',
+                'status' => 'error'
+            ]);
+        }
+
+//        dd($current_password, $user->password);
+        if (!Hash::check($request->current_password, $user->password)) {
+            return response()->json([
+                'message' => 'Current password is incorrect',
+                'status' => 'error'
+            ]);
+        }
+
+        // set new password
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+
+        return response()->json([
+            'message' => 'Password updated successfully',
+            'status' => 'success'
         ]);
     }
 

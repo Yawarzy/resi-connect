@@ -12,6 +12,8 @@ import {NzDatePickerModule} from "ng-zorro-antd/date-picker";
 import {NzTypographyModule} from "ng-zorro-antd/typography";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzNotificationModule} from "ng-zorro-antd/notification";
+import {NzPopconfirmModule} from "ng-zorro-antd/popconfirm";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
@@ -29,7 +31,9 @@ import {NzNotificationModule} from "ng-zorro-antd/notification";
     NzDatePickerModule,
     NzTypographyModule,
     NzButtonModule,
-    NzNotificationModule
+    NzNotificationModule,
+    NzPopconfirmModule,
+    NzIconModule
   ]
 })
 export class ProfileModule {

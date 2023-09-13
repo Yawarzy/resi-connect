@@ -28,6 +28,11 @@ export class AuthLoginFormComponent implements OnInit {
       this.authService.login({email, password}, () => {
         this.loading = false;
         this.router.navigate(['/tenant/dashboard/overview']);
+      }, (err) => {
+        this.loading = false;
+        if (err.status === 401) {
+          this.form.setErrors({invalidCredentials: true});
+        }
       });
     }
   }

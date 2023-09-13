@@ -1234,7 +1234,7 @@
             --bs-gray-700: #495057;
             --bs-gray-800: #343a40;
             --bs-gray-900: #212529;
-            --bs-primary: #dc2f02;
+            --bs-primary: #1C8EFA;
             --bs-secondary: #03071e;
             --bs-success: #198754;
             --bs-info: #0dcaf0;
@@ -1362,17 +1362,17 @@
             --bs-breakpoint-xl: 1200px;
             --bs-breakpoint-xxl: 1400px
         }</style>
-    <link rel="stylesheet" href="/dist/styles.a1e8c304c2b95d4d.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="/dist/styles.6e9a54432e773f41.css" media="print" onload="this.media='all'">
     <noscript>
-        <link rel="stylesheet" href="/dist/styles.a1e8c304c2b95d4d.css">
+        <link rel="stylesheet" href="/dist/styles.6e9a54432e773f41.css">
     </noscript>
 </head>
 <body>
 <app-root></app-root>
-<script src="/dist/runtime.2eff1cfd8ce640d7.js" type="module"></script>
+<script src="/dist/runtime.242261f240972c55.js" type="module"></script>
 <script src="/dist/polyfills.f0b46f1b2a981147.js" type="module"></script>
 <script src="/dist/scripts.19fad2a324740701.js" defer></script>
-<script src="/dist/main.23d45a55fa06a5c9.js" type="module"></script>
+<script src="/dist/main.f28417eaf905912f.js" type="module"></script>
 
 </body>
 </html>

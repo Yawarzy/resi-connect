@@ -22,7 +22,7 @@ class AuthController extends Controller
 
         // check if user is tenant
         $user = User::where('email', $request->email)->first();
-        if ($user->role_id != 2) {
+        if (!$user || $user->role_id != 2) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Invalid credentials',

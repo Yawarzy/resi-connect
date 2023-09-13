@@ -31,6 +31,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
     Route::put('/tenant/update', 'App\Http\Controllers\TenantController@update');
+    Route::put('/tenant/update-password', 'App\Http\Controllers\UserController@updatePassword');
 });
 
 /**

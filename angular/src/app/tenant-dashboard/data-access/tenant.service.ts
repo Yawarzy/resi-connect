@@ -26,5 +26,15 @@ export class TenantService extends BaseCrudService<any> {
     super(http)
   }
 
+  changePassword(data: any, success: any, error: any) {
+    this.http.put(`${environment.baseUrl}/api/tenant/update-password`, data).subscribe(
+      (res: any) => {
+        success(res);
+      },
+      (err: any) => {
+        error(err);
+      }
+    );
+  }
 
 }

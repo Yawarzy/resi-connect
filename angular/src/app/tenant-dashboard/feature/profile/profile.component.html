@@ -8,124 +8,182 @@
       </div>
     </div>
 
-    <nz-card>
-      <form [formGroup]="profileForm">
-
-        <div class="mb-4 d-flex justify-content-between align-items-center" nz-typography>
-          <div>
-            <h5 class="mb-0">
-              Your Profile
-            </h5>
-            <p class="mb-0">
-              Update your profile information.
-            </p>
+    <nz-tabset>
+      <nz-tab nzTitle="General">
+        <nz-card>
+          <div class="mb-4 d-flex justify-content-between align-items-center" nz-typography>
+            <div>
+              <h5 class="mb-0">
+                Your Profile
+              </h5>
+              <p class="mb-0">
+                Update your profile information.
+              </p>
+            </div>
+            <div>
+              <button (click)="handleSave()" [nzType]="editMode ? 'primary' : 'default'" nz-button>
+                {{editMode ? 'Save' : 'Edit'}}
+              </button>
+            </div>
           </div>
-          <div>
-            <button (click)="handleSave()" [nzType]="editMode ? 'primary' : 'default'" nz-button>
-              {{editMode ? 'Save' : 'Edit'}}
-            </button>
-          </div>
-        </div>
 
-        <div nz-row nzGutter="16">
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+          <form [formGroup]="profileForm">
+            <div nz-row nzGutter="16">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
               <span>
                 Full Name
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('full_name')?.value}}
               </span>
 
-              <nz-form-control *ngIf="editMode">
-                <input formControlName="full_name" nz-input nzSize="default"
-                       placeholder="Full Name"/>
-              </nz-form-control>
-            </div>
-          </div>
+                  <nz-form-control *ngIf="editMode">
+                    <input formControlName="full_name" nz-input nzSize="default"
+                           placeholder="Full Name"/>
+                  </nz-form-control>
+                </div>
+              </div>
 
 
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
                <span>
                  Date of Birth
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('date_of_birth')?.value}}
               </span>
 
-              <nz-date-picker *ngIf="editMode" [nzShowTime]="true" [nzShowToday]="false" formControlName="date_of_birth"
-                              nzFormat="dd/MM/YYYY" style="display: block"></nz-date-picker>
+                  <nz-date-picker *ngIf="editMode" [nzShowTime]="true" [nzShowToday]="false"
+                                  formControlName="date_of_birth"
+                                  nzFormat="dd/MM/YYYY" style="display: block"></nz-date-picker>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div nz-row nzGutter="16">
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+            <div nz-row nzGutter="16">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
                <span>
                 Email Address
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('email')?.value}}
               </span>
 
-              <nz-form-control *ngIf="editMode">
-                <input formControlName="email" nz-input placeholder="Email"/>
-              </nz-form-control>
-            </div>
-          </div>
+                  <nz-form-control *ngIf="editMode">
+                    <input formControlName="email" nz-input placeholder="Email"/>
+                  </nz-form-control>
+                </div>
+              </div>
 
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
                <span>
                 Phone Number
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('phone_number')?.value}}
               </span>
 
-              <nz-form-control *ngIf="editMode">
-                <input formControlName="phone_number" nz-input placeholder="Phone Number"/>
-              </nz-form-control>
+                  <nz-form-control *ngIf="editMode">
+                    <input formControlName="phone_number" nz-input placeholder="Phone Number"/>
+                  </nz-form-control>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
 
-        <div nz-row nzGutter="16">
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+            <div nz-row nzGutter="16">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
                <span>
                 Alternate Phone Number
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('alternate_phone_number')?.value ?? 'N.A'}}
               </span>
 
-              <nz-form-control *ngIf="editMode">
-                <input formControlName="alternate_phone_number" nz-input
-                       placeholder="Alternate Phone Number"/>
-              </nz-form-control>
-            </div>
-          </div>
+                  <nz-form-control *ngIf="editMode">
+                    <input formControlName="alternate_phone_number" nz-input
+                           placeholder="Alternate Phone Number"/>
+                  </nz-form-control>
+                </div>
+              </div>
 
-          <div nz-col nz-typography nzMd="12" nzXs="24">
-            <div class="view-mode d-flex flex-column">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
+                <div class="view-mode d-flex flex-column">
                <span>
                 Home Address
               </span>
-              <span *ngIf="!editMode" nz-typography nzType="secondary">
+                  <span *ngIf="!editMode" nz-typography nzType="secondary">
             {{profileForm.get('home_address')?.value ?? 'N.A'}}
               </span>
 
-              <nz-form-control *ngIf="editMode">
-                <input formControlName="home_address" nz-input placeholder="Home Address"/>
-              </nz-form-control>
+                  <nz-form-control *ngIf="editMode">
+                    <input formControlName="home_address" nz-input placeholder="Home Address"/>
+                  </nz-form-control>
+                </div>
+              </div>
             </div>
+          </form>
+        </nz-card>
+      </nz-tab>
+      <nz-tab nzTitle="Security">
+        <nz-card>
+          <div class="mb-4 d-flex justify-content-between align-items-center" nz-typography>
+            <div>
+              <h5 class="mb-0">
+                Change Password
+              </h5>
+              <p class="mb-0">
+                Update your password.
+              </p>
+            </div>
+
+            <button
+              nz-button
+              nzType="primary"
+              nz-popconfirm
+              nzPopconfirmTitle="Are you sure you want to change your password ?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="handleChangePassword()"
+            >
+              <i nz-icon nzType="lock" nzTheme="outline"></i>
+              Change Password
+            </button>
           </div>
-        </div>
-      </form>
-    </nz-card>
+
+          <form [formGroup]="passwordForm">
+            <div nz-row nzGutter="16">
+              <div nz-col nz-typography nzXs="24" nzMd="12">
+                <div class="view-mode d-flex flex-column">
+                  <span>
+                    Current Password
+                  </span>
+                  <nz-form-control>
+                    <input formControlName="current_password" nz-input type="password" nzSize="default"
+                           placeholder="Full Name"/>
+                  </nz-form-control>
+                </div>
+              </div>
+
+              <div nz-col nz-typography nzXs="24" nzMd="12">
+                <div class="view-mode d-flex flex-column">
+                  <span>
+                    New Password
+                  </span>
+                  <nz-form-control>
+                    <input formControlName="new_password" type="password" nz-input nzSize="default"
+                           placeholder="Full Name"/>
+                  </nz-form-control>
+                </div>
+              </div>
+            </div>
+          </form>
+        </nz-card>
+      </nz-tab>
+    </nz-tabset>
   </div>
 </section>

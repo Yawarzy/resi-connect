@@ -19,6 +19,10 @@ export class ProfileComponent implements OnInit {
     alternate_phone_number: new FormControl(''),
     home_address: new FormControl('', [Validators.required]),
   });
+  passwordForm: FormGroup = new FormGroup({
+    current_password: new FormControl('', [Validators.required]),
+    new_password: new FormControl('', [Validators.required]),
+  });
   editMode: any;
 
   constructor(private tenantService: TenantService, private notificationService: NzNotificationService) {
@@ -50,4 +54,19 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  handleChangePassword() {
+    const payload = {
+      id: this.tenant.user_id,
+      current_password: this.passwordForm.value.current_password,
+      new_password: this.passwordForm.value.new_password,
+    }
+
+    this.tenantService.changePassword(payload, (res: any) => {
+      this.notificationService.success('Password Changed', 'Your password has been changed successfully');
+      this.passwordForm.reset();
+    }, (err: any) => {
+      this.notificationService.error('Error', 'An error occurred while changing your password');
+      console.error(err);
+    });
+  }
 }
