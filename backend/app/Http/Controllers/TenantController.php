@@ -6,6 +6,7 @@ use App\Models\Enquiry;
 use App\Models\Property;
 use App\Models\Tenant;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -66,5 +67,34 @@ class TenantController extends Controller
             'message' => 'Successfully converted the enquiry to tenant.',
             'alert-type' => 'success',
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        $id = $request->id;
+
+        $tenant = Tenant::where('id', $id)->firstorfail();
+        $validatedRequest = $request->validate([
+            'full_name' => 'required',
+            'date_of_birth' => 'required',
+            'email' => 'required|email',
+            'phone_number' => 'required|numeric|digits:10',
+            'alternate_phone_number' => 'nullable|numeric|digits:10',
+            'home_address' => 'required',
+        ]);
+
+        $tenant->full_name = $validatedRequest['full_name'];
+        $tenant->date_of_birth = $validatedRequest['date_of_birth'];
+        $tenant->email = $validatedRequest['email'];
+        $tenant->phone_number = $validatedRequest['phone_number'];
+        $tenant->alternate_phone_number = $validatedRequest['alternate_phone_number'];
+        $tenant->home_address = $validatedRequest['home_address'];
+        $tenant->save();
+
+
+        return response()->json([
+            'message' => 'Tenant updated successfully',
+            'tenant' => $tenant->makeHidden(['id_proof', 'address_proof', 'created_at', 'updated_at'])
+        ], 201);
     }
 }

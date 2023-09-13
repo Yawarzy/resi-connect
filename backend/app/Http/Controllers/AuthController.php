@@ -40,7 +40,7 @@ class AuthController extends Controller
                 'token' => $token,
                 // send user with tenant relationship
                 'user' => $user,
-                'tenant' => $user->tenant()->get(),
+                'tenant' => $user->tenant()->get()->except(['created_at', 'updated_at', 'unsigned_contract', 'upload_contract_slug', 'status'])
             ]);
         }
 

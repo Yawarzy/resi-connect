@@ -30,7 +30,7 @@ export class AuthService {
     }).subscribe((res: any) => {
       localStorage.setItem('token', res.token);
       this.currentTenant$ = of(res.tenant);
-      localStorage.setItem('currentTenant', JSON.stringify(res.tenant));
+      localStorage.setItem('currentTenant', JSON.stringify(res.tenant[0]));
       success?.();
     }, error => {
       console.error(error);

@@ -102,9 +102,15 @@ export abstract class BaseCrudService<T> {
    * @param item - item to PUT
    * @param success - callback function to handle the response
    * @param error - callback function to handle the error
+   * @param usesId -
    */
-  updateItem(item: any, success?: (item: any) => void, error?: (err: any) => void): void {
-    const url = `${this.baseUrl}/${item.id}`;
+  updateItem(item: any, success?: (item: any) => void, error?: (err: any) => void, usesId = true): void {
+    let url;
+    if (usesId) {
+      url = `${this.baseUrl}/${item.id}`;
+    } else {
+      url = this.baseUrl;
+    }
     this.http.put<any>(url, item).subscribe(
       {
         next: (response: any) => {

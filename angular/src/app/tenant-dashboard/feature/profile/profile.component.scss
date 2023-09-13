@@ -1,0 +1,14 @@
+:host {
+  .view-mode {
+    //border: 1px solid red;
+  }
+
+  nz-form-control {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  nz-date-picker, nz-form-control {
+    margin-top: .25rem;
+  }
+}
