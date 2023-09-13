@@ -1,0 +1,20 @@
+@use "./style-variables" as *;
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: $ff-body;
+  font-weight: $fw-regular;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: $ff-heading;
+  font-weight: $fw-semi-bold;
+}
+
+img {
+  max-width: 100%;
+}
+
