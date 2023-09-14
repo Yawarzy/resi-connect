@@ -22,7 +22,7 @@ export class AuthService {
   }
 
 
-  login(loginDto: LoginDto, success?: () => void, error?: () => void) {
+  login(loginDto: LoginDto, success?: () => void, error?: (err: any) => void) {
     this.http.post(this.baseUrl + 'login', loginDto, {
       headers: {
         'Accept': 'application/json',
@@ -30,11 +30,11 @@ export class AuthService {
     }).subscribe((res: any) => {
       localStorage.setItem('token', res.token);
       this.currentTenant$ = of(res.tenant);
-      localStorage.setItem('currentTenant', JSON.stringify(res.tenant));
+      localStorage.setItem('currentTenant', JSON.stringify(res.tenant[0]));
       success?.();
-    }, error => {
-      console.error(error);
-      error?.();
+    }, err => {
+      console.error(err);
+      error?.(err);
     });
   }
 

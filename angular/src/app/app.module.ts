@@ -7,8 +7,9 @@ import {en_US, NZ_I18N} from 'ng-zorro-antd/i18n';
 import {registerLocaleData} from '@angular/common';
 import en from '@angular/common/locales/en';
 import {FormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {AuthInterceptorService} from "./shared/data-access/auth-interceptor.service";
 
 registerLocaleData(en);
 
@@ -24,7 +25,12 @@ registerLocaleData(en);
     BrowserAnimationsModule
   ],
   providers: [
-    {provide: NZ_I18N, useValue: en_US}
+    {provide: NZ_I18N, useValue: en_US},
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    }
   ],
   bootstrap: [AppComponent]
 })
