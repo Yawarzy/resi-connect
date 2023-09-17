@@ -31,16 +31,5 @@ export class DashboardOverviewComponent implements OnInit {
     });
   }
 
-
-  addMonthsToDate(date: Date, months: number) {
-    const parsedDate = new Date(date);
-    const d = parsedDate.getDate();
-    parsedDate.setMonth(parsedDate.getMonth() + +months);
-    if (parsedDate.getDate() != d) {
-      parsedDate.setDate(0);
-    }
-    return parsedDate;
-  }
-
   protected readonly AppUtil = AppUtil;
 }

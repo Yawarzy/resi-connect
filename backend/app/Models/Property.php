@@ -40,4 +40,34 @@ class Property extends Model
     {
         return $this->belongsTo(Landlord::class, 'landlord_id', 'id');
     }
+
+    public function getPrefixAttribute() {
+        $propWords = explode(' ', $this->name);
+        $llWords = explode(' ', $this->landlord?->name);
+        $prefix = 'RC';
+        foreach ($propWords as $word) {
+            $prefix .= $word[0];
+        }
+        foreach ($llWords as $word) {
+            $prefix .= $word[0];
+        }
+
+        return $prefix;
+    }
+
+    public function getSlugAttribute() {
+        $lowercaseString = strtolower($this->name);
+        return str_replace(' ', '-', $lowercaseString);
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        Property::creating(function($model) {
+            $model->prefix = $model->getPrefixAttribute();
+            $model->slug = $model->getSlugAttribute();
+        });
+    }
 }

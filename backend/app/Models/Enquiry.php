@@ -36,6 +36,22 @@ class Enquiry extends Model
         'updated_at',
         'deleted_at',
     ];
+    protected $casts = [
+        'created_at' => 'datetime:d-m-Y',
+    ];
+
+    public function getContractSignedAttribute($attr) {
+        if ($attr) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return date('d/m/Y h:m A', strtotime($this->attributes['created_at']));
+    }
 
 
     public function sendContractToTenantNotification($enquiry, $file)

@@ -15,6 +15,16 @@ export interface Tenant {
   signed_contract: string;
 }
 
+export interface RentPayment {
+  id: number;
+  date: string;
+  amount: number;
+  late_fee: number;
+  payment_method: 'cash' | 'bank_transfer';
+  reference_number: string;
+  confirmation_sent_date: string | null;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -28,6 +38,17 @@ export class TenantService extends BaseCrudService<any> {
 
   changePassword(data: any, success: any, error: any) {
     this.http.put(`${environment.baseUrl}/api/tenant/update-password`, data).subscribe(
+      (res: any) => {
+        success(res);
+      },
+      (err: any) => {
+        error(err);
+      }
+    );
+  }
+
+  getPaymentHistory(id: number, success: (res: any) => void, error: (err: any) => void) {
+    this.http.get<{'payments': RentPayment[]}>(`${environment.baseUrl}/api/tenant/payment-history/${id}`).subscribe(
       (res: any) => {
         success(res);
       },

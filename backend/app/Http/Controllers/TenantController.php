@@ -97,4 +97,13 @@ class TenantController extends Controller
             'tenant' => $tenant->makeHidden(['id_proof', 'address_proof', 'created_at', 'updated_at'])
         ], 201);
     }
+
+    public function paymentHistory(Tenant $tenant)
+    {
+        $payments = $tenant->rentPayments()->get()->makeHidden(['tenant_id', 'updated_at', 'created_at']);
+
+        return response()->json([
+            'payments' => $payments
+        ], 200);
+    }
 }

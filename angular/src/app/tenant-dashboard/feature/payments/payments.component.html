@@ -1,0 +1,52 @@
+<section class="payments">
+  <div class="container">
+    <div nz-row nzGutter="16">
+      <div [nzMd]="12" [nzXs]="24" nz-col>
+        <h3 nz-typography>
+          Payments
+        </h3>
+        <p>
+          Below is a list of all rent payments made by you.
+        </p>
+      </div>
+    </div>
+
+    <nz-card>
+      <div class="table-responsive" [perfectScrollbar]="config">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th># ID</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Late Fee</th>
+            <th>Payment Method</th>
+            <th>Reference Number</th>
+            <th>Confirmation Received</th>
+          </tr>
+          <tbody>
+          <tr *ngFor="let payment of rentPayments">
+            <td>{{payment.id}}</td>
+            <td>
+                {{payment.date | date: 'mediumDate'}}
+            <td>{{payment.amount | currency: 'INR'}}</td>
+            <td>{{(payment.late_fee | currency: 'INR')}}</td>
+            <td>{{payment.payment_method === 'bank_transfer' ? 'Bank Transfer' : 'Cash'}}</td>
+            <td>{{payment.reference_number}}</td>
+            <td>
+              <ng-container *ngIf="payment.confirmation_sent_date; else NA">
+                {{payment.confirmation_sent_date | date: 'medium'}}
+              </ng-container>
+              <ng-template #NA>
+                Not Received
+              </ng-template>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </nz-card>
+  </div>
+</section>
+
+

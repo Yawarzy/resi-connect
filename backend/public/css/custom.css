@@ -1,0 +1,11 @@
+.pagination {
+    float: right;
+}
+
+.pagination nav, .pagination nav > div {
+    border: none;
+}
+
+.pagination nav > div {
+    gap: 1rem;
+}

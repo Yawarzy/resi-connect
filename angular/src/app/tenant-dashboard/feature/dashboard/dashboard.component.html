@@ -23,6 +23,12 @@
           <span *ngIf="!isCollapsed"> Profile</span>
         </a>
       </li>
+      <li nz-menu-item nzMatchRouter class="d-flex align-items-center gap-2">
+        <a routerLink="/tenant/dashboard/payments" class="text-decoration-none">
+          <span nz-icon nzType="money-collect" nzTheme="outline"></span>
+          <span *ngIf="!isCollapsed"> Payments</span>
+        </a>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>
