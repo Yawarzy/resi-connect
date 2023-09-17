@@ -191,6 +191,7 @@ return [
     ],
 
     'additional_js' => [
+        'js/sweetalert2@11.js',
         //'js/custom.js',
     ],
 
