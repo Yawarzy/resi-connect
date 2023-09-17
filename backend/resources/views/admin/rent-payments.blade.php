@@ -31,6 +31,9 @@
                             echo date_format($date,"d-m-Y");
                         @endphp <br>
                     </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b>Bank Transfer Reference No:</b> {{$tenant->reference_number}}
+                    </div>
                 </div>
 
 

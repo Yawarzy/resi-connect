@@ -8,6 +8,30 @@ use Illuminate\Http\Request;
 
 class RentPaymentsController extends Controller
 {
+    public function index(Request $request)
+    {
+        $all_tenants = Tenant::where('is_active', true)->get();
+        $tenants = $all_tenants->filter(function ($tenant) {
+            return $tenant->rent_balance > 0;
+        });
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            $tenants = $tenants->filter(function ($tenant) use ($search) {
+                return stripos($tenant->full_name, $search) !== false || stripos($tenant->property->name, $search) !== false;
+            });
+        }
+
+        $perPage = 10;
+        $currentPage = $request->input('page', 1);
+        $pagedData = $tenants->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $tenants = new \Illuminate\Pagination\LengthAwarePaginator($pagedData, count($tenants), $perPage, $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]);
+
+        return view('admin.pending-rents', compact('tenants'));
+    }
+
+
     public function view(Tenant $tenant)
     {
         $property_id = $tenant->property_id;
@@ -46,6 +70,12 @@ class RentPaymentsController extends Controller
     public function sendConfirmation(RentPayments $rentPayment)
     {
         $rentPayment->sendRentConfirmationNotification();
+        return response()->json(['success' => true]);
+    }
+
+    function sendRentReminder(Tenant $tenant)
+    {
+        $tenant->sendRentReminderNotification();
         return response()->json(['success' => true]);
     }
 }

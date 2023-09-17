@@ -14,11 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('tenants', function (Blueprint $table) {
-            $table->string('room_number')->nullable();
-            $table->boolean('is_active')->default(true);
-            $table->string('time_left_string')->nullable();
-            $table->string('expiry_date')->nullable();
-            $table->dateTime('last_emailed_at')->nullable();
+            $table->string('reference_number')->unique()->after('id')->nullable();
         });
     }
 

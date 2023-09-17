@@ -25,6 +25,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/tenants/{tenant}/add-payment', '\App\Http\Controllers\RentPaymentsController@addPayment');
     Route::post('/tenant/rent-payment-delete/{rentPayment}/', '\App\Http\Controllers\RentPaymentsController@deletePayment');
     Route::get('/tenants/rent-payment-confirmation/{rentPayment}', '\App\Http\Controllers\RentPaymentsController@sendConfirmation');
+    Route::get('/pending-rents', '\App\Http\Controllers\RentPaymentsController@index');
+    Route::get('/tenants/send-rent-reminder/{tenant}', '\App\Http\Controllers\RentPaymentsController@sendRentReminder');
 
 
 });

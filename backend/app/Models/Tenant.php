@@ -35,6 +35,7 @@ class Tenant extends Model
         'upload_contract_slug',
         'ppm',
         'deposit',
+        'last_emailed_at',
     ];
     protected $hidden = [
         'created_at',
@@ -42,6 +43,7 @@ class Tenant extends Model
     ];
     protected $casts = [
         'commencement_date' => 'datetime:d-m-Y',
+        'last_emailed_at' => 'datetime:d-m-Y',
     ];
 
     public function getExpiryDateAttribute()
@@ -90,6 +92,19 @@ class Tenant extends Model
         return $this->total_rent_to_pay - $this->total_rent_paid;
     }
 
+    public function getPropertyAttribute() {
+        return Property::find($this->property_id);
+    }
+
+    public function getReferenceNumberAttribute() {
+        return $this->property->prefix . 'R' . $this->property->room_number . 'T' . $this->id;
+    }
+
+    function owesMoreThanOneMonthRent()
+    {
+        return $this->rent_balance > $this->rent_month;
+    }
+
     public function rentPayments()
     {
         return $this->hasMany(RentPayments::class, 'tenant_id', 'id')->orderBy('created_at', 'desc');
@@ -100,8 +115,23 @@ class Tenant extends Model
         $this->notify(new SendCredentialsToTenantNotification($tenant, $initPassword));
     }
 
-    public function getPropertyAttribute() {
-        return Property::find($this->property_id);
+    function sendRentReminderNotification()
+    {
+        $this->last_emailed_at = now();
+        $this->update();
+        $this->notify(new \App\Notifications\TenantRentReminderNotification($this));
+    }
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        Tenant::creating(function($model) {
+            $model->time_left_string = $model->getTimeLeftStringAttribute();
+            $model->expiry_date = $model->getExpiryDateAttribute();
+            $model->reference_number = $model->getReferenceNumberAttribute();
+        });
     }
 }
 
