@@ -97,7 +97,7 @@ class Tenant extends Model
     }
 
     public function getReferenceNumberAttribute() {
-        return $this->property->prefix . 'R' . $this->property->room_number . 'T' . $this->id;
+        return $this->property->prefix . 'R' . $this->room_number . 'T' . $this->id;
     }
 
     function owesMoreThanOneMonthRent()

@@ -50,7 +50,7 @@
                   Agreement Start Date
                 </span>
           <span nz-typography nzType="secondary">
-                {{tenant.commencement_date | date: 'dd/MM/yyyy'}}
+                {{AppUtil.toDate(tenant.commencement_date) | date: 'mediumDate'}}
                 </span>
         </div>
       </div>
@@ -62,7 +62,7 @@
                   Agreement End Date
                 </span>
           <span nz-typography nzType="secondary">
-                {{addMonthsToDate(tenant.commencement_date, tenant.agreement_duration) | date: 'dd/MM/yyyy'}}
+                {{AppUtil.toDate(tenant.expiry_date) | date:'mediumDate'}}
                 </span>
         </div>
 

@@ -13,11 +13,12 @@ class RentPayments extends Model
         'amount',
         'date',
         'late_fee',
-        'payment_method'
+        'payment_method',
+        'reference_number',
     ];
     protected $casts = [
         'date' => 'date',
-        'confirmation_sent_date' => 'datetime'
+        'confirmation_sent_date' => 'datetime:Y-m-d H:i:s'
     ];
 
     public function tenant() {

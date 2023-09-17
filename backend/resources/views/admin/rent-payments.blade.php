@@ -94,8 +94,8 @@
                         <td>{{$payment->date->format('M')}}/{{$payment->date->format('y')}}</td>
                         <td>{{$payment->late_fee ?? 'Nil'}}</td>
                         <td>{{$payment->payment_method}}</td>
-                        <td>{{$payment->created_at->format('d/m/Y h:m A')}}</td>
-                        <td>{{$payment->confirmation_sent_date?->format('d/m/Y h:m A') ?? 'Not Sent'}}</td>
+                        <td>{{$payment->created_at->format('d/m/Y h:i A')}}</td>
+                        <td>{{$payment->confirmation_sent_date?->format('d-m-Y h:i A') ?? 'Not Sent'}}</td>
                         <td>
                             <button type="button" class="btn btn-primary btn-sm mr-1"
                                     onclick="sendConfirmation(event,{{$payment->id}})">Send Confirmation

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('payment_method');
             $table->float('late_fee')->default(0);
             $table->string('reference_number')->unique()->nullable();
-            $table->date('confirmation_sent_date')->nullable();
+            $table->dateTime('confirmation_sent_date')->nullable();
             $table->timestamps();
         });
     }

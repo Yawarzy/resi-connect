@@ -51,6 +51,7 @@ class RentPaymentsController extends Controller
             'late_fee' => 'required|string'
         ]);
 
+        $validatedRequest['reference_number'] = $tenant->reference_number;
         $rent_payment = $tenant->rentPayments()->create($validatedRequest);
 
         if ($rent_payment) {
