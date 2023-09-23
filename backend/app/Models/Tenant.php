@@ -100,6 +100,13 @@ class Tenant extends Model
         return $this->property->prefix . 'R' . $this->room_number . 'T' . $this->id;
     }
 
+    public function getIsActiveAttribute($value) {
+        if ($value == 1) {
+            return 'Yes';
+        }
+        return 'No';
+    }
+
     function owesMoreThanOneMonthRent()
     {
         return $this->rent_balance > $this->rent_month;

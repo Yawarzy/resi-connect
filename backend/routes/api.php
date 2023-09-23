@@ -55,3 +55,8 @@ Route::get('/enquiries', 'App\Http\Controllers\EnquiryController@index');
 Route::post('/enquiries', 'App\Http\Controllers\EnquiryController@store');
 Route::post('/enquiries/is-contract-signed', 'App\Http\Controllers\EnquiryController@isContractSigned');
 Route::post('/enquiries/upload-contract', 'App\Http\Controllers\EnquiryController@uploadContract');
+
+/**
+ * Repairs
+ */
+Route::get('/repair-categories', 'App\Http\Controllers\RepairCategoryController@index');
