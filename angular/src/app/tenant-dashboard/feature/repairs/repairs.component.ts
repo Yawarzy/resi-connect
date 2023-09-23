@@ -18,16 +18,18 @@ export class RepairsComponent implements OnInit {
   selectedProblem: string | undefined;
   problems: RepairProblem[] = [];
 
-  current = 1;
+  current = 0;
   loading = false;
   success: boolean | null = null;
 
   repairRequestForm = new FormGroup({
+    tenant_id: new FormControl('', [Validators.required]),
     property_id: new FormControl('', [Validators.required]),
-    problem: new FormGroup({
-      category: new FormControl('', [Validators.required]),
-      problem: new FormControl('', [Validators.required]),
-      description: new FormControl('', [Validators.required])
+    repair_category_id: new FormControl('', [Validators.required]),
+    repair_problem_id: new FormControl('', [Validators.required]),
+    problem_description: new FormControl('', [Validators.required]),
+    files: new FormGroup({
+      photos: new FormControl<File[]>([], [Validators.required]),
     })
   })
 
@@ -36,6 +38,9 @@ export class RepairsComponent implements OnInit {
 
   ngOnInit(): void {
     this.tenant = JSON.parse(localStorage.getItem('currentTenant') || '{}');
+    this.repairRequestForm.patchValue({
+      tenant_id: this.tenant!.id as any
+    });
 
     this.propertiesService.fetchItem(this.tenant!.property_id, (data: { property: Property }) => {
       this.selectedProperty = {
@@ -46,11 +51,10 @@ export class RepairsComponent implements OnInit {
         property_id: this.selectedProperty.id as any
       });
     }, (error: any) => {
-      console.log(error);
+      console.error(error);
     });
 
     this.repairsService.getRepairCategories((res: any) => {
-      console.log(res);
       this.repairCategories = res;
     }, (err: any) => {
       console.error(err);
@@ -63,7 +67,6 @@ export class RepairsComponent implements OnInit {
 
   next(): void {
     if (this.current === 0) {
-      console.log(this.repairRequestForm.get('property_id')?.value)
       if (this.repairRequestForm.get('property_id')?.valid) {
         this.current += 1;
         return;
@@ -75,76 +78,51 @@ export class RepairsComponent implements OnInit {
     }
 
     if (this.current === 1) {
-      if (this.repairRequestForm.controls.problem.controls.description.invalid) {
-        this.repairRequestForm.controls.problem.controls.description.markAsDirty();
-        this.repairRequestForm.controls.problem.controls.description.markAsTouched();
+      if (this.repairRequestForm.controls.problem_description.invalid) {
+        this.repairRequestForm.controls.problem_description.markAsDirty();
+        this.repairRequestForm.controls.problem_description.markAsTouched();
         return;
       }
 
       this.current += 1;
     }
-
-
-    if (this.current === 2) {
-      // const controls = ['id_proof', 'address_proof'];
-      // let valid = true;
-      // for (let control of controls) {
-      //   if (this.repairRequestForm.controls?.[control]?.invalid) {
-      //     this.repairRequestForm.controls?.[control]?.markAsDirty();
-      //     this.repairRequestForm.controls?.[control]?.markAsTouched();
-      //     valid = false;
-      //   }
-      // }
-      //
-      // if (!valid) {
-      //   return;
-      // }
-    }
-
-    this.current += 1;
   }
 
   done(): void {
-    console.log('done');
+    if (this.repairRequestForm.controls.files.controls.photos.invalid) {
+      this.repairRequestForm.controls.files.controls.photos.markAsDirty();
+      this.repairRequestForm.controls.files.controls.photos.markAsTouched();
+      return;
+    }
+
     this.handleSubmit();
   }
 
-  private handleSubmit() {
-
-  }
-
-  selectCategory(category: any) {
+  selectCategory(category: RepairCategory) {
     this.selectedCategory = category;
     this.repairRequestForm.patchValue({
-      problem: {
-        category: category.id
-      }
+      repair_category_id: category.id.toString()
     });
     this.problems = category.problems;
   }
 
-  selectProblem(problem: any) {
+  selectProblem(problem: RepairProblem) {
     this.repairRequestForm.patchValue({
-      problem: {
-        category: this.repairRequestForm.get('problem.category')?.value,
-        problem: problem.title
-      }
+        repair_problem_id: problem.id.toString()
     });
     this.selectedProblem = problem.title;
     if (problem.is_emergency) {
       this.isDialogVisible = true;
       this.dialogContent = problem.dialog_content;
     }
-    console.log(this.repairRequestForm.value)
   }
 
-  protected readonly prompt = prompt;
   isDialogVisible = false;
   dialogTitle = 'Emergency Contact';
   dialogContent: any;
 
   resetToDefault() {
-    this.repairRequestForm.controls['problem'].reset();
+    this.repairRequestForm.controls.repair_problem_id.reset();
     this.selectedProblem = undefined;
     this.selectedCategory = undefined;
     this.problems = [];
@@ -152,5 +130,33 @@ export class RepairsComponent implements OnInit {
 
   handleDialog() {
     this.isDialogVisible = false;
+  }
+
+  onPhotosChange(event: any) {
+    if (event.target.files.length < 2 ) {
+      this.repairRequestForm.controls.files.controls.photos.setErrors({minFiles: true});
+      return;
+    }
+    this.repairRequestForm.controls.files.controls.photos.setErrors(null);
+
+    const files: File[] = event.target.files;
+    this.repairRequestForm.patchValue({
+      files: {
+        photos: files
+      }
+    });
+  }
+
+  private handleSubmit() {
+    this.loading = true;
+    this.repairsService.addRepairRequest(this.repairRequestForm.value, (res: any) => {
+      this.loading = false;
+      this.success = true;
+      this.repairRequestForm.reset();
+      this.resetToDefault();
+    }, (err: any) => {
+      this.loading = false;
+      this.success = false;
+    });
   }
 }

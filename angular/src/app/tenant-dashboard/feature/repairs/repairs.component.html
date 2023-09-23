@@ -28,40 +28,48 @@
             >
             </ng-container>
           </ng-container>
+            <ng-container *ngIf="loading">
+              <div class="flex-center flex-column mt-3 gap-3" nz-typography nzType="secondary">
+                <span nz-icon nzType="loading" nzTheme="outline" style="font-size: 2rem"></span>
+                <p>Submitting...</p>
+              </div>
+            </ng-container>
 
-          <!--          <ng-container *ngIf="loading">-->
-          <!--            <div class="flex-center flex-column mt-3 gap-3" nz-typography nzType="secondary">-->
-          <!--              <span nz-icon nzType="loading" nzTheme="outline" style="font-size: 2rem"></span>-->
-          <!--              <p>Submitting...</p>-->
-          <!--            </div>-->
-          <!--          </ng-container>-->
+            <ng-container *ngIf="success">
+              <div class="flex-center flex-column mt-3 gap-3" role="alert">
+              <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"
+                    style="font-size: 3rem"></span>
+                <h4 nz-typography>
+                  Don't worry, we've got your back!
+                </h4>
+                <p nz-typography nzType="secondary">
+                  Your repair request has been submitted successfully. We will get back to you as soon as possible.
+                </p>
+                <a routerLink="/tenant/dashboard/overview" nz-button nzType="link">
+                  Return to overview
+                </a>
+              </div>
+            </ng-container>
 
-          <!--          <ng-container *ngIf="success">-->
-          <!--            <div class="flex-center flex-column mt-3 gap-3" role="alert">-->
-          <!--            <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"-->
-          <!--                  style="font-size: 3rem"></span>-->
-          <!--              <h4 nz-typography>Enquiry Submitted Successfully</h4>-->
-          <!--              <p nz-typography nzType="secondary">-->
-          <!--                Thank you for submitting your enquiry. We will get back to you soon.-->
-          <!--              </p>-->
-          <!--            </div>-->
-          <!--          </ng-container>-->
-
-          <!--          <ng-container *ngIf="success === false">-->
-          <!--            <div class="flex-center flex-column mt-3 gap-3" role="alert">-->
-          <!--            <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF9494'"-->
-          <!--                  style="font-size: 3rem"></span>-->
-          <!--              <h4 nz-typography>Something went wrong</h4>-->
-          <!--              <p nz-typography nzType="secondary">-->
-          <!--                It seems that something went wrong while submitting your enquiry. Please try again later. If the problem-->
-          <!--                persists, please contact us.-->
-          <!--              </p>-->
-          <!--            </div>-->
-          <!--          </ng-container>-->
+            <ng-container *ngIf="success === false">
+              <div class="flex-center flex-column mt-3 gap-3" role="alert">
+              <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF9494'"
+                    style="font-size: 3rem"></span>
+                <h4 nz-typography>
+                  Oops! Something went wrong.
+                </h4>
+                <p nz-typography nzType="secondary">
+                  Unfortunately, we were unable to submit your request. Please try again later.
+                </p>
+                <a routerLink="/tenant/dashboard/overview" nz-button nzType="link">
+                  Return to overview
+                </a>
+              </div>
+            </ng-container>
         </div>
       </form>
 
-      <div class="steps-action">
+      <div class="steps-action" *ngIf="success === null">
         <button (click)="pre()" *ngIf="current > 0" nz-button nzType="default">
           <span>Previous</span>
         </button>
@@ -88,7 +96,7 @@
                nzPlaceHolder="Select Property"
                nzSize="large"
                style="width: 100%">
-      <nz-option [nzLabel]="selectedProperty!.name"
+      <nz-option [nzLabel]="(selectedProperty?.name ?? 'N.A')"
                  [nzValue]="selectedProperty?.id"></nz-option>
     </nz-select>
   </nz-form-item>
@@ -157,20 +165,41 @@
     <div *ngIf="selectedProblem" style="margin-top: 1rem; width: 100%">
       <nz-form-label [nzRequired]="true">Fault Details</nz-form-label>
       <textarea
-          [formControl]="$any(repairRequestForm.controls.problem.controls['description'])"
+          [formControl]="$any(repairRequestForm.controls.problem_description)"
           nz-input
           placeholder="Please include as much useful information as possible about the issue"
           rows="5"
         >
         </textarea>
       <div
-        *ngIf="repairRequestForm.controls.problem.controls.description.invalid && repairRequestForm.controls.problem.controls.description.dirty && repairRequestForm.controls.problem.controls.description.touched"
+        *ngIf="repairRequestForm.controls.problem_description.invalid && repairRequestForm.controls.problem_description.dirty && repairRequestForm.controls.problem_description.touched"
         class="text-danger mt-2">
-        <small *ngIf="repairRequestForm.controls.problem.controls.description.errors?.['required']">
+        <small *ngIf="repairRequestForm.controls.problem_description.errors?.['required']">
           Description is required.
         </small>
       </div>
     </div>
   </div>
 </ng-template>
-<ng-template #imagesTemplate></ng-template>
+<ng-template #imagesTemplate>
+  <nz-form-item>
+    <nz-form-label nzFor="photos">Please add atleast 2 images to help explain the problem</nz-form-label>
+    <nz-input-group>
+      <input (change)="onPhotosChange($event)" class="form-control" id="photos" nz-input
+             type="file" [multiple]="true">
+    </nz-input-group>
+
+    <div
+      *ngIf="repairRequestForm.controls.files.controls.photos.invalid && repairRequestForm.controls.files.controls.photos.dirty && repairRequestForm.controls.files.controls.photos.touched"
+      class="text-danger mt-2">
+      <small *ngIf="repairRequestForm.controls.files.controls.photos.errors?.['required']">
+        Photos are required.
+      </small>
+
+      <small *ngIf="repairRequestForm.controls.files.controls.photos.errors?.['minFiles']">
+        Please add atleast 2 images.
+      </small>
+
+    </div>
+  </nz-form-item>
+</ng-template>

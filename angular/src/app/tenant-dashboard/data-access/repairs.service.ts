@@ -40,4 +40,29 @@ export class RepairsService {
       error(err);
     })
   }
+
+  addRepairRequest(repairRequest: any, success: (res: any) => void, error: (err: any) => void) {
+    const formData = new FormData();
+    Object.keys(repairRequest).forEach((key) => {
+      if (key === 'files') {
+        const photos: any[] = [...repairRequest.files.photos]
+        photos.forEach((file: File) => {
+          formData.append('files[]', file);
+        });
+      } else {
+        formData.append(key, repairRequest[key]);
+      }
+    });
+
+
+    this.http.post(`${this.baseUrl}/repair-requests`, formData, {
+      headers: {
+          'Accept': 'application/json',
+      }
+    }).subscribe(res => {
+      success(res);
+    }, (err) => {
+      error(err);
+    })
+  }
 }

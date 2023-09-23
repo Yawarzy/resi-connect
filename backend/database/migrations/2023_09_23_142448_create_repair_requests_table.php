@@ -19,6 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('property_id');
             $table->unsignedBigInteger('contractor_id');
 
+            $table->longText('problem_breadcrumb')->nullable();
+
             $table->text('room_no')->nullable();
             $table->longText('problem_description');
             $table->longText('files');

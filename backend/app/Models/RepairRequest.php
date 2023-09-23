@@ -15,6 +15,7 @@ class RepairRequest extends Model
         'contractor_id',
         'room_no',
         'problem_description',
+        'problem_breadcrumb',
         'files',
         'comments',
         'tenant_feedback',
