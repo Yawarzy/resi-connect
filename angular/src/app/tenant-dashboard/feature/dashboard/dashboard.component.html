@@ -29,6 +29,12 @@
           <span *ngIf="!isCollapsed"> Payments</span>
         </a>
       </li>
+      <li nz-menu-item nzMatchRouter class="d-flex align-items-center gap-2">
+        <a routerLink="/tenant/dashboard/repairs" class="text-decoration-none">
+          <span nz-icon nzType="tool" nzTheme="outline"></span>
+          <span *ngIf="!isCollapsed"> Repairs</span>
+        </a>
+      </li>
     </ul>
   </nz-sider>
   <nz-layout>

@@ -1,0 +1,116 @@
+:host {
+  .status-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 10rem;
+    border-radius: 4px;
+  }
+
+  .repairs__main {
+    margin-top: 1rem;
+  }
+
+  .steps-content {
+    margin-top: 2rem;
+    border: 1px dashed #e9e9e9;
+    border-radius: 6px;
+    background-color: #fafafa;
+    min-height: 10rem;
+    padding: 2rem;
+  }
+
+  .steps-action {
+    margin-block: 2rem;
+  }
+
+  .breadcrumbs-container {
+    margin-bottom: 1.5rem;
+  }
+
+  @media only screen and (max-width: 576px) {
+    ::ng-deep .ant-steps {
+      flex-direction: row;
+
+      .ant-steps-item {
+        &:first-child {
+          padding-left: 0;
+        }
+
+        padding-left: 0;
+      }
+
+      .ant-steps-item-content {
+        display: none;
+      }
+
+      .ant-steps-item-tail {
+        display: block;
+        top: 45%;
+        left: 15%;
+        z-index: -1;
+      }
+    }
+
+    .steps-content {
+      padding-inline: 1rem;
+    }
+  }
+
+  // card
+  .card-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .card {
+    //margin: 0 0 1rem 0;
+    height: 11rem;
+    width: 11rem;
+    padding: 1rem;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+    background-color: #fff;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    cursor: pointer;
+    text-align: center;
+  }
+
+  .card-img {
+    padding-block: 0.25rem;
+    margin-bottom: 1rem;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 100%;
+      max-height: 100%
+    }
+  }
+
+  .card-title {
+    margin-bottom: 0;
+  }
+
+  nz-list {
+    display: block;
+    width: 100%
+  }
+
+  .problem {
+    cursor: pointer;
+    background: #fff;
+    &.selected,
+    &:hover {
+      background: #1890ff;
+      color: #fff;
+    }
+  }
+}
