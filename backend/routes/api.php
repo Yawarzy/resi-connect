@@ -60,3 +60,4 @@ Route::post('/enquiries/upload-contract', 'App\Http\Controllers\EnquiryControlle
  * Repairs
  */
 Route::get('/repair-categories', 'App\Http\Controllers\RepairCategoryController@index');
+Route::post('/repair-requests', 'App\Http\Controllers\RepairRequestController@store');

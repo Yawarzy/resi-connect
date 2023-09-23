@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Notifications\EnquiryReceivedNotification;
+use App\Notifications\LandlordRepairRequestReceivedNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
@@ -34,5 +35,10 @@ class Landlord extends Model
     public function sendEnquiryReceivedNotifications($enquiry, $landlord)
     {
         $this->notify(new EnquiryReceivedNotification($enquiry, $landlord));
+    }
+
+    public function sendRepairRequestReceivedNotifications($repairRequest)
+    {
+        $this->notify(new LandlordRepairRequestReceivedNotification($repairRequest));
     }
 }
