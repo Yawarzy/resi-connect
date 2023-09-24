@@ -43,12 +43,12 @@ class ContractorAssignRepairRequestNotification extends Notification
     {
         $app_url = config('app.debug') ? config('app.url_local') : config('app.url');
         $mail_message = (new MailMessage)
-            ->subject("Contractor Repair Request Assigned - " . $this->repairRequest->title)
+            ->subject("Repair Request Assigned")
             ->greeting('Hello ' . $this->repairRequest->contractor->name . '!')
             ->line("A new repair request has been assigned to you")
             ->line('**Comments from Landlord:** ' . $this->repairRequest->comments)
             ->line("After you have completed the repair, please click the button below to confirm the repair.")
-            ->action('View & Confirm Repair', url($app_url.'/repairs/finish-repair-contractor/'.$this->repairRequest->contractor_approve_slug));
+            ->action('View & Confirm Repair', url($app_url . '/contractor/approve-repair/' . $this->repairRequest->contractor_approve_slug));
 
 
         return $mail_message;
