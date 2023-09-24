@@ -63,6 +63,21 @@ class RepairRequest extends Model
         return $this->tenant->phone_number;
     }
 
+    public function getApprovedByAdminAttribute($attr) {
+        return strval($attr);
+    }
+
+    public function getTenantApprovedAttribute($attr) {
+        return strval($attr);
+    }
+
+    public function getContractorApprovedAttribute($attr) {
+        return strval($attr);
+    }
+
+    public function getPaidAttribute($attr) {
+        return strval($attr);
+    }
 
     public function tenant()
     {

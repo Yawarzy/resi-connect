@@ -7,7 +7,9 @@ use App\Models\Problem;
 use App\Models\RepairCategory;
 use App\Models\RepairRequest;
 use App\Models\Tenant;
+use App\Notifications\ContractorAssignRepairRequestNotification;
 use App\Notifications\LandlordRepairRequestReceivedNotification;
+use App\Notifications\TenantRepairRequestApprovedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -87,5 +89,31 @@ class RepairRequestController extends Controller
             abort(500, 'Something went wrong while storing the data');
         }
 
+    }
+
+    public function landlordApproveRepair(Request $request, RepairRequest $repairRequest) {
+        $approved = $request->approved === '1';
+        $repairRequest->approved_by_admin = $approved;
+        $repairRequest->save();
+
+        $repairRequest->tenant->notify(new TenantRepairRequestApprovedNotification($repairRequest));
+
+        if ($approved) {
+            $repairRequest->contractor->notify(new ContractorAssignRepairRequestNotification($repairRequest));
+        }
+
+        $message = '';
+        $alert = '';
+        if ($approved) {
+            $message = 'Request approved successfully';
+            $alert = 'success';
+        } else {
+            $message = 'Request rejected';
+            $alert = 'error';
+        }
+        return redirect()->route('voyager.repair-requests.index')->with([
+            'message' => $message,
+            'alert-type' => $alert,
+        ]);
     }
 }

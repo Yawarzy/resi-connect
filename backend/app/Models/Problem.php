@@ -15,6 +15,10 @@ class Problem extends Model
         'is_emergency' => 'boolean',
     ];
 
+    public function getIsEmergencyAttribute($attr) {
+        return strval($attr);
+    }
+
     public function repairCategory()
     {
         return $this->belongsTo(RepairCategory::class);
