@@ -21,6 +21,7 @@ import {NzTableModule} from "ng-zorro-antd/table";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
 import {NzToolTipModule} from "ng-zorro-antd/tooltip";
 import {NzRadioModule} from "ng-zorro-antd/radio";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import {NzRadioModule} from "ng-zorro-antd/radio";
     PerfectScrollbarModule,
     NzToolTipModule,
     NzRadioModule,
+    NzNotificationModule
   ]
 })
 export class RepairsModule { }

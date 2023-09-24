@@ -93,12 +93,10 @@
             <tr>
               <th>Dated</th>
               <th>Repair Category</th>
-              <th>Problem Desc.</th>
-              <th>Contractor Assigned</th>
-              <th>Contractor Done</th>
-              <th>Tenant Done</th>
-              <th>Tenant Rating</th>
-              <th>Tenant Feedback</th>
+              <th>Problem Desciption</th>
+              <th>Rating</th>
+              <th>Feedback</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
             <tbody>
@@ -107,13 +105,15 @@
                 {{rr.created_at | date: 'mediumDate'}}
               <td>{{rr.problem_breadcrumb}}</td>
               <td>{{rr.problem_description}}</td>
-              <td>{{rr.contractor.name}}</td>
-              <td>{{rr.contractor_approved === '0' ? 'No' : 'Yes'}}</td>
-              <td>{{rr.tenant_approved === '0' ? 'No' : 'Yes'}}</td>
-              <td>{{rr.tenant_rating}}</td>
-              <td>{{rr.tenant_feedback}}</td>
+              <td>{{getRating(rr.tenant_rating)}}</td>
+              <td>{{rr.tenant_feedback ?? 'N/A'}}</td>
               <td>
-                <button *ngIf="rr.tenant_approved === '0'" (click)="isVisible = !isVisible" nz-button nzType="primary">
+                {{getStatus(rr)}}
+              </td>
+              <td>
+                <button
+                  *ngIf="rr.contractor_approved === '1' && rr.approved_by_admin === '1' && rr.tenant_approved === '0'"
+                  (click)="isVisible = !isVisible" nz-button nzType="primary">
                   Mark as done
                 </button>
               </td>

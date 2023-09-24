@@ -7,8 +7,11 @@ use App\Models\Problem;
 use App\Models\RepairCategory;
 use App\Models\RepairRequest;
 use App\Models\Tenant;
+use App\Notifications\AdminContractorFinishedRepairNotification;
+use App\Notifications\AdminTenantFinishedRepairNotification;
 use App\Notifications\ContractorAssignRepairRequestNotification;
 use App\Notifications\LandlordRepairRequestReceivedNotification;
+use App\Notifications\TenantContractorFinishedRepairNotification;
 use App\Notifications\TenantRepairRequestApprovedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -91,7 +94,8 @@ class RepairRequestController extends Controller
 
     }
 
-    public function landlordApproveRepair(Request $request, RepairRequest $repairRequest) {
+    public function landlordApproveRepair(Request $request, RepairRequest $repairRequest)
+    {
         $approved = $request->approved === '1';
         $repairRequest->approved_by_admin = $approved;
         $repairRequest->save();
@@ -100,6 +104,9 @@ class RepairRequestController extends Controller
 
         if ($approved) {
             $repairRequest->contractor->notify(new ContractorAssignRepairRequestNotification($repairRequest));
+        }
+        {
+            $repairRequest->rejected_by_admin = true;
         }
 
         $message = '';
@@ -138,8 +145,11 @@ class RepairRequestController extends Controller
         $repairRequest->contractor_feedback = $validated_request['contractor_feedback'];
         $repairRequest->contractor_job_cost = $validated_request['contractor_job_cost'];
         $repairRequest->update();
-        //TODO: notify tenant again that contractor has finished the repair request and ask for their confirmation and feedback
-        // TODO: notify admin that contractor has finished the repair request
+
+        $landlord = $repairRequest->property->landlord;
+        $landlord->notify(new AdminContractorFinishedRepairNotification($repairRequest));
+        $repairRequest->tenant->notify(new TenantContractorFinishedRepairNotification($repairRequest));
+
         return [
             'message' => 'success'
         ];
@@ -160,7 +170,8 @@ class RepairRequestController extends Controller
         $repairRequest->tenant_feedback = $validated_request['tenant_feedback'];
         $repairRequest->update();
 
-        // TODO: notify admin that tenant has approved the repair request
+        $landlord = $repairRequest->property->landlord;
+        $landlord->notify(new AdminTenantFinishedRepairNotification($repairRequest));
         return [
             'message' => 'success'
         ];
