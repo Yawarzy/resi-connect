@@ -28,6 +28,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/pending-rents', '\App\Http\Controllers\RentPaymentsController@index');
     Route::get('/tenants/send-rent-reminder/{tenant}', '\App\Http\Controllers\RentPaymentsController@sendRentReminder');
 
+    Route::get('/landlord-approve-repair-request/{repairRequest}', 'App\Http\Controllers\RepairRequestController@landlordApproveRepair')->name('voyager.repair-requests.approve');
+
 
 });
 
