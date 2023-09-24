@@ -2,92 +2,137 @@
   <div class="container">
     <header nz-row nzGutter="16">
       <div [nzMd]="24" [nzXs]="24" nz-col>
-        <h3 nz-typography>
+        <h3 class="section__title" nz-typography>
           Repairs
         </h3>
-        <p>
-          Here you can report a problem. Please be as specific as possible and always include the pictures of the
-          problem.
+        <p class="section__subtitle" nz-typography>
+          Here you can raise a repair request for your property, and track the progress of any existing requests.
         </p>
       </div>
     </header>
 
+    <nz-tabset>
+      <nz-tab nzTitle="Raise Request">
+        <div class="repairs__main">
+          <form enctype="multipart/form-data">
+            <nz-steps [nzCurrent]="current">
+              <nz-step nzIcon="home" nzTitle="Select Property"></nz-step>
+              <nz-step nzIcon="tool" nzTitle="Specify Problem"></nz-step>
+              <nz-step nzIcon="file-image" nzTitle="Upload Images"></nz-step>
+            </nz-steps>
 
-    <div class="repairs__main">
-      <form enctype="multipart/form-data">
-        <nz-steps [nzCurrent]="current">
-          <nz-step nzIcon="home" nzTitle="Select Property"></nz-step>
-          <nz-step nzIcon="tool" nzTitle="Specify Problem"></nz-step>
-          <nz-step nzIcon="file-image" nzTitle="Upload Images"></nz-step>
-        </nz-steps>
+            <div class="steps-content">
+              <ng-container *ngIf="!loading && success === null">
+                <ng-container
+                  *ngTemplateOutlet="current === 0 ? propertyTemplate : current === 1 ? problemTemplate : current === 2 ? imagesTemplate : null"
+                >
+                </ng-container>
+              </ng-container>
+              <ng-container *ngIf="loading">
+                <div class="flex-center flex-column mt-3 gap-3" nz-typography nzType="secondary">
+                  <span nz-icon nzTheme="outline" nzType="loading" style="font-size: 2rem"></span>
+                  <p>Submitting...</p>
+                </div>
+              </ng-container>
 
-        <div class="steps-content">
-          <ng-container *ngIf="!loading && success === null">
-            <ng-container
-              *ngTemplateOutlet="current === 0 ? propertyTemplate : current === 1 ? problemTemplate : current === 2 ? imagesTemplate : null"
-            >
-            </ng-container>
-          </ng-container>
-            <ng-container *ngIf="loading">
-              <div class="flex-center flex-column mt-3 gap-3" nz-typography nzType="secondary">
-                <span nz-icon nzType="loading" nzTheme="outline" style="font-size: 2rem"></span>
-                <p>Submitting...</p>
-              </div>
-            </ng-container>
-
-            <ng-container *ngIf="success">
-              <div class="flex-center flex-column mt-3 gap-3" role="alert">
-              <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'"
+              <ng-container *ngIf="success">
+                <div class="flex-center flex-column mt-3 gap-3" role="alert">
+              <span [nzTheme]="'twotone'" [nzTwotoneColor]="'#52c41a'" [nzType]="'check-circle'" nz-icon
                     style="font-size: 3rem"></span>
-                <h4 nz-typography>
-                  Don't worry, we've got your back!
-                </h4>
-                <p nz-typography nzType="secondary">
-                  Your repair request has been submitted successfully. We will get back to you as soon as possible.
-                </p>
-                <a routerLink="/tenant/dashboard/overview" nz-button nzType="link">
-                  Return to overview
-                </a>
-              </div>
-            </ng-container>
+                  <h4 nz-typography>
+                    Don't worry, we've got your back!
+                  </h4>
+                  <p nz-typography nzType="secondary">
+                    Your repair request has been submitted successfully. We will get back to you as soon as possible.
+                  </p>
+                  <a nz-button nzType="link" routerLink="/tenant/dashboard/overview">
+                    Return to overview
+                  </a>
+                </div>
+              </ng-container>
 
-            <ng-container *ngIf="success === false">
-              <div class="flex-center flex-column mt-3 gap-3" role="alert">
-              <span nz-icon [nzType]="'check-circle'" [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF9494'"
+              <ng-container *ngIf="success === false">
+                <div class="flex-center flex-column mt-3 gap-3" role="alert">
+              <span [nzTheme]="'twotone'" [nzTwotoneColor]="'#FF9494'" [nzType]="'check-circle'" nz-icon
                     style="font-size: 3rem"></span>
-                <h4 nz-typography>
-                  Oops! Something went wrong.
-                </h4>
-                <p nz-typography nzType="secondary">
-                  Unfortunately, we were unable to submit your request. Please try again later.
-                </p>
-                <a routerLink="/tenant/dashboard/overview" nz-button nzType="link">
-                  Return to overview
-                </a>
-              </div>
-            </ng-container>
+                  <h4 nz-typography>
+                    Oops! Something went wrong.
+                  </h4>
+                  <p nz-typography nzType="secondary">
+                    Unfortunately, we were unable to submit your request. Please try again later.
+                  </p>
+                  <a nz-button nzType="link" routerLink="/tenant/dashboard/overview">
+                    Return to overview
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+          </form>
+
+          <div *ngIf="success === null" class="steps-action">
+            <button (click)="pre()" *ngIf="current > 0" nz-button nzType="default">
+              <span>Previous</span>
+            </button>
+            <button (click)="next()" *ngIf="current < 2" [disabled]="success !== null || loading" nz-button
+                    nzType="default">
+              <span>Next</span>
+            </button>
+            <button (click)="done()" *ngIf="current === 2" [disabled]="success !== null || loading" nz-button
+                    nzType="primary"
+                    type="submit">
+              <span>Done</span>
+            </button>
+          </div>
         </div>
-      </form>
 
-      <div class="steps-action" *ngIf="success === null">
-        <button (click)="pre()" *ngIf="current > 0" nz-button nzType="default">
-          <span>Previous</span>
-        </button>
-        <button (click)="next()" *ngIf="current < 2" [disabled]="success !== null || loading" nz-button
-                nzType="default">
-          <span>Next</span>
-        </button>
-        <button (click)="done()" *ngIf="current === 2" [disabled]="success !== null || loading" nz-button nzType="primary"
-                type="submit">
-          <span>Done</span>
-        </button>
-      </div>
-    </div>
+      </nz-tab>
+      <nz-tab nzTitle="Track Request">
+        <div [perfectScrollbar]="psConfig" class="table-responsive">
+          <table class="table table-striped" *ngIf="tenantRepairRequests.length > 0">
+            <thead>
+            <tr>
+              <th>Dated</th>
+              <th>Repair Category</th>
+              <th>Problem Desc.</th>
+              <th>Contractor Assigned</th>
+              <th>Contractor Done</th>
+              <th>Tenant Done</th>
+              <th>Tenant Rating</th>
+              <th>Tenant Feedback</th>
+              <th>Actions</th>
+            </tr>
+            <tbody>
+            <tr *ngFor="let rr of tenantRepairRequests">
+              <td>
+                {{rr.created_at | date: 'mediumDate'}}
+              <td>{{rr.problem_breadcrumb}}</td>
+              <td>{{rr.problem_description}}</td>
+              <td>{{rr.contractor.name}}</td>
+              <td>{{rr.contractor_approved === '0' ? 'No' : 'Yes'}}</td>
+              <td>{{rr.tenant_approved === '0' ? 'No' : 'Yes'}}</td>
+              <td>{{rr.tenant_rating}}</td>
+              <td>{{rr.tenant_feedback}}</td>
+              <td>
+                <button *ngIf="rr.tenant_approved === '0'" (click)="isVisible = !isVisible" nz-button nzType="primary">
+                  Mark as done
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
 
-
+          <div>
+            <div *ngIf="tenantRepairRequests.length === 0" class="flex-center flex-column mt-3 gap-3" nz-typography
+                 nzType="secondary">
+              <span nz-icon nzTheme="outline" nzType="file-search" style="font-size: 2rem"></span>
+              <p>No repair requests found.</p>
+            </div>
+          </div>
+        </div>
+      </nz-tab>
+    </nz-tabset>
   </div>
 </section>
-
 
 <ng-template #propertyTemplate>
   <nz-form-item>
@@ -142,10 +187,10 @@
     </nz-list>
 
     <nz-modal
-      [(nzVisible)]="isDialogVisible"
-      [nzTitle]="dialogTitle"
       (nzOnCancel)="handleDialog()"
       (nzOnOk)="handleDialog()"
+      [(nzVisible)]="isDialogVisible"
+      [nzTitle]="dialogTitle"
     >
       <ng-container *nzModalContent>
         <div *ngIf="dialogContent" [innerHTML]="dialogContent"></div>
@@ -155,7 +200,7 @@
             by telephone as soon as possible.
           </p>
           <p>
-            Office hours: +91 1234567890 <br />
+            Office hours: +91 1234567890 <br/>
             Out of hours: +44 1234567890
           </p>
         </div>
@@ -165,11 +210,11 @@
     <div *ngIf="selectedProblem" style="margin-top: 1rem; width: 100%">
       <nz-form-label [nzRequired]="true">Fault Details</nz-form-label>
       <textarea
-          [formControl]="$any(repairRequestForm.controls.problem_description)"
-          nz-input
-          placeholder="Please include as much useful information as possible about the issue"
-          rows="5"
-        >
+        [formControl]="$any(repairRequestForm.controls.problem_description)"
+        nz-input
+        placeholder="Please include as much useful information as possible about the issue"
+        rows="5"
+      >
         </textarea>
       <div
         *ngIf="repairRequestForm.controls.problem_description.invalid && repairRequestForm.controls.problem_description.dirty && repairRequestForm.controls.problem_description.touched"
@@ -185,8 +230,8 @@
   <nz-form-item>
     <nz-form-label nzFor="photos">Please add atleast 2 images to help explain the problem</nz-form-label>
     <nz-input-group>
-      <input (change)="onPhotosChange($event)" class="form-control" id="photos" nz-input
-             type="file" [multiple]="true">
+      <input (change)="onPhotosChange($event)" [multiple]="true" class="form-control" id="photos"
+             nz-input type="file">
     </nz-input-group>
 
     <div
@@ -203,3 +248,57 @@
     </div>
   </nz-form-item>
 </ng-template>
+
+
+<nz-modal
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="confirmTenantRepair()"
+  [(nzVisible)]="isVisible"
+  [nzOkLoading]="loading"
+  nzTitle="Confirm Repair"
+>
+  <div *nzModalContent>
+    <p class="section__subtitle" style="text-transform: none">
+      Please confirm that the repair has been completed by the contractor.
+    </p>
+    <div nz-row nzGutter="16">
+      <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+        <span class="mb-2">
+         How would you rate the cooperation provided by the contractor ?
+        </span>
+        <span nz-typography nzType="secondary">
+          <nz-radio-group
+            [formControl]="confirmForm.controls.tenant_rating"
+          >
+            <label *ngFor="let option of radioOptions" [nzValue]="option.value" nz-radio>
+            <span nz-typography nzType="secondary">{{option.label}}</span>
+            </label>
+          </nz-radio-group>
+        </span>
+      </div>
+    </div>
+    <div nz-row nzGutter="16">
+      <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+        <span nz-typography nzType="secondary">
+          <nz-form-item>
+            <nz-form-label [nzRequired]="true" nzFor="feedback">Feedback</nz-form-label>
+             <textarea
+               [formControl]="confirmForm.controls.tenant_feedback"
+               id="feedback"
+               nz-input
+               placeholder="Please provide any additional feedback..."
+               rows="5"
+             ></textarea>
+             <div
+               *ngIf="confirmForm.controls.tenant_feedback.invalid && confirmForm.controls.tenant_feedback.dirty && confirmForm.controls.tenant_feedback.touched"
+               class="text-danger mt-2">
+              <div *ngIf="confirmForm.controls.tenant_feedback?.errors?.['required']">
+                Feedback is required
+              </div>
+            </div>
+          </nz-form-item>
+        </span>
+      </div>
+    </div>
+  </div>
+</nz-modal>

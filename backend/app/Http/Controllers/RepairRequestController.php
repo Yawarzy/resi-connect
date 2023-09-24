@@ -132,8 +132,6 @@ class RepairRequestController extends Controller
             'contractor_job_cost' => 'required|int'
         ]);
 
-
-
         $repairRequest = RepairRequest::where('contractor_approve_slug', $validated_request['contractor_approve_slug'])->where('approved_by_admin', 1)->firstOrFail();
         $repairRequest->contractor_approved = $validated_request['contractor_approved'];
         $repairRequest->contractor_rating = $validated_request['contractor_rating'];
@@ -142,6 +140,27 @@ class RepairRequestController extends Controller
         $repairRequest->update();
         //TODO: notify tenant again that contractor has finished the repair request and ask for their confirmation and feedback
         // TODO: notify admin that contractor has finished the repair request
+        return [
+            'message' => 'success'
+        ];
+    }
+
+    public function tenantApproveRepair(Request $request)
+    {
+        $validated_request = $request->validate([
+            'tenant_approve_slug' => 'required|string',
+            'tenant_approved' => 'required|boolean',
+            'tenant_rating' => 'required|int|min:1|max:5',
+            'tenant_feedback' => 'required|string',
+        ]);
+
+        $repairRequest = RepairRequest::where('tenant_approve_slug', $validated_request['tenant_approve_slug'])->where('approved_by_admin', 1)->firstOrFail();
+        $repairRequest->tenant_approved = $validated_request['tenant_approved'];
+        $repairRequest->tenant_rating = $validated_request['tenant_rating'];
+        $repairRequest->tenant_feedback = $validated_request['tenant_feedback'];
+        $repairRequest->update();
+
+        // TODO: notify admin that tenant has approved the repair request
         return [
             'message' => 'success'
         ];

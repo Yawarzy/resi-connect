@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PropertiesService, Property} from "../../../properties/data-access/properties.service";
 import {RepairCategory, RepairProblem, RepairsService} from "../../data-access/repairs.service";
 import {Tenant} from "../../data-access/tenant.service";
+import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 
 @Component({
   selector: 'app-repairs',
@@ -33,6 +34,8 @@ export class RepairsComponent implements OnInit {
     })
   })
 
+  tenantRepairRequests: any[] = [];
+
   constructor(private propertiesService: PropertiesService, private repairsService: RepairsService) {
   }
 
@@ -56,6 +59,15 @@ export class RepairsComponent implements OnInit {
 
     this.repairsService.getRepairCategories((res: any) => {
       this.repairCategories = res;
+    }, (err: any) => {
+      console.error(err);
+    });
+
+    this.repairsService.getAllRepairRequests(this.tenant!.id, (res: any) => {
+      this.tenantRepairRequests = res.repairRequests;
+      this.confirmForm.patchValue({
+        tenant_approve_slug: this.tenantRepairRequests[0]?.tenant_approve_slug
+      });
     }, (err: any) => {
       console.error(err);
     });
@@ -120,6 +132,38 @@ export class RepairsComponent implements OnInit {
   isDialogVisible = false;
   dialogTitle = 'Emergency Contact';
   dialogContent: any;
+  psConfig: PerfectScrollbarConfigInterface = {
+    suppressScrollY: true
+  };
+  isVisible = false;
+  confirmForm = new FormGroup({
+    tenant_approve_slug: new FormControl('', [Validators.required]),
+    tenant_approved: new FormControl(false, [Validators.requiredTrue]),
+    tenant_rating: new FormControl(3, [Validators.required]),
+    tenant_feedback: new FormControl('', [Validators.required])
+  });
+  radioOptions: any[] = [
+    {
+      label: 'Terrible',
+      value: 1,
+    },
+    {
+      label: 'Bad',
+      value: 2,
+    },
+    {
+      label: 'Neutral',
+      value: 3,
+    },
+    {
+      label: 'Good',
+      value: 4,
+    },
+    {
+      label: 'Excellent',
+      value: 5,
+    },
+  ]
 
   resetToDefault() {
     this.repairRequestForm.controls.repair_problem_id.reset();
@@ -157,6 +201,22 @@ export class RepairsComponent implements OnInit {
     }, (err: any) => {
       this.loading = false;
       this.success = false;
+    });
+  }
+
+  handleCancel() {
+    this.isVisible = false;
+  }
+
+  confirmTenantRepair() {
+    this.confirmForm.patchValue({
+      tenant_approved: true
+    });
+    this.repairsService.tenantApproveRepair(this.confirmForm.value, (res: any) => {
+      this.isVisible = false;
+      this.confirmForm.reset();
+    }, (err: any) => {
+      console.error(err);
     });
   }
 }

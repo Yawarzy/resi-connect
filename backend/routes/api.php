@@ -33,6 +33,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/tenant/update', 'App\Http\Controllers\TenantController@update');
     Route::put('/tenant/update-password', 'App\Http\Controllers\UserController@updatePassword');
     Route::get('/tenant/payment-history/{tenant}', 'App\Http\Controllers\TenantController@paymentHistory');
+    Route::get('/tenant/repair-requests/{tenant}', 'App\Http\Controllers\TenantController@getRepairRequests');
+    Route::post('/tenant/repair-request/approve', 'App\Http\Controllers\RepairRequestController@tenantApproveRepair');
 });
 
 /**

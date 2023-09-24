@@ -16,6 +16,11 @@ import {NzListModule} from "ng-zorro-antd/list";
 import {NzBreadCrumbModule} from "ng-zorro-antd/breadcrumb";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzModalModule} from "ng-zorro-antd/modal";
+import {NzTabsModule} from "ng-zorro-antd/tabs";
+import {NzTableModule} from "ng-zorro-antd/table";
+import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {NzToolTipModule} from "ng-zorro-antd/tooltip";
+import {NzRadioModule} from "ng-zorro-antd/radio";
 
 
 @NgModule({
@@ -38,6 +43,11 @@ import {NzModalModule} from "ng-zorro-antd/modal";
     NzBreadCrumbModule,
     NzInputModule,
     NzModalModule,
+    NzTabsModule,
+    NzTableModule,
+    PerfectScrollbarModule,
+    NzToolTipModule,
+    NzRadioModule,
   ]
 })
 export class RepairsModule { }

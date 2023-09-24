@@ -9,6 +9,7 @@ import {NzCardModule} from "ng-zorro-antd/card";
 import {NzNotificationModule} from "ng-zorro-antd/notification";
 import {NzTableModule} from "ng-zorro-antd/table";
 import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
+import {NzIconModule} from "ng-zorro-antd/icon";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {PerfectScrollbarModule} from "ngx-perfect-scrollbar";
     NzCardModule,
     NzNotificationModule,
     NzTableModule,
-    PerfectScrollbarModule
+    PerfectScrollbarModule,
+    NzIconModule,
   ]
 })
 export class PaymentsModule { }
