@@ -65,4 +65,24 @@ export class RepairsService {
       error(err);
     })
   }
+
+  getRepairByContractorApproveSlug(slug: string) {
+    return this.http.get(`${this.baseUrl}/contractor/repair-request/${slug}`, {
+      headers: {
+        Accept: 'application/json',
+        AcceptControlAllowOrigin: '*'
+      }
+    });
+  }
+
+  contractorApproveRepair(data:any, success: (res: any) => void, error: (err: any) => void) {
+    this.http.post(`${this.baseUrl}/contractor/repair-request/approve`, {
+      ...data
+    }).subscribe(res => {
+      success(res);
+    }, (err) => {
+      console.error(err)
+      error(err);
+    })
+  }
 }

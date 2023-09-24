@@ -116,4 +116,34 @@ class RepairRequestController extends Controller
             'alert-type' => $alert,
         ]);
     }
+
+    public function contractorViewRepair($slug) {
+        $rr = RepairRequest::where('contractor_approve_slug', $slug)->where('contractor_approved', 0)->with('property')->firstOrFail();
+        return $rr;
+    }
+
+    public function contractorApproveRepair(Request $request) {
+
+        $validated_request = $request->validate([
+            'contractor_approve_slug'  => 'required|string',
+            'contractor_approved' => 'required|boolean',
+            'contractor_rating' => 'required|int|min:1|max:5',
+            'contractor_feedback' => 'required|string',
+            'contractor_job_cost' => 'required|int'
+        ]);
+
+
+
+        $repairRequest = RepairRequest::where('contractor_approve_slug', $validated_request['contractor_approve_slug'])->where('approved_by_admin', 1)->firstOrFail();
+        $repairRequest->contractor_approved = $validated_request['contractor_approved'];
+        $repairRequest->contractor_rating = $validated_request['contractor_rating'];
+        $repairRequest->contractor_feedback = $validated_request['contractor_feedback'];
+        $repairRequest->contractor_job_cost = $validated_request['contractor_job_cost'];
+        $repairRequest->update();
+        //TODO: notify tenant again that contractor has finished the repair request and ask for their confirmation and feedback
+        // TODO: notify admin that contractor has finished the repair request
+        return [
+            'message' => 'success'
+        ];
+    }
 }
