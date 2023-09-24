@@ -106,4 +106,15 @@ class TenantController extends Controller
             'payments' => $payments
         ], 200);
     }
+
+    public function getRepairRequests(Tenant $tenant)
+    {
+        $repairRequests = $tenant->repairRequests()->get()->makeHidden(['tenant_id', 'updated_at']);
+
+        return response()->json([
+            'repairRequests' => $repairRequests,
+            'message' => 'Repair requests fetched successfully'
+        ], 200);
+
+    }
 }

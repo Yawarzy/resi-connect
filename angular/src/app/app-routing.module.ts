@@ -32,6 +32,10 @@ const routes: Routes = [
     path: 'tenant',
     loadChildren: () => import('./tenant-dashboard/feature/tenant-dashboard-shell/tenant-dashboard-shell.module').then(m => m.TenantDashboardShellModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'contractor',
+    loadChildren: () => import('./contractor/feature/contractor-shell/contractor-shell.module').then(m => m.ContractorShellModule),
   }
 ];
 

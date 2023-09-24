@@ -1,0 +1,203 @@
+<app-page
+  [showNavItems]="false"
+>
+  <div *ngIf="!invalidLink" class="container">
+
+    <ng-container *ngIf="!isApproved">
+      <header class="mt-4 section__header">
+        <h2 class="section__title">View and Confirm Repair</h2>
+        <p class="section__subtitle">
+          Please carefully read the details of the repair request and provide the feedback only after the completion of
+          repair
+        </p>
+      </header>
+
+      <nz-tabset>
+        <nz-tab nzTitle="View Repair">
+          <nz-card>
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+              <span>
+                Tenant Name
+              </span>
+                <span nz-typography nzType="secondary">
+                {{item?.tenant?.full_name}}
+              </span>
+              </div>
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+                <span>
+                  Tenant Contact
+                </span>
+                <span nz-typography nzType="secondary">
+                {{item?.phone}} / {{item?.tenant?.alternate_phone_number ?? 'No alternate number'}}
+                </span>
+              </div>
+            </div>
+
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+                <span>
+                  Property Name & Address
+                </span>
+                <span nz-typography nzType="secondary">
+              {{item?.property?.name}}, {{item?.property?.full_address}}
+              </span>
+              </div>
+
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+                <span>
+                  Room Number
+                </span>
+                <span nz-typography nzType="secondary">
+              {{item?.room_no}}
+            </span>
+              </div>
+            </div>
+
+
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+                <span>
+                  Problem Category
+                </span>
+                <span nz-typography nzType="secondary">
+              {{item?.problem_breadcrumb}}
+            </span>
+              </div>
+
+              <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
+                <span>
+                  Problem Description
+                </span>
+                <span nz-typography nzType="secondary">
+              {{item?.problem_description}}
+            </span>
+              </div>
+            </div>
+
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+              <span>
+                Problem Images
+              </span>
+                <span nz-typography nzType="secondary">
+<!--              <perfect-scrollbar [config]="psConfig">-->
+                <lightgallery #lightgalleryComponent [onInit]="galleryOnInit" [settings]="settings">
+                  <a *ngFor="let file of files" [attr.data-src]="baseUrl + '/storage/' + file"
+                     class="gallery-item">
+                  <img [src]="baseUrl + '/storage/' + file" alt="" class="img-responsive">
+                  </a>
+                </lightgallery>
+                  <!--              </perfect-scrollbar>-->
+              </span>
+              </div>
+            </div>
+          </nz-card>
+        </nz-tab>
+
+        <nz-tab nzTitle="Confirm Repair">
+          <nz-card>
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+                <span class="mb-2">
+                  How would you rate the cooperation provided by the tenant ?
+                </span>
+                <span nz-typography nzType="secondary">
+                    <nz-radio-group
+                      [formControl]="form.controls.contractor_rating"
+                    >
+                      <label *ngFor="let option of radioOptions" [nzValue]="option.value" nz-radio>
+                        <span nz-typography nzType="secondary">{{option.label}}</span>
+                      </label>
+                    </nz-radio-group>
+                </span>
+              </div>
+            </div>
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+                <span nz-typography nzType="secondary">
+                  <nz-form-item>
+                    <nz-form-label [nzRequired]="true" nzFor="jobCost">Repair Cost</nz-form-label>
+                    <nz-input-group [nzPrefix]="currencyIconTemplate">
+                      <input [formControl]="form.controls.contractor_job_cost" id="jobCost" nz-input nzSize="default"
+                             placeholder="Repair cost"
+                             style="" type="number">
+                    </nz-input-group>
+                   <div
+                     *ngIf="form.controls.contractor_job_cost.invalid && form.controls.contractor_job_cost.dirty && form.controls.contractor_job_cost.touched"
+                     class="text-danger mt-2">
+                    <div *ngIf="form.controls.contractor_job_cost?.errors?.['required']">
+                      Repair cost is required
+                    </div>
+                  </div>
+                  </nz-form-item>
+                </span>
+              </div>
+            </div>
+            <div nz-row nzGutter="16">
+              <div class="d-flex flex-column" nz-col nz-typography nzXs="24">
+                <span nz-typography nzType="secondary">
+                  <nz-form-item>
+                    <nz-form-label [nzRequired]="true" nzFor="feedback">Feedback</nz-form-label>
+                     <textarea
+                       [formControl]="form.controls.contractor_feedback"
+                       id="feedback"
+                       nz-input
+                       placeholder="Please provide any additional feedback..."
+                       rows="5"
+                     ></textarea>
+                   <div
+                     *ngIf="form.controls.contractor_feedback.invalid && form.controls.contractor_feedback.dirty && form.controls.contractor_feedback.touched"
+                     class="text-danger mt-2">
+                    <div *ngIf="form.controls.contractor_feedback?.errors?.['required']">
+                      Repair cost is required
+                    </div>
+                  </div>
+                  </nz-form-item>
+                </span>
+              </div>
+            </div>
+
+            <button (click)="onFormSubmit()" *ngIf="!isApproved" [disabled]="form.invalid || loading" [nzLoading]="loading"
+                    nz-button
+                    nzType="primary">
+              Confirm
+            </button>
+          </nz-card>
+        </nz-tab>
+      </nz-tabset>
+    </ng-container>
+
+    <div *ngIf="!loading && isApproved" class="confirmation-container">
+      <span
+        class="icon"
+        nz-icon
+        nzTheme="twotone"
+        nzTwotoneColor="#52c41a"
+        nzType="check-circle"
+      ></span>
+      <h3 class="mb-1" nz-typography>Confirmation</h3>
+      <p nz-typography nzType="secondary">
+        Your repair has been successfully confirmed.
+      </p>
+    </div>
+  </div>
+
+  <div class="container" style="padding-top: 4rem;">
+    <nz-alert *ngIf="invalidLink" [nzDescription]="alertDescription" [nzMessage]="alertTitle"
+              [nzType]="'error'"></nz-alert>
+  </div>
+
+  <ng-template #currencyIconTemplate>
+    <span nz-typography>₹</span>
+  </ng-template>
+
+  <ng-template #alertTitle>
+    <h4   nz-typography>Invalid Url</h4>
+  </ng-template>
+
+  <ng-template #alertDescription>
+    <p nz-typography nzType="secondary" style="font-size: 1rem">The url you are trying to access does not exist or has expired.</p>
+  </ng-template>
+
+</app-page>

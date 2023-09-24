@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {PropertiesService, Property} from "../../../properties/data-access/properties.service";
 import {RepairCategory, RepairProblem, RepairsService} from "../../data-access/repairs.service";
 import {Tenant} from "../../data-access/tenant.service";
+import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
+import {NzNotificationService} from "ng-zorro-antd/notification";
 
 @Component({
   selector: 'app-repairs',
@@ -33,7 +35,44 @@ export class RepairsComponent implements OnInit {
     })
   })
 
-  constructor(private propertiesService: PropertiesService, private repairsService: RepairsService) {
+  isDialogVisible = false;
+  dialogTitle = 'Emergency Contact';
+  dialogContent: any;
+  psConfig: PerfectScrollbarConfigInterface = {
+    suppressScrollY: true
+  };
+  isVisible = false;
+  confirmForm = new FormGroup({
+    tenant_approve_slug: new FormControl('', [Validators.required]),
+    tenant_approved: new FormControl(false, [Validators.requiredTrue]),
+    tenant_rating: new FormControl(3, [Validators.required]),
+    tenant_feedback: new FormControl('', [Validators.required])
+  });
+  radioOptions: any[] = [
+    {
+      label: 'Terrible',
+      value: 1,
+    },
+    {
+      label: 'Bad',
+      value: 2,
+    },
+    {
+      label: 'Neutral',
+      value: 3,
+    },
+    {
+      label: 'Good',
+      value: 4,
+    },
+    {
+      label: 'Excellent',
+      value: 5,
+    },
+  ]
+  tenantRepairRequests: any[] = [];
+
+  constructor(private propertiesService: PropertiesService, private repairsService: RepairsService, private notificationService: NzNotificationService) {
   }
 
   ngOnInit(): void {
@@ -59,6 +98,8 @@ export class RepairsComponent implements OnInit {
     }, (err: any) => {
       console.error(err);
     });
+
+    this.getTenantRepairs();
   }
 
   pre(): void {
@@ -117,10 +158,6 @@ export class RepairsComponent implements OnInit {
     }
   }
 
-  isDialogVisible = false;
-  dialogTitle = 'Emergency Contact';
-  dialogContent: any;
-
   resetToDefault() {
     this.repairRequestForm.controls.repair_problem_id.reset();
     this.selectedProblem = undefined;
@@ -157,6 +194,89 @@ export class RepairsComponent implements OnInit {
     }, (err: any) => {
       this.loading = false;
       this.success = false;
+    });
+  }
+
+  handleCancel() {
+    this.isVisible = false;
+  }
+
+  confirmTenantRepair() {
+    this.confirmForm.patchValue({
+      tenant_approved: true
+    });
+    this.repairsService.tenantApproveRepair(this.confirmForm.value, (res: any) => {
+      this.isVisible = false;
+      this.confirmForm.reset();
+      this.notificationService.success('Success', 'Repair confirmed!!');
+      this.getTenantRepairs();
+    }, (err: any) => {
+      console.error(err);
+      this.notificationService.error('Error', 'Something went wrong!!');
+    });
+  }
+
+  getStatus(rr: any) {
+    if (rr.tenant_approved === '1' && rr.approved_by_admin === '1' && rr.contractor_approved === '1') {
+      return 'Completed';
+    }
+
+    if (rr.contractor_approved === '1' && rr.approved_by_admin === '1') {
+      return 'Contractor Approved';
+    }
+
+    if (rr.contractor_approved === '0' && rr.approved_by_admin === '1') {
+      return 'In Progress';
+    }
+
+    if (rr.rejected_by_admin === '1') {
+      return 'Rejected';
+    }
+
+    if (rr.approved_by_admin === '0') {
+      return 'Pending'
+    }
+
+    if (rr.approved_by_admin === '1') {
+      return 'Approved';
+    }
+
+    return 'Pending';
+  }
+
+  public getRating(rating: number) {
+    if (rating === 1) {
+      return 'Terrible';
+    }
+
+    if (rating === 2) {
+      return 'Bad';
+    }
+
+    if (rating === 3) {
+      return 'Neutral';
+    }
+
+    if (rating === 4) {
+      return 'Good';
+    }
+
+    if (rating === 5) {
+      return 'Excellent';
+    }
+
+    return 'N/A';
+  }
+
+
+  private getTenantRepairs() {
+    this.repairsService.getAllRepairRequests(this.tenant!.id, (res: any) => {
+      this.tenantRepairRequests = res.repairRequests;
+      this.confirmForm.patchValue({
+        tenant_approve_slug: this.tenantRepairRequests[0]?.tenant_approve_slug
+      });
+    }, (err: any) => {
+      console.error(err);
     });
   }
 }
