@@ -40,13 +40,14 @@ class Enquiry extends Model
         'created_at' => 'datetime:d-m-Y',
     ];
 
-    public function getContractSignedAttribute($attr) {
-        if ($attr) {
-            return 'Yes';
-        } else {
-            return 'No';
-        }
-    }
+    // TODO: This causes an error when uploading the contract
+//    public function getContractSignedAttribute($attr) {
+//        if ($attr) {
+//            return 'Yes';
+//        } else {
+//            return 'No';
+//        }
+//    }
 
     public function getCreatedAtAttribute()
     {

@@ -59,7 +59,9 @@
                             <td>{{$tenant->rent_month}}</td>
                             <td>{{$tenant->rent_balance}}</td>
                             <td>{{$tenant->time_left_string}}</td>
-                            <td>{{$tenant->last_emailed_at->diffForHumans() ?? 'Not Sent'}}</td>
+                            <td>{{
+    $tenant->last_emailed_at ? $tenant->last_emailed_at->diffForHumans() ?? 'Not Sent' : 'Not Sent'
+}}</td>
                             <td>
                                 <button style="margin: 0" class="btn btn-danger"
                                         onclick="sendRentReminder(event,{{$tenant->id}})">Send
