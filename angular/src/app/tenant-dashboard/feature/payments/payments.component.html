@@ -13,7 +13,7 @@
 
     <nz-card>
       <div class="table-responsive" [perfectScrollbar]="config">
-        <table class="table table-striped">
+        <table class="table table-striped" *ngIf="rentPayments.length > 0">
           <thead>
           <tr>
             <th># ID</th>
@@ -44,6 +44,16 @@
           </tr>
           </tbody>
         </table>
+
+        <div>
+          <div *ngIf="rentPayments.length === 0" class="flex-center flex-column mt-3 gap-3" nz-typography
+               nzType="secondary">
+            <span nz-icon nzTheme="outline" nzType="file-search" style="font-size: 2rem"></span>
+            <p>
+              No payments have been made yet.
+            </p>
+          </div>
+        </div>
       </div>
     </nz-card>
   </div>

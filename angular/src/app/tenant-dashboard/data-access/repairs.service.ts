@@ -65,4 +65,47 @@ export class RepairsService {
       error(err);
     })
   }
+
+  getRepairByContractorApproveSlug(slug: string) {
+    return this.http.get(`${this.baseUrl}/contractor/repair-request/${slug}`, {
+      headers: {
+        Accept: 'application/json',
+        AcceptControlAllowOrigin: '*'
+      }
+    });
+  }
+
+  contractorApproveRepair(data: any, success: (res: any) => void, error: (err: any) => void) {
+    this.http.post(`${this.baseUrl}/contractor/repair-request/approve`, {
+      ...data
+    }).subscribe(res => {
+      success(res);
+    }, (err) => {
+      console.error(err)
+      error(err);
+    })
+  }
+
+  getAllRepairRequests(tenantId: number, success: (res: any) => void, error: (err: any) => void) {
+    this.http.get(`${this.baseUrl}/tenant/repair-requests/${tenantId}`, {
+      headers: {
+        Accept: 'application/json',
+      }
+    }).subscribe(res => {
+      success(res);
+    }, (err) => {
+      error(err);
+    })
+  }
+
+  tenantApproveRepair(data: any, success: (res: any) => void, error: (err: any) => void) {
+    this.http.post(`${this.baseUrl}/tenant/repair-request/approve`, {
+      ...data
+    }).subscribe(res => {
+      success(res);
+    }, (err) => {
+      console.error(err)
+      error(err);
+    })
+  }
 }

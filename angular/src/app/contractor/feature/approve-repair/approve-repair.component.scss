@@ -1,0 +1,45 @@
+:host {
+  .container {
+    padding-bottom: 4rem;
+  }
+
+  lightgallery {
+    display: flex;
+    padding-block: 0.25rem;
+    overflow: auto;
+  }
+
+  .gallery-item {
+    flex-grow: 1;
+    flex-shrink: 0;
+  }
+
+  .img-responsive {
+    max-width: 100%;
+    width: 20rem;
+    height: 14.65rem;
+    object-fit: cover;
+    display: inline-block;
+    margin: .15rem;
+  }
+
+  nz-form-item {
+    margin-bottom: 0;
+  }
+
+
+  .confirmation-container {
+    margin-top: 4rem;
+    background: #fafafa;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding-block: 5rem;
+  }
+
+  .icon {
+    display: inline-block;
+    transform: scale(3);
+    margin-bottom: 2rem;
+  }
+}

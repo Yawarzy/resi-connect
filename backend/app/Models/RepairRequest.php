@@ -48,6 +48,8 @@ class RepairRequest extends Model
         "files" => "array",
     ];
 
+    protected $with = ['contractor'];
+
     public function getFullNameAttribute()
     {
         return $this->tenant->full_name;

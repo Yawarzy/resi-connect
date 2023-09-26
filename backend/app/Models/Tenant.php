@@ -137,6 +137,11 @@ class Tenant extends Model
         return $this->hasMany(RentPayments::class, 'tenant_id', 'id')->orderBy('created_at', 'desc');
     }
 
+    public function repairRequests()
+    {
+        return $this->hasMany(RepairRequest::class, 'tenant_id', 'id')->orderBy('created_at', 'desc');
+    }
+
     public function sendCredentialsToTenantNotification($tenant, $initPassword)
     {
         $this->notify(new SendCredentialsToTenantNotification($tenant, $initPassword));

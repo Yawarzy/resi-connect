@@ -7,10 +7,12 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ContractorAssignRepairRequestNotification extends Notification
+class AdminTenantFinishedRepairNotification extends Notification
 {
     use Queueable;
+
     private RepairRequest $repairRequest;
+
 
     /**
      * Create a new notification instance.
@@ -25,7 +27,7 @@ class ContractorAssignRepairRequestNotification extends Notification
     /**
      * Get the notification's delivery channels.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function via($notifiable)
@@ -36,28 +38,32 @@ class ContractorAssignRepairRequestNotification extends Notification
     /**
      * Get the mail representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
     public function toMail($notifiable)
     {
+        $rc = $this->repairRequest;
+
         $app_url = config('app.debug') ? config('app.url_local') : config('app.url');
-        $mail_message = (new MailMessage)
-            ->subject("Repair Request Assigned")
-            ->greeting('Hello ' . $this->repairRequest->contractor->name . '!')
-            ->line("A new repair request has been assigned to you")
-            ->line('**Comments from Landlord:** ' . $this->repairRequest->comments)
-            ->line("After you have completed the repair, please click the button below to confirm the repair.")
-            ->action('View & Confirm Repair', url($app_url . '/contractor/approve-repair/' . $this->repairRequest->contractor_approve_slug));
 
-
-        return $mail_message;
+        return (new MailMessage)
+            ->subject('Repair Confirmed By Tenant - ' . $rc->full_name)
+            ->greeting('Dear Landlord')
+            ->line('A repair request has been confirmed by ' . $rc->full_name)
+            ->line('**Property Name:** ' . $rc->property->name)
+            ->line('**Problem:** ' . $rc->problem_breadcrumb)
+            ->line('**Problem Description:** ' . $rc->problem_description)
+            ->line('**Tenant Name:** ' . $rc->full_name)
+            ->line('**Email:** ' . $rc->email)
+            ->line('**Phone:** ' . $rc->phone)
+            ->action('View Repair Request', url($app_url . '/admin/repair-requests/' . $rc->id));
     }
 
     /**
      * Get the array representation of the notification.
      *
-     * @param  mixed  $notifiable
+     * @param mixed $notifiable
      * @return array
      */
     public function toArray($notifiable)

@@ -7,8 +7,11 @@ use App\Models\Problem;
 use App\Models\RepairCategory;
 use App\Models\RepairRequest;
 use App\Models\Tenant;
+use App\Notifications\AdminContractorFinishedRepairNotification;
+use App\Notifications\AdminTenantFinishedRepairNotification;
 use App\Notifications\ContractorAssignRepairRequestNotification;
 use App\Notifications\LandlordRepairRequestReceivedNotification;
+use App\Notifications\TenantContractorFinishedRepairNotification;
 use App\Notifications\TenantRepairRequestApprovedNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -91,7 +94,8 @@ class RepairRequestController extends Controller
 
     }
 
-    public function landlordApproveRepair(Request $request, RepairRequest $repairRequest) {
+    public function landlordApproveRepair(Request $request, RepairRequest $repairRequest)
+    {
         $approved = $request->approved === '1';
         $repairRequest->approved_by_admin = $approved;
         $repairRequest->save();
@@ -100,6 +104,9 @@ class RepairRequestController extends Controller
 
         if ($approved) {
             $repairRequest->contractor->notify(new ContractorAssignRepairRequestNotification($repairRequest));
+        }
+        {
+            $repairRequest->rejected_by_admin = true;
         }
 
         $message = '';
@@ -115,5 +122,58 @@ class RepairRequestController extends Controller
             'message' => $message,
             'alert-type' => $alert,
         ]);
+    }
+
+    public function contractorViewRepair($slug) {
+        $rr = RepairRequest::where('contractor_approve_slug', $slug)->where('contractor_approved', 0)->with('property')->firstOrFail();
+        return $rr;
+    }
+
+    public function contractorApproveRepair(Request $request) {
+
+        $validated_request = $request->validate([
+            'contractor_approve_slug'  => 'required|string',
+            'contractor_approved' => 'required|boolean',
+            'contractor_rating' => 'required|int|min:1|max:5',
+            'contractor_feedback' => 'required|string',
+            'contractor_job_cost' => 'required|int'
+        ]);
+
+        $repairRequest = RepairRequest::where('contractor_approve_slug', $validated_request['contractor_approve_slug'])->where('approved_by_admin', 1)->firstOrFail();
+        $repairRequest->contractor_approved = $validated_request['contractor_approved'];
+        $repairRequest->contractor_rating = $validated_request['contractor_rating'];
+        $repairRequest->contractor_feedback = $validated_request['contractor_feedback'];
+        $repairRequest->contractor_job_cost = $validated_request['contractor_job_cost'];
+        $repairRequest->update();
+
+        $landlord = $repairRequest->property->landlord;
+        $landlord->notify(new AdminContractorFinishedRepairNotification($repairRequest));
+        $repairRequest->tenant->notify(new TenantContractorFinishedRepairNotification($repairRequest));
+
+        return [
+            'message' => 'success'
+        ];
+    }
+
+    public function tenantApproveRepair(Request $request)
+    {
+        $validated_request = $request->validate([
+            'tenant_approve_slug' => 'required|string',
+            'tenant_approved' => 'required|boolean',
+            'tenant_rating' => 'required|int|min:1|max:5',
+            'tenant_feedback' => 'required|string',
+        ]);
+
+        $repairRequest = RepairRequest::where('tenant_approve_slug', $validated_request['tenant_approve_slug'])->where('approved_by_admin', 1)->firstOrFail();
+        $repairRequest->tenant_approved = $validated_request['tenant_approved'];
+        $repairRequest->tenant_rating = $validated_request['tenant_rating'];
+        $repairRequest->tenant_feedback = $validated_request['tenant_feedback'];
+        $repairRequest->update();
+
+        $landlord = $repairRequest->property->landlord;
+        $landlord->notify(new AdminTenantFinishedRepairNotification($repairRequest));
+        return [
+            'message' => 'success'
+        ];
     }
 }
