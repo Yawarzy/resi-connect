@@ -164,10 +164,13 @@
           </nz-input-group>
 
           <div
-            *ngIf="enquiryForm.get('phone_number')?.invalid && (enquiryForm.get('phone_number')?.dirty || enquiryForm.get('phone_number')?.touched)"
+            *ngIf="enquiryForm.get('phone_number')?.invalid && (enquiryForm.get('phone_number')?.dirty && enquiryForm.get('phone_number')?.touched)"
             class="text-danger mt-2">
             <div *ngIf="enquiryForm.get('phone_number')?.errors?.['required']">
               Phone Number is required.
+            </div>
+            <div *ngIf="enquiryForm.get('phone_number')?.errors?.['pattern']">
+              Enter a valid phone number.
             </div>
           </div>
         </nz-form-item>

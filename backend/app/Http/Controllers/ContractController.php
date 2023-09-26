@@ -30,6 +30,7 @@ class ContractController extends Controller
         $filename = $name . '_' . date('Y-m-d_H-i-s') . '_' . uniqid() . '.pdf';
 
         // save the contract to storage/app/contracts
+        dd($filename);
         $pdf->save(storage_path('app/public/contracts/' . $filename));
 
         // save the path of the contract file in the enquiry table
