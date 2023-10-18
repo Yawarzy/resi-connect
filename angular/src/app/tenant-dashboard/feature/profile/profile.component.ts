@@ -54,6 +54,19 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  handleCancel() {
+    this.editMode = !this.editMode;
+    this.profileForm.patchValue({
+      id: this.tenant.id,
+      full_name: this.tenant.full_name,
+      date_of_birth: this.tenant.date_of_birth,
+      email: this.tenant.email,
+      phone_number: this.tenant.phone_number,
+      alternate_phone_number: this.tenant.alternate_phone_number,
+      home_address: this.tenant.home_address,
+    });
+  }
+
   handleChangePassword() {
     const payload = {
       id: this.tenant.user_id,

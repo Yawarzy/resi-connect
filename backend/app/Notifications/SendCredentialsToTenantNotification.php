@@ -47,7 +47,7 @@ class SendCredentialsToTenantNotification extends Notification
         $app_url = config('app.debug') ? config('app.url_local') : config('app.url');
         return (new MailMessage)
             ->greeting('Hello, ' . $this->tenant->full_name)
-            ->subject('')
+            ->subject('Credentials for you account | ' . config('app.name'))
             ->line('We are thrilled to have you as our tenant. Thank you for choosing our services.')
             ->line('Here are your login credentials:')
             ->line('**Email:** ' . $this->tenant->email)

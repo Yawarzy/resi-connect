@@ -44,17 +44,22 @@ class Tenant extends Model
     protected $casts = [
         'commencement_date' => 'datetime:d-m-Y',
         'last_emailed_at' => 'datetime:d-m-Y',
+        'next_rent_due_date' => 'datetime:d-m-Y',
+    ];
+    protected $appends = [
+        'next_rent_due_date',
     ];
 
     public function getExpiryDateAttribute()
     {
         $expiry_date = new DateTime($this->commencement_date);
-        $interval = new DateInterval('P'. $this->agreement_duration .'M');
+        $interval = new DateInterval('P' . $this->agreement_duration . 'M');
         $expiry_date->add($interval);
         return $expiry_date->format('d-m-Y');
     }
 
-    public function getTimeLeftAttribute() {
+    public function getTimeLeftAttribute()
+    {
         $now = Carbon::now();
         return $now->diffInDays($this->expiry_date, false);
     }
@@ -72,10 +77,22 @@ class Tenant extends Model
         }
     }
 
-    public function getNextRentDueDateAttribute() {
-        $day=  $this->commencement_date->format('d');
-        $month_year = Carbon::now()->format('m-Y');
-        return Carbon::createFromFormat('d-m-Y', $day.'-'.$month_year)->format('d-m-Y');
+    public function getNextRentDueDateAttribute()
+    {
+        $commencementDate = $this->commencement_date;
+        $currentDate = Carbon::now();
+
+        // If the current date is on or after the commencement date of the month,
+        // set the next payment due date to the 1st day of the next month.
+        if ($currentDate->isSameMonth($commencementDate) || $currentDate->gt($commencementDate)) {
+            $nextPaymentDueDate = $commencementDate->copy()->addMonth()->startOfMonth();
+        } else {
+            // If the current date is before the commencement date of the month,
+            // set the next payment due date to the commencement date of the current month.
+            $nextPaymentDueDate = $commencementDate->copy()->startOfMonth();
+        }
+
+        return $nextPaymentDueDate->format('d-m-Y');
     }
 
     function getTotalRentPaidAttribute(){
@@ -92,20 +109,23 @@ class Tenant extends Model
         return $this->total_rent_to_pay - $this->total_rent_paid;
     }
 
-    public function getPropertyAttribute() {
+    public function getPropertyAttribute()
+    {
         return Property::find($this->property_id);
     }
 
-    public function getReferenceNumberAttribute() {
+    public function getReferenceNumberAttribute()
+    {
         return $this->property->prefix . 'R' . $this->room_number . 'T' . $this->id;
     }
 
-    public function getIsActiveAttribute($value) {
-        if ($value == 1) {
-            return 'Yes';
-        }
-        return 'No';
-    }
+    // TODO: This causes an error when editing the tenant
+//    public function getIsActiveAttribute($value) {
+//        if ($value == 1) {
+//            return 'Yes';
+//        }
+//        return 'No';
+//    }
 
     function owesMoreThanOneMonthRent()
     {

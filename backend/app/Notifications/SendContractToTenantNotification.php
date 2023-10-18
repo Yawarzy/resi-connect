@@ -49,7 +49,7 @@ class SendContractToTenantNotification extends Notification
         return (new MailMessage)
             // email greeting, subject, and body for the tenant, this should contain the attached contract and information
             ->greeting('Hello ' . $this->enquiry->full_name . ',')
-            ->subject('Rental Agreement | ' . env('APP_NAME'))
+            ->subject('Rental Agreement | ' . config('app.name'))
             ->line('As we discussed, the Rental Agreement which needs to be signed by you is attached to this email.')
             ->line('Kindly review the agreement and submit it to us at your earliest convenience.')
             ->line('If you have any questions, please feel free to contact us.')

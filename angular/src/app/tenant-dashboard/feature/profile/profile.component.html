@@ -20,7 +20,8 @@
                 Update your profile information.
               </p>
             </div>
-            <div>
+            <div class="d-flex gap-3">
+              <button nz-button *ngIf="editMode" (click)="handleCancel()" nzType="default">Cancel</button>
               <button (click)="handleSave()" [nzType]="editMode ? 'primary' : 'default'" nz-button>
                 {{editMode ? 'Save' : 'Edit'}}
               </button>
