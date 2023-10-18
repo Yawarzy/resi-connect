@@ -15,7 +15,14 @@ export class AuthLoginFormComponent implements OnInit {
   })
   loading = false;
 
+  authMode: 'tenant' | 'landlord' = 'tenant';
+
   constructor(private authService: AuthService, private router: Router) {
+    if (this.router.url === '/auth/landlord/login') {
+      this.authMode = 'landlord';
+    } else {
+      this.authMode = 'tenant';
+    }
   }
 
   ngOnInit(): void {
@@ -25,15 +32,31 @@ export class AuthLoginFormComponent implements OnInit {
     this.loading = true;
     const {email, password} = this.form.value;
     if (email && password) {
-      this.authService.login({email, password}, () => {
-        this.loading = false;
-        this.router.navigate(['/tenant/dashboard/overview']);
-      }, (err) => {
-        this.loading = false;
-        if (err.status === 401) {
-          this.form.setErrors({invalidCredentials: true});
-        }
-      });
+      if (this.authMode === 'landlord') {
+        this.authService.landlordLogin({email, password}, () => {
+          this.loading = false;
+          this.router.navigate(['/landlord/dashboard/overview']);
+        }, (err) => {
+          this.loading = false;
+          if (err.status === 401) {
+            this.form.setErrors({invalidCredentials: true});
+          }
+        });
+        return;
+      }
+
+      if (this.authMode === 'tenant') {
+        this.authService.login({email, password}, () => {
+          this.loading = false;
+          this.router.navigate(['/tenant/dashboard/overview']);
+        }, (err) => {
+          this.loading = false;
+          if (err.status === 401) {
+            this.form.setErrors({invalidCredentials: true});
+          }
+        });
+      }
+
     }
   }
 }

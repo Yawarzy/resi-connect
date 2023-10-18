@@ -5,6 +5,10 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('../auth-login-form/auth-login-form.module').then(m => m.AuthLoginFormModule)
+  },
+  {
+    path: 'landlord/login',
+    loadChildren: () => import('../auth-login-form/auth-login-form.module').then(m => m.AuthLoginFormModule)
   }
 ];
 

@@ -10,19 +10,23 @@ import {FormsModule} from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthInterceptorService} from "./shared/data-access/auth-interceptor.service";
+import {LandlordDashboardComponent} from './landlord-dashboard/feature/landlord-dashboard/landlord-dashboard.component';
+import {DashboardModule} from "./shared/ui/dashboard/dashboard.module";
 
 registerLocaleData(en);
 
 @NgModule({
   declarations: [
     AppComponent,
+    LandlordDashboardComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    DashboardModule
   ],
   providers: [
     {provide: NZ_I18N, useValue: en_US},

@@ -4,13 +4,13 @@ import {RouterModule, Routes} from '@angular/router';
 const routes: Routes = [
   {
     path: 'dashboard',
-    loadChildren: () => import('../dashboard/tenant-dashboard.module').then(m => m.TenantDashboardModule),
-  },
+    loadChildren: () => import('../landlord-dashboard/landlord-dashboard.module').then(m => m.LandlordDashboardModule),
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TenantDashboardShellRoutingModule {
+export class LandlordDashboardShellRoutingModule {
 }

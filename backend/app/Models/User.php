@@ -45,4 +45,9 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasOne(Tenant::class, 'user_id');
     }
+
+    public function landlord()
+    {
+        return $this->hasOne(Landlord::class, 'user_id');
+    }
 }

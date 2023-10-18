@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "./auth/util/auth-guard";
+import {LandlordAuthGuard} from "./auth/util/landloard-auth-guard";
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'tenant',
     loadChildren: () => import('./tenant-dashboard/feature/tenant-dashboard-shell/tenant-dashboard-shell.module').then(m => m.TenantDashboardShellModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'landlord',
+    loadChildren: () => import('./landlord-dashboard/feature/landlord-dashboard-shell/landlord-dashboard-shell.module').then(m => m.LandlordDashboardShellModule),
+    canActivate: [LandlordAuthGuard],
   },
   {
     path: 'contractor',

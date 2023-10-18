@@ -7,6 +7,42 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+
+    public function landlordLogin(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
+
+        // check if user is landlord
+        $user = User::where('email', $request->email)->first();
+        if (!$user || $user->role_id != 3) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Invalid credentials',
+            ], 401);
+        }
+
+        if (auth()->attempt($credentials)) {
+            $user = auth()->user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+
+            return response()->json([
+                'status' => 'success',
+                'token' => $token,
+                'user' => $user,
+                'landlord' => $user->landlord()->get()->except(['created_at', 'updated_at'])
+            ]);
+        }
+
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Invalid credentials',
+        ], 401);
+    }
+
+
     /**
      * Login for Tenant
      * @param Request $request

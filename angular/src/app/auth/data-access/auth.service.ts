@@ -15,10 +15,29 @@ export class AuthService {
   baseUrl = environment.baseUrl + '/api/';
 
   private currentTenant$: Observable<any> | undefined;
+  private currentLandlord$: Observable<any> | undefined;
 
   constructor(
     private http: HttpClient,
   ) {
+  }
+
+
+  landlordLogin(loginDto: LoginDto, success?: () => void, error?: (err: any) => void) {
+    this.http.post(this.baseUrl + 'landlord/login', loginDto, {
+      headers: {
+        'Accept': 'application/json',
+      }
+    }).subscribe((res: any) => {
+      localStorage.setItem('landlord_token', res.token);
+      this.currentLandlord$ = of(res.landlord[0]);
+      console.log({res})
+      localStorage.setItem('currentLandlord', JSON.stringify(res.landlord[0]));
+      success?.();
+    }, err => {
+      console.error(err);
+      error?.(err);
+    });
   }
 
 
@@ -42,7 +61,11 @@ export class AuthService {
     return !!localStorage.getItem('token');
   }
 
-  logout() {
+  isLandlordLoggedIn() {
+    return !!localStorage.getItem('landlord_token');
+  }
+
+  logout(user: "landlord" | "tenant" = "tenant") {
     this.http.post(this.baseUrl + 'logout', {}, {
       headers: {
         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -50,10 +73,18 @@ export class AuthService {
       }
     }).subscribe(res => {
       // remove the token and currentTenant from LS
-      localStorage.removeItem('token');
-      localStorage.removeItem('currentTenant');
+      if (user === "tenant") {
+        localStorage.removeItem('token');
+        localStorage.removeItem('currentTenant');
+      }
+
+      if (user === "landlord") {
+        localStorage.removeItem("landlord_token");
+        localStorage.removeItem("currentLandlord");
+      }
     })
   }
+
 
   getCurrentTenant$() {
     this.currentTenant$?.subscribe(user => {

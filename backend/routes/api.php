@@ -41,7 +41,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
  * Auth
  */
 Route::post('/login', 'App\Http\Controllers\AuthController@login');
+Route::post('/landlord/login', 'App\Http\Controllers\AuthController@landlordLogin');
 Route::post('/is-authenticated', 'App\Http\Controllers\AuthController@isAuthenticated');
+
 
 // Public routes
 /**

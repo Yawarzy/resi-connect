@@ -5,14 +5,14 @@ import {Injectable} from "@angular/core";
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
+export class LandlordAuthGuard implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) {
   }
 
   canActivate() {
     // only logged in users can access
-    if (this.authService.isLoggedIn()) {
+    if (this.authService.isLandlordLoggedIn()) {
       return true;
     } else {
       this.router.navigate(['/']);

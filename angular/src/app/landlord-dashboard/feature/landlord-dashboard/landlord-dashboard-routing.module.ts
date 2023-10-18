@@ -1,16 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import {LandlordDashboardComponent} from "./landlord-dashboard.component";
 
 const routes: Routes = [
   {
-    path: 'dashboard',
-    loadChildren: () => import('../dashboard/tenant-dashboard.module').then(m => m.TenantDashboardModule),
-  },
+    path: '',
+    component: LandlordDashboardComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TenantDashboardShellRoutingModule {
+export class LandlordDashboardRoutingModule {
 }
