@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     component: AuthLoginFormComponent,
-    canActivate: [UnauthGuard]
+    canActivate: [UnauthGuard],
   }
 ];
 

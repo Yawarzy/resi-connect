@@ -35,7 +35,7 @@ export class AuthLoginFormComponent implements OnInit {
       if (this.authMode === 'landlord') {
         this.authService.landlordLogin({email, password}, () => {
           this.loading = false;
-          this.router.navigate(['/landlord/dashboard/overview']);
+          this.router.navigate(['/landlord/dashboard']);
         }, (err) => {
           this.loading = false;
           if (err.status === 401) {
