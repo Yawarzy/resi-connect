@@ -27,14 +27,17 @@ class ContractController extends Controller
 
         $name = implode('_', explode(' ', $id->full_name));
         // name the file with the enquiry name, and current utc date and a unique id
-        $filename = $name . '_' . date('Y-m-d_H-i-s') . '_' . uniqid() . '.pdf';
+        $filename = 'unsigned_contract_' . $name . '_' . date('Y-m-d_H-i-s') . '_' . uniqid() . '.pdf';
 
         // save the contract to storage/app/contracts
-        dd($filename);
-        $pdf->save(storage_path('app/public/contracts/' . $filename));
+        $pdf->save(storage_path('app/public/contracts/unsigned/' . $filename));
+        $filePathObj = [[
+            'download_link' => 'contracts/unsigned/' . $filename,
+            'original_name' => $filename
+        ]];
 
         // save the path of the contract file in the enquiry table
-        $id->unsigned_contract = 'contracts/' . $filename;
+        $id->unsigned_contract = json_encode($filePathObj);
 
         // generate upload_contract_slug
         $id->upload_contract_slug = md5(uniqid() . time());

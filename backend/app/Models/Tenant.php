@@ -89,7 +89,7 @@ class Tenant extends Model
         } else {
             // If the current date is before the commencement date of the month,
             // set the next payment due date to the commencement date of the current month.
-            $nextPaymentDueDate = $commencementDate->copy()->startOfMonth();
+            $nextPaymentDueDate = $commencementDate->copy()->addMonth()->startOfMonth();
         }
 
         return $nextPaymentDueDate->format('d-m-Y');
