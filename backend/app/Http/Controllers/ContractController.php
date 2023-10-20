@@ -51,7 +51,7 @@ class ContractController extends Controller
     public function send(Enquiry $id)
     {
         // get the unsigned contract path
-        $unsigned_contract = $id->unsigned_contract;
+        $unsigned_contract = json_decode($id->unsigned_contract)[0]->download_link;
 
         // get file from storage
         $file = storage_path('app/public/' . $unsigned_contract);
