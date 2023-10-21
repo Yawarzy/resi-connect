@@ -229,7 +229,8 @@ export class RepairsComponent implements OnInit {
       return 'In Progress';
     }
 
-    if (rr.rejected_by_admin === '1') {
+    console.log(rr)
+    if (rr.rejected_by_admin === 1) {
       return 'Rejected';
     }
 

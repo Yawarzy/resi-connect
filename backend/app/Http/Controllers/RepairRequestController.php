@@ -103,10 +103,14 @@ class RepairRequestController extends Controller
         $repairRequest->tenant->notify(new TenantRepairRequestApprovedNotification($repairRequest));
 
         if ($approved) {
+            $repairRequest->rejected_by_admin = false;
+            $repairRequest->save();
             $repairRequest->contractor->notify(new ContractorAssignRepairRequestNotification($repairRequest));
         }
-        {
+
+        if (!$approved) {
             $repairRequest->rejected_by_admin = true;
+            $repairRequest->save();
         }
 
         $message = '';

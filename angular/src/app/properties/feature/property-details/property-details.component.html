@@ -21,7 +21,7 @@
       <div class="d-flex flex-column border-bottom py-3">
         <div class="flex-between">
           <h2 class="property__name">{{ property?.name }}</h2>
-          <h2 class="property__price"> &#8377;{{ property?.ppm }}</h2>
+          <h2 class="property__price">{{ property?.ppm | currency: 'INR' }}</h2>
         </div>
         <div class="property__header py-1">
           <div>
@@ -82,7 +82,7 @@
           <div class="property__spec__col">
             <div class="property__spec__container flex-between">
               <span class="property__spec">Deposit:</span>
-              <span class="property__spec__value">{{property?.deposit}}</span>
+              <span class="property__spec__value"> {{property?.deposit | currency: 'INR' }}</span>
             </div>
           </div>
 
