@@ -8,6 +8,7 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {ReactiveFormsModule} from "@angular/forms";
+import {NzButtonModule} from "ng-zorro-antd/button";
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     NzFormModule,
     NzGridModule,
     NzInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NzButtonModule
   ]
 })
 export class ContractUploadModule {
