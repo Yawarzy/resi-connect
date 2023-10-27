@@ -14,14 +14,14 @@
                class="nav-link py-2 mx-2">{{navItem.label}}</a>
           </li>
         </ul>
-        <button (click)="navigateToLogin()" *ngIf="!authService.isLoggedIn()" class="nav-action" nz-button
+        <button (click)="navigateToLogin()" *ngIf="!isLoggedIn" class="nav-action" nz-button
                 nzSize="large"
                 nzType="primary">
           Login
         </button>
 
         <a
-          *ngIf="authService.isLoggedIn()"
+          *ngIf="isLoggedIn"
           nz-button
           nzSize="default"
           nzType="link"
@@ -36,7 +36,7 @@
         </a>
 
         <button
-          *ngIf="authService.isLoggedIn()"
+          *ngIf="isLoggedIn"
           nz-button
           nzSize="default"
           nzType="link"

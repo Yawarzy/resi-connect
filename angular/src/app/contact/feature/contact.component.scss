@@ -1,0 +1,45 @@
+:host {
+  .contact-content {
+    flex-direction: row-reverse;
+    gap: 3rem;
+  }
+
+  .contact-info, .contact-form {
+    flex: 1;
+  }
+
+  .contact-form {
+    form > div {
+      margin-bottom: 1rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: .5rem;
+    }
+
+    textarea {
+      resize: none;
+    }
+  }
+
+
+  .contact-info__item {
+    h5, p {
+      margin: 0;
+    }
+
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    gap: .5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .contact-info__icon {
+      margin-right: 1rem;
+    }
+  }
+}

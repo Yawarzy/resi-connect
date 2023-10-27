@@ -21,7 +21,7 @@
               </p>
             </div>
             <div class="d-flex gap-3">
-              <button nz-button *ngIf="editMode" (click)="handleCancel()" nzType="default">Cancel</button>
+              <button (click)="handleCancel()" *ngIf="editMode" nz-button nzType="default">Cancel</button>
               <button (click)="handleSave()" [disabled]="profileForm.invalid"
                       [nzType]="editMode ? 'primary' : 'default'" nz-button>
                 {{editMode ? 'Save' : 'Edit'}}
@@ -33,12 +33,12 @@
             <div nz-row nzGutter="16">
               <div nz-col nz-typography nzMd="12" nzXs="24">
                 <div class="view-mode d-flex flex-column">
-              <span>
-                Full Name
-              </span>
+                  <span>
+                    Full Name
+                  </span>
                   <span *ngIf="!editMode" nz-typography nzType="secondary">
-            {{profileForm.get('full_name')?.value}}
-              </span>
+                    {{profileForm.get('full_name')?.value}}
+                  </span>
 
                   <nz-form-control *ngIf="editMode">
                     <input formControlName="full_name" nz-input nzSize="default"
@@ -61,7 +61,7 @@
                  Date of Birth
               </span>
                   <span *ngIf="!editMode" nz-typography nzType="secondary">
-            {{profileForm.get('date_of_birth')?.value}}
+                  {{profileForm.get('date_of_birth')?.value}}
               </span>
 
                   <nz-date-picker *ngIf="editMode" [nzShowTime]="false" [nzShowToday]="false"
@@ -190,29 +190,29 @@
             </div>
 
             <button
-              nz-button
-              nzType="primary"
-              nz-popconfirm
-              nzPopconfirmTitle="Are you sure you want to change your password ?"
-              nzPopconfirmPlacement="bottom"
               (nzOnConfirm)="handleChangePassword()"
               [disabled]="passwordForm.invalid"
+              nz-button
+              nz-popconfirm
+              nzPopconfirmPlacement="bottom"
+              nzPopconfirmTitle="Are you sure you want to change your password ?"
+              nzType="primary"
             >
-              <i nz-icon nzType="lock" nzTheme="outline"></i>
+              <i nz-icon nzTheme="outline" nzType="lock"></i>
               Change Password
             </button>
           </div>
 
           <form [formGroup]="passwordForm">
             <div nz-row nzGutter="16">
-              <div nz-col nz-typography nzXs="24" nzMd="12">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
                 <div class="view-mode d-flex flex-column">
                   <span>
                     Current Password
                   </span>
                   <nz-form-control>
-                    <input formControlName="current_password" nz-input type="password" nzSize="default"
-                           placeholder="Current Password"/>
+                    <input formControlName="current_password" nz-input nzSize="default" placeholder="Current Password"
+                           type="password"/>
                   </nz-form-control>
                   <div
                     *ngIf="passwordForm.get('current_password')?.invalid && (passwordForm.get('current_password')?.dirty && passwordForm.get('current_password')?.touched)"
@@ -224,14 +224,14 @@
                 </div>
               </div>
 
-              <div nz-col nz-typography nzXs="24" nzMd="12">
+              <div nz-col nz-typography nzMd="12" nzXs="24">
                 <div class="view-mode d-flex flex-column">
                   <span>
                     New Password
                   </span>
                   <nz-form-control>
-                    <input formControlName="new_password" type="password" nz-input nzSize="default"
-                           placeholder="New Password"/>
+                    <input formControlName="new_password" nz-input nzSize="default" placeholder="New Password"
+                           type="password"/>
                   </nz-form-control>
                   <div
                     *ngIf="passwordForm.get('new_password')?.invalid && (passwordForm.get('new_password')?.dirty && passwordForm.get('new_password')?.touched)"
