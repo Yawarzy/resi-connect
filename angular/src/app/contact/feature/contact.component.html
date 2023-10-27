@@ -2,21 +2,21 @@
   <section class="section contact">
     <div class="container">
       <header class="section__header">
-        <p class="section__subtitle">
-          We are here to help you with all your needs
-        </p>
         <h1 class="section__title">
           Contact Us Today
         </h1>
+        <p class="section__subtitle">
+          We are here to help you with all your needs
+        </p>
       </header>
     </div>
 
 
-    <section class="pt-5">
+    <section class="pt-2">
       <div class="container d-flex justify-content-between contact-content">
         <div class="contact-info">
           <h4 nz-typography>
-            Please do not hesitate to contact us
+            Contact Information
           </h4>
           <p nz-typography nzType="secondary">
             If you have any questions or concerns, please do not hesitate to contact us. We are here to help you with
@@ -53,6 +53,9 @@
         </div>
         <div class="contact-form">
           <form [formGroup]="contactForm">
+            <h4 nz-typography>
+              Contact Form
+            </h4>
             <div>
               <label nz-typography>Full Name</label>
               <nz-form-control>
@@ -117,6 +120,12 @@
                   </div>
                 </div>
               </nz-form-control>
+            </div>
+
+            <div class="mt-3">
+              <button nz-button nzType="primary" nzSize="large" type="submit" style="width: 100%">
+                Submit
+              </button>
             </div>
           </form>
         </div>
