@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Notifications\EnquiryReceivedNotification;
 use App\Notifications\LandlordRepairRequestReceivedNotification;
+use App\Notifications\SendContactToLandlordNotification;
 use App\Notifications\SendTenantUploadedSignedContractNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -46,5 +47,10 @@ class Landlord extends Model
     public function sendTenantUploadedSignedContractNotification($enquiry, $file)
     {
         $this->notify(new SendTenantUploadedSignedContractNotification($enquiry, $file, $this));
+    }
+
+    public function sendContactEmailReceivedNotification($contact)
+    {
+        $this->notify(new SendContactToLandlordNotification($contact, $this));
     }
 }

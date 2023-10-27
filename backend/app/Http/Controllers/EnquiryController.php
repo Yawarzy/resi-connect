@@ -140,4 +140,22 @@ class EnquiryController extends Controller
             'message' => 'Contract uploaded successfully',
         ]);
     }
+
+
+    public function handleContact(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+            'message' => 'required',
+        ]);
+
+        // TODO: Send email to Landlord
+        $landlord = Property::find(1)->landlord;
+        $landlord->sendContactEmailReceivedNotification($validatedRequest);
+        return response()->json([
+            'success' => true,
+        ]);
+    }
 }

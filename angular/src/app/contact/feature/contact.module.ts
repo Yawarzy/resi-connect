@@ -10,6 +10,7 @@ import {NzInputModule} from "ng-zorro-antd/input";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputModule} from "../../shared/ui/form/input/input.module";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {InputModule} from "../../shared/ui/form/input/input.module";
     NzInputModule,
     NzButtonModule,
     ReactiveFormsModule,
-    InputModule
+    InputModule,
+    NzNotificationModule
   ],
   exports: [ContactComponent]
 })

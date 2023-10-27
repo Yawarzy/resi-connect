@@ -21,4 +21,12 @@ export class EnquiryService extends BaseCrudService<Enquiry> {
   uploadContract(formData: FormData, headers: HttpHeaders) {
     return this.http.post(this.baseUrl + '/upload-contract', formData, {headers});
   }
+
+  sendContactEmail(data: any) {
+    return this.http.post(environment.baseUrl + '/api/contact', data, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
+  }
 }
