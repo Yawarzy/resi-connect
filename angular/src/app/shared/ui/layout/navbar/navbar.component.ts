@@ -11,6 +11,7 @@ import {AuthService} from "../../../../auth/data-access/auth.service";
 export class NavbarComponent implements OnInit {
   navItems: NavItem[] = NAV_ITEMS;
   activeItem: NavItem | undefined;
+  isLoggedIn: boolean = false;
 
   @Input() showNavItems: boolean = true;
 
@@ -20,6 +21,9 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     const url = this.router.url;
     this.activeItem = this.navItems.find(item => item.path === url);
+    this.authService.isLoggedIn().subscribe(res => {
+      this.isLoggedIn = res.status !== 'not authenticated';
+    });
   }
 
   navigateToLogin() {

@@ -57,7 +57,7 @@
     </form>
 
     <div class="steps-action">
-      <button (click)="pre()" *ngIf="current > 0" nz-button nzType="default">
+      <button (click)="pre()" *ngIf="current > 0" nz-button nzType="default" [disabled]="success !== null || loading">
         <span>Previous</span>
       </button>
       <button (click)="next()" *ngIf="current < 2" nz-button nzType="default" [disabled]="success !== null || loading">

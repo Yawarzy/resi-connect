@@ -1,3 +1,137 @@
 <app-page>
-  <h1>Contact</h1>
+  <section class="section contact">
+    <div class="container">
+      <header class="section__header">
+        <h1 class="section__title">
+          Contact Us Today
+        </h1>
+        <p class="section__subtitle">
+          We are here to help you with all your needs
+        </p>
+      </header>
+    </div>
+
+
+    <section class="pt-2">
+      <div class="container d-flex justify-content-between contact-content">
+        <div class="contact-info">
+          <h4 nz-typography>
+            Contact Information
+          </h4>
+          <p nz-typography nzType="secondary">
+            If you have any questions or concerns, please do not hesitate to contact us. We are here to help you with
+            all your needs. You can reach us by phone or email. We will get back to you as soon as possible. Thank you
+            for your interest in our services.
+          </p>
+
+          <div class="contact-info__item">
+            <h5 nz-typography>
+              Phone:
+            </h5>
+            <p nz-typography nzType="secondary">
+              <a href="tel:1-800-123-4567" nz-typography nzType="secondary">1-800-123-4567</a>
+            </p>
+          </div>
+
+          <div class="contact-info__item">
+            <h5 nz-typography>
+              Email:
+            </h5>
+            <span nz-typography nzType="secondary">
+              <a href="mailto:yawarbhatzy@gmail.com" nz-typography nzType="secondary">info@resiconnect.in</a>
+            </span>
+          </div>
+
+          <div class="contact-info__item">
+            <h5 nz-typography>
+              Address:
+            </h5>
+            <span nz-typography nzType="secondary">
+              1234 Main Street, Anytown, USA
+            </span>
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <form [formGroup]="contactForm" (ngSubmit)="handleSubmit()">
+            <h4 nz-typography>
+              Contact Form
+            </h4>
+            <div>
+              <label nz-typography>Full Name</label>
+              <nz-form-control>
+                <input formControlName="full_name" nz-input nzSize="default"
+                       placeholder="Full Name"/>
+                <div
+                  *ngIf="contactForm.get('full_name')?.invalid && (contactForm.get('full_name')?.dirty && contactForm.get('full_name')?.touched)"
+                  class="text-danger mt-2">
+                  <div *ngIf="contactForm.get('full_name')?.errors?.['required']">
+                    Full Name is required.
+                  </div>
+                </div>
+              </nz-form-control>
+            </div>
+
+            <div>
+              <label nz-typography>Email</label>
+              <nz-form-control>
+                <input formControlName="email" nz-input nzSize="default"
+                       placeholder="Email"/>
+                <div
+                  *ngIf="contactForm.get('email')?.invalid && (contactForm.get('email')?.dirty && contactForm.get('email')?.touched)"
+                  class="text-danger mt-2">
+                  <div *ngIf="contactForm.get('email')?.errors?.['required']">
+                    Email is required.
+                  </div>
+                  <div *ngIf="contactForm.get('email')?.errors?.['email']">
+                    Email is invalid.
+                  </div>
+                </div>
+              </nz-form-control>
+            </div>
+
+            <div>
+              <label nz-typography>Phone</label>
+              <nz-form-control>
+                <input formControlName="phone" nz-input nzSize="default"
+                       placeholder="Phone"/>
+                <div
+                  *ngIf="contactForm.get('phone')?.invalid && (contactForm.get('phone')?.dirty && contactForm.get('phone')?.touched)"
+                  class="text-danger mt-2">
+                  <div *ngIf="contactForm.get('phone')?.errors?.['required']">
+                    Phone is required.
+                  </div>
+                  <div *ngIf="contactForm.get('phone')?.errors?.['pattern']">
+                    Phone is invalid.
+                  </div>
+                </div>
+              </nz-form-control>
+            </div>
+
+            <div>
+              <label nz-typography>Message</label>
+              <nz-form-control>
+                <textarea rows="5" formControlName="message" nz-input nzSize="default"
+                          placeholder="Phone"></textarea>
+                <div
+                  *ngIf="contactForm.get('message')?.invalid && (contactForm.get('message')?.dirty && contactForm.get('message')?.touched)"
+                  class="text-danger mt-2">
+                  <div *ngIf="contactForm.get('message')?.errors?.['required']">
+                    Message is required.
+                  </div>
+                </div>
+              </nz-form-control>
+            </div>
+
+            <div class="mt-3">
+              <button nz-button nzType="primary" [nzLoading]="loading" [disabled]="contactForm.invalid" nzSize="large"
+                      type="submit" style="width: 100%">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </section>
 </app-page>

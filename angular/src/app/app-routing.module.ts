@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from "./auth/util/auth-guard";
+import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 
 const routes: Routes = [
   {
@@ -26,7 +27,6 @@ const routes: Routes = [
   {
     path: 'contact',
     loadChildren: () => import('./contact/feature/contact.module').then(m => m.ContactModule),
-    canActivate: [AuthGuard]
   },
   {
     path: 'tenant',
@@ -36,7 +36,11 @@ const routes: Routes = [
   {
     path: 'contractor',
     loadChildren: () => import('./contractor/feature/contractor-shell/contractor-shell.module').then(m => m.ContractorShellModule),
-  }
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+  },
 ];
 
 @NgModule({

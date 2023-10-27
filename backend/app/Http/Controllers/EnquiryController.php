@@ -33,7 +33,7 @@ class EnquiryController extends Controller
             $file = $validatedRequest['id_proof'];
             $fileExtension = $file->getClientOriginalExtension();
 
-            $fileName = "Id-proof-" . $validatedRequest['full_name'] . '-' . date("d-m-Y") . '.' . $fileExtension;
+            $fileName = "Id-proof-" . $validatedRequest['full_name'] . '-' . date("d-m-Y") . uniqid() . '.' . $fileExtension;
             $storage_path = 'id_proofs' . '/' . date("Y");
             Storage::disk('local')->putFileAs('public/' . $storage_path, $file, $fileName);
             $filePathObj = [[
@@ -48,7 +48,7 @@ class EnquiryController extends Controller
             $file = $validatedRequest['address_proof'];
             $fileExtension = $file->getClientOriginalExtension();
 
-            $fileName = "Address-proof-" . $validatedRequest['full_name'] . '-' . date("d-m-Y") . '.' . $fileExtension;
+            $fileName = "Address-proof-" . $validatedRequest['full_name'] . '-' . date("d-m-Y") . uniqid() . '.' . $fileExtension;
             $storage_path = 'address_proofs' . '/' . date("Y");
             Storage::disk('local')->putFileAs('public/' . $storage_path, $file, $fileName);
             $filePathObj = [[
@@ -130,9 +130,32 @@ class EnquiryController extends Controller
             $enquiry->save();
         }
 
+        // TODO: Send email to Landlord
+        // get landlord
+        $property = Property::find($enquiry->property_id);
+        $landlord = $property->landlord;
+        $landlord->sendTenantUploadedSignedContractNotification($enquiry, $file);
 
         return response()->json([
             'message' => 'Contract uploaded successfully',
+        ]);
+    }
+
+
+    public function handleContact(Request $request)
+    {
+        $validatedRequest = $request->validate([
+            'full_name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric|digits:10',
+            'message' => 'required',
+        ]);
+
+        // TODO: Send email to Landlord
+        $landlord = Property::find(1)->landlord;
+        $landlord->sendContactEmailReceivedNotification($validatedRequest);
+        return response()->json([
+            'success' => true,
         ]);
     }
 }

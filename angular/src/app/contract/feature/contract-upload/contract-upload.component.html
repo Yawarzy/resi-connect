@@ -3,8 +3,8 @@
     <ng-container *ngIf="!loading && !contractSigned && success === null">
       <div class="card mx-auto my-5 p-3" style="min-width: 20rem; max-width: 50rem">
         <div class="card-body">
-          <h1 class="card-title fs-3">Upload Signed Contract</h1>
-          <p class="card-text">
+          <h1 class="section__title fs-3">Upload Signed Contract</h1>
+          <p class="section__subtitle" style="text-transform: none">
             Please upload the signed contract below to complete the process of renting the room.
           </p>
 
@@ -30,8 +30,8 @@
               </div>
             </div>
 
-            <div class="d-grid">
-              <button class="btn btn-primary mt-4" type="submit">
+            <div class="d-grid mt-3">
+              <button nz-button nzType="primary" type="submit">
                 Upload
               </button>
             </div>

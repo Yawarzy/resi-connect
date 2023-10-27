@@ -90,7 +90,7 @@ export class PropertiesComponent implements OnInit {
     const {page, pageSize} = this.router.parseUrl(this.router.url).queryParams;
     this.paginationConfig = {
       page: page || 1,
-      pageSize: pageSize || 3
+      pageSize: pageSize || 2
     }
   }
 

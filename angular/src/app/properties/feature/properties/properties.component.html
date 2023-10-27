@@ -23,7 +23,7 @@
 
 
 <ng-template #paginationTemplate>
-  <ul *ngIf="properties && properties.length > 3" class="pagination">
+  <ul *ngIf="properties && properties.length <= paginationConfig.pageSize" class="pagination">
     <li class="page-item">
       <button (click)="goToPage(pagination?.links?.prev.slice(-1))"
               [class.disabled]="!pagination?.links.prev"

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
-import {Observable, of} from "rxjs";
+import {Observable, of, switchMap, take} from "rxjs";
 
 export interface LoginDto {
   email: string;
@@ -14,7 +14,7 @@ export interface LoginDto {
 export class AuthService {
   baseUrl = environment.baseUrl + '/api/';
 
-  private currentTenant$: Observable<any> | undefined;
+  public currentTenant$: Observable<any> | undefined;
 
   constructor(
     private http: HttpClient,
@@ -39,7 +39,20 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    return !!localStorage.getItem('token');
+    return this.http.post(this.baseUrl + 'is-authenticated', {}, {
+      headers: {
+        'Authorization': 'Bearer ' + localStorage.getItem('token'),
+      }
+    }).pipe(
+      switchMap((res: any) => {
+        if (res && res.tenant) {
+          localStorage.setItem('currentTenant', JSON.stringify(res.tenant));
+          this.currentTenant$ = of(res.tenant);
+        }
+        return of(res);
+      }),
+      take(1)
+    );
   }
 
   logout() {

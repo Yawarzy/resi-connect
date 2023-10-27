@@ -4,6 +4,13 @@ import {CommonModule} from '@angular/common';
 import {ContactRoutingModule} from './contact-routing.module';
 import {ContactComponent} from "./contact.component";
 import {PageModule} from "../../shared/ui/layout/page/page.module";
+import {NzTypographyModule} from "ng-zorro-antd/typography";
+import {NzFormModule} from "ng-zorro-antd/form";
+import {NzInputModule} from "ng-zorro-antd/input";
+import {NzButtonModule} from "ng-zorro-antd/button";
+import {ReactiveFormsModule} from "@angular/forms";
+import {InputModule} from "../../shared/ui/form/input/input.module";
+import {NzNotificationModule} from "ng-zorro-antd/notification";
 
 
 @NgModule({
@@ -11,7 +18,14 @@ import {PageModule} from "../../shared/ui/layout/page/page.module";
   imports: [
     CommonModule,
     ContactRoutingModule,
-    PageModule
+    PageModule,
+    NzTypographyModule,
+    NzFormModule,
+    NzInputModule,
+    NzButtonModule,
+    ReactiveFormsModule,
+    InputModule,
+    NzNotificationModule
   ],
   exports: [ContactComponent]
 })

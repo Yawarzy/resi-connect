@@ -11,7 +11,8 @@ export class DashboardOverviewComponent implements OnInit {
   tenant: any;
   signedContract: string | undefined;
   property: Property | undefined;
-
+  overDueBy: number = 0;
+  advanceBy: number = 0;
 
   constructor(private propertiesService: PropertiesService) {
   }
@@ -20,6 +21,12 @@ export class DashboardOverviewComponent implements OnInit {
     this.tenant = JSON.parse(localStorage.getItem('currentTenant') || '{}');
 
     this.signedContract = JSON.parse(this.tenant.signed_contract || '{}')[0].download_link;
+
+    this.overDueBy = (this.tenant.rent_balance / this.tenant.ppm) - 1;
+    if (this.tenant.rent_balance < 0) {
+      this.overDueBy = 0;
+      this.advanceBy = Math.abs(this.tenant.rent_balance / this.tenant.ppm);
+    }
 
     this.propertiesService.fetchItem(this.tenant.property_id, (data: { property: Property }) => {
       this.property = {

@@ -75,16 +75,13 @@ export class EnquiryFormComponent implements OnInit {
     });
 
     this.enquiryService.addItem(formData, (res) => {
-      console.log(res)
-      setTimeout(() => {
-        this.enquiryForm.reset();
-        this.selectedFiles = {
-          id_proof: null,
-          address_proof: null
-        }
-        this.loading = false;
-        this.success = true;
-      }, 3000)
+      this.enquiryForm.reset();
+      this.selectedFiles = {
+        id_proof: null,
+        address_proof: null
+      }
+      this.loading = false;
+      this.success = true;
     }, (err) => {
       console.log(err)
       setTimeout(() => {

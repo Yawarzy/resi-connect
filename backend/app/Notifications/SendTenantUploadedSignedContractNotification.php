@@ -3,15 +3,17 @@
 namespace App\Notifications;
 
 use App\Models\Enquiry;
+use App\Models\Landlord;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class SendContractToTenantNotification extends Notification
+class SendTenantUploadedSignedContractNotification extends Notification
 {
     use Queueable;
 
     private Enquiry $enquiry;
+    private Landlord $landlord;
     private $file;
 
     /**
@@ -19,9 +21,10 @@ class SendContractToTenantNotification extends Notification
      *
      * @return void
      */
-    public function __construct(Enquiry $enquiry, $file)
+    public function __construct(Enquiry $enquiry, $file, Landlord $landlord)
     {
         $this->enquiry = $enquiry;
+        $this->landlord = $landlord;
         $this->file = $file;
     }
 
@@ -45,20 +48,19 @@ class SendContractToTenantNotification extends Notification
     public function toMail($notifiable)
     {
         $app_url = config('app.debug') ? config('app.url_local') : config('app.url');
-
         return (new MailMessage)
-            ->greeting('Hello ' . $this->enquiry->full_name . ',')
-            ->subject('Rental Agreement | ' . config('app.name'))
-            ->line('As we discussed, the Rental Agreement which needs to be signed by you is attached to this email.')
-            ->line('Kindly review the agreement and submit it to us at your earliest convenience.')
-            ->line('If you have any questions, please feel free to contact us.')
-            ->line('We look forward to hearing from you.')
+            ->greeting('Hello ' . $this->landlord->name . ',')
+            ->subject('Tenant has uploaded signed contract | ' . config('app.name'))
+            ->line('Tenant with the following details has uploaded the signed contract:')
+            ->line('**Tenant Name: **' . $this->enquiry->full_name)
+            ->line('**Tenant Email: **' . $this->enquiry->email)
+            ->line('**Tenant Phone: **' . $this->enquiry->phone_number)
+            ->line('Please find the attached signed contract.')
             ->attach($this->file, [
                 'as' => 'Rental Agreement.pdf',
                 'mime' => 'application/pdf',
             ])
-            ->line('Please click the button below to upload the signed contract.')
-            ->action('Upload Contract', url($app_url . 'contract/upload/' . $this->enquiry->upload_contract_slug));
+            ->action('View Enquiry', url('/admin/enquiries/' . $this->enquiry->id));
     }
 
     /**
