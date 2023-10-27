@@ -15,7 +15,7 @@ export class ProfileComponent implements OnInit {
     full_name: new FormControl('', [Validators.required]),
     date_of_birth: new FormControl('', [Validators.required]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    phone_number: new FormControl('', [Validators.required]),
+    phone_number: new FormControl('', [Validators.required, Validators.pattern("^[0-9]{10}$")]),
     alternate_phone_number: new FormControl(''),
     home_address: new FormControl('', [Validators.required]),
   });
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
         localStorage.setItem('currentTenant', JSON.stringify(res.tenant));
         this.notificationService.success('Profile Updated', 'Your profile has been updated successfully');
       }, (err) => {
-        this.notificationService.error('Error', 'An error occurred while updating your profile');
+        this.notificationService.error('Error', err.error.message);
         console.error(err);
       }, false);
     }
@@ -75,10 +75,14 @@ export class ProfileComponent implements OnInit {
     }
 
     this.tenantService.changePassword(payload, (res: any) => {
+      if (res.status === 'error') {
+        this.notificationService.error('Error', res.message);
+        return;
+      }
       this.notificationService.success('Password Changed', 'Your password has been changed successfully');
       this.passwordForm.reset();
     }, (err: any) => {
-      this.notificationService.error('Error', 'An error occurred while changing your password');
+      this.notificationService.error('Error', err.error.message);
       console.error(err);
     });
   }

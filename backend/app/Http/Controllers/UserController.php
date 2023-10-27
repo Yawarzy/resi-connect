@@ -36,6 +36,11 @@ class UserController extends VoyagerUserController
     {
         $user = User::where('id', $request->id)->firstorFail();
 
+        $validated = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8',
+        ]);
+
         if ($user->role_id != 2) {
             return response()->json([
                 'message' => 'You are not authorized to update password',
@@ -44,7 +49,7 @@ class UserController extends VoyagerUserController
         }
 
 //        dd($current_password, $user->password);
-        if (!Hash::check($request->current_password, $user->password)) {
+        if (!Hash::check($validated['current_password'], $user->password)) {
             return response()->json([
                 'message' => 'Current password is incorrect',
                 'status' => 'error'
