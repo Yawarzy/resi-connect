@@ -48,6 +48,7 @@ class Tenant extends Model
     ];
     protected $appends = [
         'next_rent_due_date',
+        'rent_balance',
     ];
 
     public function getExpiryDateAttribute()

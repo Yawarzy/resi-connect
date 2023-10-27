@@ -4,6 +4,13 @@
       <div [nzMd]="12" [nzXs]="24" nz-col>
         <h3 nz-typography>Welcome {{tenant.full_name | titlecase}}</h3>
       </div>
+      <div [nzMd]="12" [nzXs]="12" nz-col>
+        <div class="d-flex justify-content-end outstanding-balance">
+         <span class="small" nz-typography nzType="secondary">
+            All payments are due on the {{AppUtil.toDate(tenant.commencement_date) | date: 'd'}}th of every month.
+          </span>
+        </div>
+      </div>
     </div>
 
     <nz-card>
@@ -26,12 +33,14 @@
               </span>
         </div>
         <div class="d-flex flex-column" nz-col nz-typography nzMd="12" nzXs="24">
-                <span>
-                  Next payment due
-                </span>
-          <span nz-typography nzType="secondary">
-                {{tenant.next_rent_due_date}}
-                </span>
+          <span>
+            Balance
+          </span>
+          <span nz-typography
+                [nzType]="tenant.rent_balance > tenant.ppm ? 'danger' : tenant.rent_balance < 0 ? 'success' : 'secondary'">
+            {{tenant.rent_balance | currency: 'INR'}}
+            {{(tenant.rent_balance > tenant.ppm) && '(Overdue by ' + overDueBy + (overDueBy > 1 && ' months' || ' month)') || tenant.rent_balance === 0 && '(All Paid)' || tenant.rent_balance < tenant.ppm && '(Advance of ' + advanceBy + (advanceBy > 1 && ' months' || ' month)') || '(Current Month)'}}
+          </span>
         </div>
       </div>
 

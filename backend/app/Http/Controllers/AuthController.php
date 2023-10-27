@@ -56,13 +56,15 @@ class AuthController extends Controller
      */
     public function logout()
     {
-
-        auth()->user()->tokens()->delete();
-
-        return response()->json([
-            'message' => 'Logged out',
-        ]);
-
+        if (request()->user()->currentAccessToken()->delete()) {
+            return response()->json([
+                'message' => 'Logged out',
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Something went wrong',
+            ]);
+        }
     }
 
     /**
@@ -70,11 +72,11 @@ class AuthController extends Controller
      */
     public function isAuthenticated()
     {
-        // check if the user is logged in, if yes return true, else return false
-        if (auth()->check()) {
+        if (auth('sanctum')->check()) {
             return response()->json([
                 'status' => 'authenticated',
-                'user' => auth()->user(),
+                'user' => auth('sanctum')->user(),
+                'tenant' => auth('sanctum')->user()->tenant()->get()->except(['created_at', 'updated_at', 'unsigned_contract', 'upload_contract_slug', 'status'])->first()
             ]);
         } else {
             return response()->json([
